@@ -1,0 +1,32 @@
+{
+  "Init page component": {
+    "prefix": "@init",
+    "body": [
+      "import React from 'react'",
+      "",
+      "const Page: React.FC = () => {",
+      "  return <></>",
+      "}",
+      "",
+      "export default Page",
+      ""
+    ],
+    "description": ""
+  },
+  "Init page component with props": {
+    "prefix": "@initWithProps",
+    "body": [
+      "import React from 'react'",
+      "",
+      "interface Props {}",
+      "",
+      "const Page: React.FC<Props> = (p) => {",
+      "  return <></>",
+      "}",
+      "",
+      "export default Page",
+      ""
+    ],
+    "description": ""
+  }
+}
