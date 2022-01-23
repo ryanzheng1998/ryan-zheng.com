@@ -1,5 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useRequestAnimationFrame } from '../lib/hooks/useRequestAnimationFrame'
+import { defaultSpringtifyNumber } from '../lib/springtifyNumber/presents'
+import { stepper } from '../lib/springtifyNumber/stepper'
+import { SpringtifyNumber } from '../lib/springtifyNumber/types'
 
 const config = {
   msPerFrame: 8, // 120 fps
@@ -11,31 +15,13 @@ const config = {
 interface State {
   timeStamp: number
   ticking: boolean
-  boxRotation: {
-    value: number
-    velocity: number
-    lastIdealValue: number
-    lastIdealVelocity: number
-    target: number
-    stiffness: number
-    damping: number
-    precision: number
-  }
+  boxRotation: SpringtifyNumber
 }
 
 const initState: State = {
   timeStamp: 0,
   ticking: true,
-  boxRotation: {
-    value: 0,
-    velocity: 0,
-    lastIdealValue: 0,
-    lastIdealVelocity: 0,
-    target: 85,
-    stiffness: 170,
-    damping: 26,
-    precision: 0.01,
-  },
+  boxRotation: { ...defaultSpringtifyNumber, target: 85 },
 }
 
 // ----------------------
@@ -55,104 +41,9 @@ type Action = ReturnType<typeof TriggerRotate> | ReturnType<typeof Tick>
 // ----------------------
 // pure function
 // ----------------------
-const stepper =
-  (timeStamp: number) =>
-  (lastUpdate: number) =>
-  (msPerFrame: number) =>
-  (unname: State['boxRotation']): State['boxRotation'] => {
-    const frameToCatchUp = Math.floor((timeStamp - lastUpdate) / msPerFrame)
-
-    const currentFrameCompletion =
-      (timeStamp - lastUpdate - msPerFrame * frameToCatchUp) / msPerFrame
-
-    // a little bit of impurity
-    let newLastIdealStyleValue = unname.lastIdealValue
-    let newLastIdealVelocityValue = unname.lastIdealVelocity
-
-    // prevent catch up too many frame
-    if (frameToCatchUp <= 10) {
-      for (let i = 0; i < frameToCatchUp; i++) {
-        ;[newLastIdealStyleValue, newLastIdealVelocityValue] = subStepper(
-          msPerFrame / 1000,
-          newLastIdealStyleValue,
-          newLastIdealVelocityValue,
-          unname.target,
-          unname.stiffness,
-          unname.damping,
-          unname.precision
-        )
-      }
-    }
-
-    const [nextIdealX, nextIdealV] = subStepper(
-      msPerFrame / 1000,
-      newLastIdealStyleValue,
-      newLastIdealVelocityValue,
-      unname.target,
-      unname.stiffness,
-      unname.damping,
-      unname.precision
-    )
-
-    const newCurrentStyle =
-      newLastIdealStyleValue +
-      (nextIdealX - newLastIdealStyleValue) * currentFrameCompletion
-
-    const newCurrentVelocity =
-      newLastIdealVelocityValue +
-      (nextIdealV - newLastIdealVelocityValue) * currentFrameCompletion
-
-    return {
-      ...unname,
-      value: newCurrentStyle,
-      velocity: newCurrentVelocity,
-      lastIdealValue: newLastIdealStyleValue,
-      lastIdealVelocity: newLastIdealVelocityValue,
-    }
-  }
-
-// from https://github.com/chenglou/react-motion/blob/master/src/stepper.js
-export function subStepper(
-  secondPerFrame: number,
-  x: number,
-  v: number,
-  destX: number,
-  k: number,
-  b: number,
-  precision: number
-): [number, number] {
-  const reusedTuple: [number, number] = [0, 0]
-  // Spring stiffness, in kg / s^2
-
-  // for animations, destX is really spring length (spring at rest). initial
-  // position is considered as the stretched/compressed position of a spring
-  const Fspring = -k * (x - destX)
-
-  // Damping, in kg / s
-  const Fdamper = -b * v
-
-  // usually we put mass here, but for animation purposes, specifying mass is a
-  // bit redundant. you could simply adjust k and b accordingly
-  // let a = (Fspring + Fdamper) / mass;
-  const a = Fspring + Fdamper
-
-  const newV = v + a * secondPerFrame
-  const newX = x + newV * secondPerFrame
-
-  if (Math.abs(newV) < precision && Math.abs(newX - destX) < precision) {
-    reusedTuple[0] = destX
-    reusedTuple[1] = 0
-    return reusedTuple
-  }
-
-  reusedTuple[0] = newX
-  reusedTuple[1] = newV
-  return reusedTuple
-}
-
-const isOnRest = (uname: State['boxRotation']) => {
-  if (uname.velocity !== 0) return false
-  if (uname.value !== uname.target) return false
+const isOnRest = (springtifyNumber: SpringtifyNumber) => {
+  if (springtifyNumber.velocity !== 0) return false
+  if (springtifyNumber.value !== springtifyNumber.target) return false
 
   return true
 }
@@ -181,7 +72,7 @@ const reducer = (state: State, action: Action): State => {
         ticking: true,
         boxRotation: {
           ...state.boxRotation,
-          target: state.boxRotation.target + 90,
+          target: state.boxRotation.target + 110,
         },
       }
   }
@@ -207,32 +98,21 @@ const Box = styled.div`
   width: 100px;
   height: 100px;
   background: red;
+  border-radius: 15px;
 `
 
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
-  const animationRef = React.useRef(0)
+  useRequestAnimationFrame(
+    (timeStamp) => {
+      if (!state.ticking) return false
 
-  const step = React.useCallback(
-    (t1: number) => (t2: number) => {
-      if (t2 - t1 > config.msPerFrame) {
-        if (!state.ticking) {
-          return
-        }
-        dispatch(Tick(t2))
-        animationRef.current = requestAnimationFrame(step(t2))
-      } else {
-        animationRef.current = requestAnimationFrame(step(t1))
-      }
+      dispatch(Tick(timeStamp))
+      return true
     },
     [state.ticking]
   )
-
-  React.useEffect(() => {
-    animationRef.current = requestAnimationFrame(step(performance.now()))
-    return () => cancelAnimationFrame(animationRef.current)
-  }, [step])
 
   return (
     <Container>
