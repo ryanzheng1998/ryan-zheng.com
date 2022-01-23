@@ -1,6 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useRequestAnimationFrame } from '../lib/hooks/useRequestAnimationFrame'
+import { SpringtifyNumber } from '../lib/springtifyNumber/types'
+import {
+  defaultSpringtifyNumber,
+  presents,
+} from '../lib/springtifyNumber/presents'
+import { stepper } from '../lib/springtifyNumber/stepper'
+import { isOnRest } from '../lib/springtifyNumber/isOnRest'
+import { circularRestrict } from '../lib/circularRestrict'
 
 const config = {
   msPerFrame: 8, // 120 fps
@@ -11,40 +20,66 @@ const config = {
 // state model
 // ----------------------
 interface State {
-  currentPage: number
+  timeStamp: number
+  ticking: boolean
+  currentPage: SpringtifyNumber
 }
 
 const initState: State = {
-  currentPage: 1,
+  timeStamp: 0,
+  ticking: true,
+  currentPage: { ...defaultSpringtifyNumber, target: 1, ...presents.gentle },
 }
 
 // ----------------------
 // action model
 // ---------------------
+export const Tick = (timeStamp: number) => ({
+  type: 'TICK' as const,
+  payload: timeStamp,
+})
+
 export const SetImage = (input: (page: number) => number | number) => ({
   type: 'SET_IMAGE' as const,
   payload: input,
 })
 
-type Action = ReturnType<typeof SetImage>
+type Action = ReturnType<typeof Tick> | ReturnType<typeof SetImage>
 
 // ----------------------
 // update
 // ----------------------
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'SET_IMAGE':
-      if (typeof action.payload === 'function') {
-        return {
-          ...state,
-          currentPage:
-            ((action.payload(state.currentPage) - 1) % config.imageCount) + 1,
-        }
-      }
+    case 'TICK':
+      const newCurrentPage = stepper(action.payload)(state.timeStamp)(
+        config.msPerFrame
+      )(state.currentPage)
+
+      const motionOnRest = isOnRest(newCurrentPage)
 
       return {
         ...state,
-        currentPage: ((action.payload - 1) % config.imageCount) + 1,
+        timeStamp: action.payload,
+        ticking: !motionOnRest,
+        currentPage: newCurrentPage,
+      }
+    case 'SET_IMAGE':
+      const pageTarget = (() => {
+        if (typeof action.payload === 'function') {
+          return action.payload(state.currentPage.target)
+        }
+
+        return action.payload
+      })()
+
+      return {
+        ...state,
+        ticking: true,
+        currentPage: {
+          ...state.currentPage,
+          target: circularRestrict(1)(config.imageCount)(pageTarget),
+        },
       }
   }
 }
@@ -85,6 +120,16 @@ const ButtonContainer = styled.div`
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
+  useRequestAnimationFrame(
+    (timeStamp) => {
+      if (!state.ticking) return false
+
+      dispatch(Tick(timeStamp))
+      return true
+    },
+    [state.ticking]
+  )
+
   return (
     <Container>
       <Container2>
@@ -95,7 +140,7 @@ const Page: React.FC = () => {
                 key={i}
                 style={{
                   transform: `translateX(${
-                    (i - state.currentPage + 1) * (960 + 40)
+                    (i - state.currentPage.value + 1) * (960 + 40)
                   }px)`,
                 }}
               >
