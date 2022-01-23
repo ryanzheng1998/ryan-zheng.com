@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useRequestAnimationFrame } from '../lib/hooks/useRequestAnimationFrame'
 import Image from 'next/image'
 
 const config = {
@@ -12,42 +11,28 @@ const config = {
 // state model
 // ----------------------
 interface State {
-  timeStamp: number
-  ticking: boolean
   currentPage: number
 }
 
 const initState: State = {
-  timeStamp: 0,
-  ticking: false,
   currentPage: 1,
 }
 
 // ----------------------
 // action model
 // ---------------------
-export const Tick = (timeStamp: number) => ({
-  type: 'TICK' as const,
-  payload: timeStamp,
-})
-
 export const SetImage = (input: (page: number) => number | number) => ({
   type: 'SET_IMAGE' as const,
   payload: input,
 })
 
-type Action = ReturnType<typeof Tick> | ReturnType<typeof SetImage>
+type Action = ReturnType<typeof SetImage>
 
 // ----------------------
 // update
 // ----------------------
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'TICK':
-      return {
-        ...state,
-        timeStamp: action.payload,
-      }
     case 'SET_IMAGE':
       if (typeof action.payload === 'function') {
         return {
@@ -99,16 +84,6 @@ const ButtonContainer = styled.div`
 
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
-
-  useRequestAnimationFrame(
-    (timeStamp) => {
-      if (!state.ticking) return false
-
-      dispatch(Tick(timeStamp))
-      return true
-    },
-    [state.ticking]
-  )
 
   return (
     <Container>
