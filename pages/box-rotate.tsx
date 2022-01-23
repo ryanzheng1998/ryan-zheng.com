@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useRequestAnimationFrame } from '../lib/hooks/useRequestAnimationFrame'
+import { isOnRest } from '../lib/springtifyNumber/isOnRest'
 import { defaultSpringtifyNumber } from '../lib/springtifyNumber/presents'
 import { stepper } from '../lib/springtifyNumber/stepper'
 import { SpringtifyNumber } from '../lib/springtifyNumber/types'
@@ -37,16 +38,6 @@ export const TriggerRotate = () => ({
 })
 
 type Action = ReturnType<typeof TriggerRotate> | ReturnType<typeof Tick>
-
-// ----------------------
-// pure function
-// ----------------------
-const isOnRest = (springtifyNumber: SpringtifyNumber) => {
-  if (springtifyNumber.velocity !== 0) return false
-  if (springtifyNumber.value !== springtifyNumber.target) return false
-
-  return true
-}
 
 // ----------------------
 // update
