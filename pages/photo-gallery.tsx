@@ -105,6 +105,13 @@ const ImageContainer = styled.div`
   height: 540px;
   width: 960px;
   overflow: hidden;
+  display: grid;
+  place-items: center;
+`
+const ImageConainer2 = styled.div`
+  position: relative;
+  height: 540px;
+  width: 960px;
 `
 
 const SingleImage = styled.div`
@@ -134,25 +141,27 @@ const Page: React.FC = () => {
     <Container>
       <Container2>
         <ImageContainer>
-          {new Array(config.imageCount).fill(0).map((_, i) => {
-            return (
-              <SingleImage
-                key={i}
-                style={{
-                  transform: `translateX(${
-                    (i - state.currentPage.value + 1) * (960 + 40)
-                  }px)`,
-                }}
-              >
-                <Image
-                  alt={`image${i + 1}`}
-                  src={`/photo-gallery/Screenshot (${i + 1}).png`}
-                  width={1920}
-                  height={1080}
-                />
-              </SingleImage>
-            )
-          })}
+          <ImageConainer2>
+            {new Array(config.imageCount).fill(0).map((_, i) => {
+              return (
+                <SingleImage
+                  key={i}
+                  style={{
+                    transform: `translateX(${
+                      (i - state.currentPage.value + 1) * 960
+                    }px)`,
+                  }}
+                >
+                  <Image
+                    alt={`image${i + 1}`}
+                    src={`/photo-gallery/Screenshot (${i + 1}).png`}
+                    width={1920}
+                    height={1080}
+                  />
+                </SingleImage>
+              )
+            })}
+          </ImageConainer2>
         </ImageContainer>
         <ButtonContainer>
           <button onClick={() => dispatch(SetImage((page) => page - 1))}>
