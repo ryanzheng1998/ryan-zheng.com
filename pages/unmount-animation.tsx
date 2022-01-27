@@ -27,7 +27,7 @@ const initState: State = {
 
 // ----------------------
 // action model
-// ---------------------
+// ----------------------
 export const Tick = (timeStamp: number) => ({
   type: 'TICK' as const,
   payload: timeStamp,
