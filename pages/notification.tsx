@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Message from '../components/atoms/Message'
+import { adjust } from '../lib/adjust'
 import { useRequestAnimationFrame } from '../lib/hooks/useRequestAnimationFrame'
 import { remove } from '../lib/remove'
 import { generateKey } from '../lib/side-effect/generateKey'
@@ -22,6 +23,7 @@ interface State {
   messages: {
     id: string
     value: string
+    existence: SpringtifyNumber
   }[]
 }
 
@@ -60,22 +62,49 @@ type Action =
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'TICK':
+      const newMessages = state.messages.map((v) => {
+        const newExistence = stepper(action.payload)(state.timeStamp)(
+          config.msPerFrame
+        )(v.existence)
+
+        return {
+          ...v,
+          existence: newExistence,
+        }
+      })
+
+      const onRest = newMessages.every((v) => isOnRest(v.existence))
+
       return {
         ...state,
+        ticking: !onRest,
         timeStamp: action.payload,
+        messages: newMessages.filter((v) => v.existence.value !== 0),
       }
     case 'ADD_MESSAGE':
       return {
         ...state,
+        ticking: true,
         messages: [
           ...state.messages,
-          { id: action.payload.id, value: action.payload.message },
+          {
+            id: action.payload.id,
+            value: action.payload.message,
+            existence: { ...defaultSpringtifyNumber, target: 1 },
+          },
         ],
       }
     case 'DELETE_MESSAGE':
       return {
         ...state,
-        messages: remove(action.payload)(1)(state.messages),
+        ticking: true,
+        messages: adjust(action.payload)((v: State['messages'][0]) => ({
+          ...v,
+          existence: {
+            ...v.existence,
+            target: 0,
+          },
+        }))(state.messages),
       }
   }
 }
@@ -90,6 +119,7 @@ const Container = styled.div`
 `
 
 const MessageContainer = styled.div`
+  margin: 30px 0px 0px 0px;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
@@ -111,21 +141,32 @@ const Page: React.FC = () => {
   return (
     <>
       <MessageContainer>
-        {state.messages.map((v, i) => {
-          return (
-            <Message
-              value={v.value}
-              key={v.id}
-              handleClose={() => dispatch(DeleteMessage(i))}
-            />
-          )
-        })}
+        {state.messages
+          .slice()
+          .reverse()
+          .map((v, i) => {
+            return (
+              <Message
+                value={v.value}
+                key={v.id}
+                handleClose={() =>
+                  dispatch(DeleteMessage(state.messages.length - 1 - i))
+                }
+                existence={v.existence.value}
+              />
+            )
+          })}
       </MessageContainer>
       <Container>
         <button
-          onClick={(e) => {
+          onClick={() => {
             const uuid = generateKey()
-            dispatch(AddMessage(uuid, `Message added. Id: ${uuid}`))
+            dispatch(
+              AddMessage(
+                uuid,
+                `Message added. Id: ${uuid}`.slice(0, Math.random() * 60)
+              )
+            )
           }}
         >
           Show message

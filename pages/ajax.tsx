@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Hello } from '../api-interface/hello'
+import { useJsonApi } from '../lib/hooks/useJsonApi'
 
 // ----------------------
 // state model
 // ----------------------
-interface Hello {
-  name: string
-}
-
 interface State {
   hello: {
     loading: boolean
@@ -29,7 +27,7 @@ export const GetRemoteData = () => ({
   type: 'GET_REMOTE_DATA' as const,
 })
 
-export const SetRemoteData = (data: Hello | null | Error) => ({
+export const SetRemoteData = (data: Hello | Error) => ({
   type: 'SET_REMOTE_DATA' as const,
   payload: data,
 })
@@ -79,37 +77,15 @@ const Container2 = styled.div`
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
-  React.useEffect(() => {
-    if (!state.hello.loading) return
-    ;(async () => {
-      try {
-        const response = await fetch('/api/hello')
-
-        if (!response.ok) {
-          const error = new Error(response.statusText)
-          error.name = response.status.toString()
-
-          dispatch(SetRemoteData(error))
-          return
-        }
-
-        try {
-          const json = await response.json()
-          dispatch(SetRemoteData(json))
-        } catch (e) {
-          console.log('Something went wrong')
-        }
-      } catch (e) {
-        const NETWORK_ERROR = new Error(
-          'No internet. Try: Checking the network cables, modem, and router'
-        )
-        dispatch(SetRemoteData(NETWORK_ERROR))
-        return
-      }
-    })()
-  }, [state.hello.loading])
+  useJsonApi<Hello>('/api/hello', state.hello.loading, (data) =>
+    dispatch(SetRemoteData(data))
+  )
 
   const content = (() => {
+    if (!state.hello.loading) {
+      return <p>Loading...</p>
+    }
+
     if (state.hello.data === null) {
       return <p>No data yet</p>
     }
@@ -134,8 +110,7 @@ const Page: React.FC = () => {
           <button onClick={() => dispatch(GetRemoteData())}>
             Get Remote Data
           </button>
-          {state.hello.loading && <p>Loading...</p>}
-          {!state.hello.loading && content}
+          {content}
         </Container2>
       </Container>
     </>

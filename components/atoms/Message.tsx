@@ -1,19 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
-import Add from '../icons/Add'
+import Add from '../../public/svg/add-outline.svg'
 
 interface Props {
   value: string
   handleClose: () => void
+  existence: number
 }
 
 const Container = styled.div`
-  background: #dadada60;
+  background: hsl(0, 0%, 95%);
   border-radius: 5px;
-  border: 1px #6e6e6e solid;
+  outline: 1px #6e6e6e solid;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr auto;
   place-items: center;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
   p {
     margin: 20px 0px 20px 20px;
@@ -31,13 +33,24 @@ const Container = styled.div`
 `
 
 const Message: React.FC<Props> = (p) => {
+  const e = p.existence
+
   return (
     <>
-      <Container>
-        <p>{p.value}</p>
-        <div onClick={p.handleClose}>
-          <Add />
-        </div>
+      <Container style={{ opacity: e, marginBottom: e * 20 }}>
+        <p
+          style={{
+            fontSize: e * 16,
+            margin: `${e * 20}px`,
+          }}
+        >
+          {p.value}
+        </p>
+
+        <Add
+          onClick={p.handleClose}
+          style={{ width: e * 20, height: e * 20, margin: `${e * 20}px` }}
+        />
       </Container>
     </>
   )

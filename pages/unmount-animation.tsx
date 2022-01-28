@@ -109,8 +109,6 @@ const Page: React.FC = () => {
           <EmojiConainer
             style={{
               opacity: state.show.value / 100,
-              transform: `translateX(${state.show.value}px)`,
-              fontSize: `${(state.show.value / 100) * 60}px`,
             }}
           >
             ✌️
