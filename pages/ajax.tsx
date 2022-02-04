@@ -8,14 +8,14 @@ import { useJsonApi } from '../lib/hooks/useJsonApi'
 // ----------------------
 interface State {
   hello: {
-    loading: boolean
+    requesting: boolean
     data: Error | Hello | null
   }
 }
 
 const initState: State = {
   hello: {
-    loading: false,
+    requesting: false,
     data: null,
   },
 }
@@ -46,7 +46,7 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         hello: {
           ...state.hello,
-          loading: true,
+          requesting: true,
         },
       }
     case 'SET_REMOTE_DATA':
@@ -54,14 +54,14 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         hello: {
           data: action.payload,
-          loading: false,
+          requesting: false,
         },
       }
   }
 }
 
 // ----------------------
-// render
+// render and side effect
 // ----------------------
 const Container = styled.div`
   display: grid;
@@ -77,12 +77,12 @@ const Container2 = styled.div`
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
-  useJsonApi<Hello>('/api/hello', state.hello.loading, (data) =>
+  useJsonApi<Hello>('/api/hello', state.hello.requesting, (data) =>
     dispatch(SetRemoteData(data))
   )
 
   const content = (() => {
-    if (!state.hello.loading) {
+    if (!state.hello.requesting) {
       return <p>Loading...</p>
     }
 
