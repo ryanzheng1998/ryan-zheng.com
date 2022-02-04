@@ -1,10 +1,8 @@
-import { useRouter } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
-import { SubmitBody, UserData } from '../api-interface/v1/login'
+import { UserData } from '../api-interface/v1/login'
 import InputWithError from '../components/atoms/InputWithError'
 import { objectMap } from '../lib/objectMap'
-import { GlobalContext, SetUserData as globalSetUserData } from './_app'
 
 // ----------------------
 // state model
@@ -54,19 +52,13 @@ export const FormEditing = (event: React.ChangeEvent<HTMLInputElement>) => ({
   payload: event,
 })
 
-export const Submit = () => ({
-  type: 'SUBMIT' as const,
-})
-
-export const SetUserData = (data: UserData | Error) => ({
-  type: 'SET_USER_DATA' as const,
-  payload: data,
+export const ShowAllFormError = () => ({
+  type: 'SHOW_ALL_FORM_ERROR' as const,
 })
 
 type Action =
   | ReturnType<typeof FormEditing>
-  | ReturnType<typeof Submit>
-  | ReturnType<typeof SetUserData>
+  | ReturnType<typeof ShowAllFormError>
 
 // ----------------------
 // update
@@ -94,21 +86,18 @@ const reducer = (state: State, action: Action): State => {
           },
         },
       }
-    case 'SUBMIT':
+
+    case 'SHOW_ALL_FORM_ERROR':
+      const newForm = objectMap(state.form)((value: any) => {
+        return {
+          ...value,
+          showError: true,
+        }
+      })
+
       return {
         ...state,
-        userData: {
-          requesting: true,
-          data: null,
-        },
-      }
-    case 'SET_USER_DATA':
-      return {
-        ...state,
-        userData: {
-          requesting: false,
-          data: action.payload,
-        },
+        form: newForm,
       }
   }
 }
@@ -129,8 +118,6 @@ const Container = styled.div`
 
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
-  const { dispatch: globalDispatch } = React.useContext(GlobalContext)
-  const router = useRouter()
 
   // computed
   const errorMessage = {
@@ -151,80 +138,38 @@ const Page: React.FC = () => {
   return (
     <Container>
       <form
-        onSubmit={async (e) => {
+        onSubmit={(e) => {
           e.preventDefault()
 
-          dispatch(Submit())
+          dispatch(ShowAllFormError())
 
-          const isValid = Object.values(errorMessage).every((v) => v === null)
+          const form = state.form
 
-          // Todo: type check (instanceof
-          const postBody = {
-            username: state.form.username.value,
-            password: state.form.password.value,
-            rememberMe: state.form.rememberMe.value,
-          } as SubmitBody
-
-          if (!isValid) {
-            // Todo: error warning
-            return
-          }
-
-          const options = {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postBody),
-          }
-          try {
-            const response = await fetch('/api/v1/login', options)
-
-            if (!response.ok) {
-              const error = new Error(response.statusText)
-              error.name = response.status.toString()
-
-              dispatch(SetUserData(error))
-              return
-            }
-
-            try {
-              const json = (await response.json()) as UserData
-              dispatch(SetUserData(json))
-              globalDispatch(
-                globalSetUserData(json.name, json.permissions, json.token)
-              )
-
-              router.push(json.redirect)
-            } catch (e) {
-              console.log('Something went wrong')
-            }
-          } catch (e) {
-            const NETWORK_ERROR = new Error(
-              'Can not connect to server. Check your connection and try again.'
-            )
-            dispatch(SetUserData(NETWORK_ERROR))
+          if (form.username === null || form.password === null) {
             return
           }
         }}
       >
         <label>Username:{'  '}</label>
-        <input
+        <InputWithError
           name="username"
           type="text"
           value={state.form.username.value ?? ''}
           onChange={(e) => {
             dispatch(FormEditing(e))
           }}
+          showError={state.form.username.showError}
+          errorMessage={errorMessage.username}
         />
 
         <label>Password:{'  '}</label>
-        <input
+        <InputWithError
           name="password"
           type="password"
           value={state.form.password.value ?? ''}
           onChange={(e) => dispatch(FormEditing(e))}
+          showError={state.form.password.showError}
+          errorMessage={errorMessage.password}
         />
 
         <label>Remember Me: {'  '}</label>

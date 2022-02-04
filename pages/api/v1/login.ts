@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Role, UserData } from '../../../api-interface/v1/login'
+import { Role, SubmitBody, UserData } from '../../../api-interface/v1/login'
 import { generateToken } from '../../../lib/generateToken'
 
 // ----------------------
@@ -65,6 +65,9 @@ const handler = async (
     case 'POST':
       const { username, password, rememberMe } = req.body
 
+      console.log(username, password, rememberMe)
+      console.log(req)
+
       if (
         typeof username !== 'string' ||
         typeof password !== 'string' ||
@@ -103,6 +106,19 @@ const handler = async (
         ])
 
         global[username] = refreshToken
+      } else {
+        const expiresAt = new Date(Date.now() / 1000 + 20 * 60) // 20 min
+
+        const refreshToken = generateToken(REFRESH_KEY, {
+          username,
+          iat: ~~(Date.now() / 1000),
+          exp: ~~expiresAt,
+        })
+
+        // session only cookie
+        res.setHeader('Set-Cookie', [
+          `refreshToken=${refreshToken}; path=/; HttpOnly`,
+        ])
       }
 
       const accessToken = generateToken(ACCESS_KEY, {
@@ -115,7 +131,7 @@ const handler = async (
         name: currentUser.username,
         token: accessToken,
         permissions: currentUser.role,
-        redirect: '/',
+        redirect: '/post-login',
       })
 
       return

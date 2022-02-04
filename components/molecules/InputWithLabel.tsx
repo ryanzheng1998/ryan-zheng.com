@@ -1,11 +1,31 @@
 import React from 'react'
+import styled from 'styled-components'
+import { SpringtifyNumber } from '../../lib/springtifyNumber/types'
+import InputWithError from '../atoms/InputWithError'
 
-interface Props {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
+  showError?: SpringtifyNumber
+  errorMessage?: string | null
   label: string
 }
 
-const Page: React.FC<Props> = (p) => {
-  return <></>
+const Container = styled.div`
+  display: grid;
+`
+
+const InputWithLabel = ({ label, ...inputProps }: Props): JSX.Element => {
+  return (
+    <Container>
+      <label>
+        {label}:{'  '}
+      </label>
+      <InputWithError {...inputProps} />
+    </Container>
+  )
 }
 
-export default Page
+export default InputWithLabel

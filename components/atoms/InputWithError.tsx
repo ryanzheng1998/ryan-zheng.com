@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { SpringtifyNumber } from '../../lib/springtifyNumber/types'
 
 interface Props
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  showError?: boolean
+  showError?: SpringtifyNumber
   errorMessage?: string | null
 }
 
@@ -37,7 +38,14 @@ const InputWithError = ({
       <input {...inputProps} />
       {showError && errorMessage && (
         <ErrorContainer>
-          <p>{errorMessage}</p>
+          <p
+            style={{
+              fontSize: showError.value * 15,
+              margin: showError.value * 2,
+            }}
+          >
+            {errorMessage}
+          </p>
         </ErrorContainer>
       )}
     </Container>
