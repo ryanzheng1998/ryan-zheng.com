@@ -77,7 +77,7 @@ const Container2 = styled.div`
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
-  useJsonApi<Hello>('/api/hello', state.hello.requesting, (data) =>
+  useJsonApi<Hello>('/api/v1/auth-hello', state.hello.requesting, (data) =>
     dispatch(SetRemoteData(data))
   )
 
