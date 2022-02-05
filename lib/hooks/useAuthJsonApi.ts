@@ -1,6 +1,8 @@
 import React from 'react'
 import { RefreshResponse } from '../../api-interface/v1/refresh-access-token'
 import { GlobalContext, SetAccessToken } from '../../pages/_app'
+import { jsonFetch } from '../side-effect/jsonFetch'
+import { useAsyncEffect } from './useAsyncEffect'
 
 export const useAuthJsonApi = <T>(
   url: string,
@@ -9,82 +11,50 @@ export const useAuthJsonApi = <T>(
   dependency?: React.DependencyList
 ) => {
   const {
-    dispatch,
+    dispatch: globalDispatch,
     userData: { inMemoryAccessToken },
   } = React.useContext(GlobalContext)
 
-  React.useEffect(() => {
-    if (!activator) return
-    ;(async () => {
-      if (inMemoryAccessToken !== null) {
-        const options = {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${inMemoryAccessToken}`,
-          },
-        }
+  // side effect
+  useAsyncEffect(async () => {
+    if (!state.hello.requesting) return
 
-        try {
-          const response = await fetch(url, options)
-
-          if (response.ok) {
-            try {
-              const json = await response.json()
-              dataCallback(json)
-            } catch (e) {
-              console.log('Something went wrong')
-            }
-          }
-
-          if (!response.ok) {
-            const error = new Error(response.statusText)
-            error.name = response.status.toString()
-
-            if (error.name !== '401') {
-              dataCallback(error)
-              return
-            }
-            // continue, the access token may be expired
-          }
-        } catch (e) {
-          const NETWORK_ERROR = new Error(
-            'Can not connect to server. Check your connection and try again.'
-          )
-          dataCallback(NETWORK_ERROR)
-          return
-        }
+    if (inMemoryAccessToken !== null) {
+      const options = {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${inMemoryAccessToken}`,
+        },
       }
 
-      const newToken = await (async () => {
-        try {
-          const response = await fetch('/api/v1/refresh-access-token')
+      const data = await jsonFetch<T>(url, options)
 
-          if (response.ok) {
-            try {
-              const json: RefreshResponse = await response.json()
-              dispatch(SetAccessToken(json.token))
-              return json.token
-            } catch (e) {
-              console.log('Something went wrong')
-            }
-          }
+      if (!(data instanceof Error) || data.name !== '401') {
+        dispatch(SetRemoteData(data))
+        return
+      }
+    }
 
-          if (!response.ok) {
-            const error = new Error(response.statusText)
-            error.name = response.status.toString()
+    const newToken = await jsonFetch<RefreshResponse>(
+      '/api/v1/refresh-access-token'
+    )
 
-            dataCallback(error)
-            return
-          }
-        } catch (e) {
-          const NETWORK_ERROR = new Error(
-            'Can not connect to server. Check your connection and try again.'
-          )
-          dataCallback(NETWORK_ERROR)
-          return
-        }
-      })()
-    })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activator, ...(dependency ?? [])])
+    if (newToken instanceof Error) {
+      dispatch(SetRemoteData(newToken))
+      return
+    }
+
+    globalDispatch(SetAccessToken(newToken.token))
+
+    const options2 = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${newToken.token}`,
+      },
+    }
+
+    const data2 = await jsonFetch<Hello>('/api/v1/auth-hello', options2)
+    dispatch(SetRemoteData(data2))
+    return
+  }, [state.hello.requesting])
 }

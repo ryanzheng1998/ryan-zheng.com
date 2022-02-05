@@ -65,9 +65,6 @@ const handler = async (
     case 'POST':
       const { username, password, rememberMe } = req.body
 
-      console.log(username, password, rememberMe)
-      console.log(req)
-
       if (
         typeof username !== 'string' ||
         typeof password !== 'string' ||
@@ -119,6 +116,8 @@ const handler = async (
         res.setHeader('Set-Cookie', [
           `refreshToken=${refreshToken}; path=/; HttpOnly`,
         ])
+
+        global[username] = refreshToken
       }
 
       const accessToken = generateToken(ACCESS_KEY, {

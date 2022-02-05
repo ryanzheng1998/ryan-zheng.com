@@ -150,7 +150,7 @@ const Page: React.FC = () => {
           }
         }}
       >
-        <label>Username:{'  '}</label>
+        {/* <label>Username:{'  '}</label>
         <InputWithError
           name="username"
           type="text"
@@ -170,7 +170,7 @@ const Page: React.FC = () => {
           onChange={(e) => dispatch(FormEditing(e))}
           showError={state.form.password.showError}
           errorMessage={errorMessage.password}
-        />
+        /> */}
 
         <label>Remember Me: {'  '}</label>
         <input

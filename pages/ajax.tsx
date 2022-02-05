@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Hello } from '../api-interface/hello'
-import { useJsonApi } from '../lib/hooks/useJsonApi'
+import { useAsyncEffect } from '../lib/hooks/useAsyncEffect'
+import { jsonFetch } from '../lib/side-effect/jsonFetch'
 
 // ----------------------
 // state model
@@ -77,10 +78,14 @@ const Container2 = styled.div`
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
-  useJsonApi<Hello>('/api/hello', state.hello.requesting, (data) =>
-    dispatch(SetRemoteData(data))
-  )
+  // side effect
+  useAsyncEffect(async () => {
+    if (!state.hello.requesting) return
 
+    dispatch(SetRemoteData(await jsonFetch<Hello>('/api/hello')))
+  }, [state.hello.requesting])
+
+  // render
   const content = (() => {
     if (state.hello.requesting) {
       return <p>Loading...</p>

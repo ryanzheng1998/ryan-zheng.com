@@ -14,7 +14,14 @@ export const handler = async (
 
   await delay(2)
 
-  if (token === undefined || !verifyToken(ACCESS_KEY, token)) {
+  if (token === undefined) {
+    res.status(401).end()
+    return
+  }
+
+  const verifyResult = verifyToken(ACCESS_KEY, token)
+
+  if (verifyResult instanceof Error) {
     res.status(401).end()
     return
   }
