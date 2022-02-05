@@ -1,20 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Hello } from '../api-interface/hello'
-import { useAuthJsonApi } from '../lib/hooks/useAuthJsonApi'
+import { useAsyncEffect } from '../lib/hooks/useAsyncEffect'
+import { blobFetch } from '../lib/side-effect/blobFetch'
 
 // ----------------------
 // state model
 // ----------------------
 interface State {
-  hello: {
+  image: {
     requesting: boolean
-    data: Error | Hello | null
+    data: Error | Blob | null
   }
 }
 
 const initState: State = {
-  hello: {
+  image: {
     requesting: true,
     data: null,
   },
@@ -27,7 +27,7 @@ export const GetRemoteData = () => ({
   type: 'GET_REMOTE_DATA' as const,
 })
 
-export const SetRemoteData = (data: Hello | Error) => ({
+export const SetRemoteData = (data: Blob | Error) => ({
   type: 'SET_REMOTE_DATA' as const,
   payload: data,
 })
@@ -44,15 +44,15 @@ const reducer = (state: State, action: Action): State => {
     case 'GET_REMOTE_DATA':
       return {
         ...state,
-        hello: {
-          ...state.hello,
+        image: {
+          ...state.image,
           requesting: true,
         },
       }
     case 'SET_REMOTE_DATA':
       return {
         ...state,
-        hello: {
+        image: {
           data: action.payload,
           requesting: false,
         },
@@ -72,36 +72,48 @@ const Container = styled.div`
 const Container2 = styled.div`
   display: grid;
   grid-template-rows: auto auto;
+  max-width: 70%;
+`
+
+const StyledImage = styled.img`
+  width: 100%;
 `
 
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
-  useAuthJsonApi<Hello>('/api/v1/auth-hello', state.hello.requesting, (data) =>
-    dispatch(SetRemoteData(data))
-  )
+  // side effect
+  useAsyncEffect(async () => {
+    if (!state.image.requesting) return
+
+    dispatch(
+      SetRemoteData(await blobFetch('/photo-gallery/Screenshot (1).png'))
+    )
+  }, [state.image.requesting])
 
   // render
   const content = (() => {
-    if (state.hello.requesting) {
+    if (state.image.requesting) {
       return <p>Loading...</p>
     }
 
-    if (state.hello.data === null) {
+    if (state.image.data === null) {
       return <p>No data yet</p>
     }
 
-    if (state.hello.data instanceof Error) {
+    if (state.image.data instanceof Error) {
       return (
         <div>
           <p>Error</p>
-          <p>Status Code: {state.hello.data.name}</p>
-          <p>Status Text: {state.hello.data.message}</p>
+          <p>Status Code: {state.image.data.name}</p>
+          <p>Status Text: {state.image.data.message}</p>
         </div>
       )
     }
 
-    return <pre>{JSON.stringify(state.hello.data, null, 2)}</pre>
+    const imageUrl = URL.createObjectURL(state.image.data)
+
+    return <StyledImage alt="Random Image" src={imageUrl} />
   })()
 
   return (

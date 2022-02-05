@@ -1,7 +1,7 @@
-export const jsonFetch = async <T>(
+export const blobFetch = async (
   url: string,
   options?: RequestInit
-): Promise<T | Error> => {
+): Promise<Blob | Error> => {
   try {
     const response = await fetch(url, options)
 
@@ -13,11 +13,11 @@ export const jsonFetch = async <T>(
     }
 
     try {
-      const json = await response.json()
-      return json
+      const blob = await response.blob()
+      return blob
     } catch (e) {
-      const JSON_PARSE_FAIL = new Error('Fail to parse response body into json')
-      return JSON_PARSE_FAIL
+      const BLOB_PARSE_FAIL = new Error('Fail to parse response body into blob')
+      return BLOB_PARSE_FAIL
     }
   } catch (e) {
     const NETWORK_ERROR = new Error(
