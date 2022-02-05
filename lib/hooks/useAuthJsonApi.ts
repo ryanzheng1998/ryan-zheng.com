@@ -17,7 +17,7 @@ export const useAuthJsonApi = <T>(
 
   // side effect
   useAsyncEffect(async () => {
-    if (!state.hello.requesting) return
+    if (!activator) return
 
     if (inMemoryAccessToken !== null) {
       const options = {
@@ -30,7 +30,7 @@ export const useAuthJsonApi = <T>(
       const data = await jsonFetch<T>(url, options)
 
       if (!(data instanceof Error) || data.name !== '401') {
-        dispatch(SetRemoteData(data))
+        dataCallback(data)
         return
       }
     }
@@ -40,7 +40,7 @@ export const useAuthJsonApi = <T>(
     )
 
     if (newToken instanceof Error) {
-      dispatch(SetRemoteData(newToken))
+      dataCallback(newToken)
       return
     }
 
@@ -53,8 +53,8 @@ export const useAuthJsonApi = <T>(
       },
     }
 
-    const data2 = await jsonFetch<Hello>('/api/v1/auth-hello', options2)
-    dispatch(SetRemoteData(data2))
+    const data2 = await jsonFetch<T>(url, options2)
+    dataCallback(data2)
     return
-  }, [state.hello.requesting])
+  }, [activator, ...(dependency ?? [])])
 }

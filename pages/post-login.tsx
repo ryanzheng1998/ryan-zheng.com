@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Hello } from '../api-interface/hello'
 import { RefreshResponse } from '../api-interface/v1/refresh-access-token'
 import { useAsyncEffect } from '../lib/hooks/useAsyncEffect'
+import { useAuthJsonApi } from '../lib/hooks/useAuthJsonApi'
 import { jsonFetch } from '../lib/side-effect/jsonFetch'
 import { GlobalContext, SetAccessToken } from './_app'
 
@@ -80,53 +81,9 @@ const Container2 = styled.div`
 const Page: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initState)
 
-  const {
-    dispatch: globalDispatch,
-    userData: { inMemoryAccessToken },
-  } = React.useContext(GlobalContext)
-
-  // side effect
-  useAsyncEffect(async () => {
-    if (!state.hello.requesting) return
-
-    if (inMemoryAccessToken !== null) {
-      const options = {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${inMemoryAccessToken}`,
-        },
-      }
-
-      const data = await jsonFetch<Hello>('/api/v1/auth-hello', options)
-
-      if (!(data instanceof Error) || data.name !== '401') {
-        dispatch(SetRemoteData(data))
-        return
-      }
-    }
-
-    const newToken = await jsonFetch<RefreshResponse>(
-      '/api/v1/refresh-access-token'
-    )
-
-    if (newToken instanceof Error) {
-      dispatch(SetRemoteData(newToken))
-      return
-    }
-
-    globalDispatch(SetAccessToken(newToken.token))
-
-    const options2 = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${newToken.token}`,
-      },
-    }
-
-    const data2 = await jsonFetch<Hello>('/api/v1/auth-hello', options2)
-    dispatch(SetRemoteData(data2))
-    return
-  }, [state.hello.requesting])
+  useAuthJsonApi<Hello>('/api/v1/auth-hello', state.hello.requesting, (data) =>
+    dispatch(SetRemoteData(data))
+  )
 
   // render
   const content = (() => {
