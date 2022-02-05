@@ -1,7 +1,7 @@
 import React from 'react'
 import { RefreshResponse } from '../../api-interface/v1/refresh-access-token'
 import { GlobalContext, SetAccessToken } from '../../pages/_app'
-import { jsonFetch } from '../side-effect/jsonFetch'
+import { jsonFetch } from '../side-effects/jsonFetch'
 import { useAsyncEffect } from './useAsyncEffect'
 
 export const useAuthJsonApi = <T>(

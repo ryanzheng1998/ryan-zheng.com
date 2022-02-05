@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Hello } from '../../api-interface/hello'
-import { delay } from '../../lib/side-effect/delay'
+import { delay } from '../../lib/side-effects/delay'
 
 export const handler = async (
   req: NextApiRequest,

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Hello } from '../api-interface/hello'
 import { useAsyncEffect } from '../lib/hooks/useAsyncEffect'
-import { jsonFetch } from '../lib/side-effect/jsonFetch'
+import { jsonFetch } from '../lib/side-effects/jsonFetch'
 
 // ----------------------
 // state model

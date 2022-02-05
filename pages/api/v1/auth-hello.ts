@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Response } from '../../../api-interface/v1/auth-hello'
-import { delay } from '../../../lib/side-effect/delay'
+import { delay } from '../../../lib/side-effects/delay'
 import { verifyToken } from '../../../lib/verifyToken'
 import { ACCESS_KEY } from './login'
 

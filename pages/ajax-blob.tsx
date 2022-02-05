@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useAsyncEffect } from '../lib/hooks/useAsyncEffect'
-import { blobFetch } from '../lib/side-effect/blobFetch'
+import { blobFetch } from '../lib/side-effects/blobFetch'
 
 // ----------------------
 // state model
