@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 import { z } from "zod";
 
+export const localeList = {
+  "en-US": "English",
+  "zh-TW": "繁體中文",
+  "zh-CN": "简体中文",
+};
+
 // wish import folder is supported
 export interface TranslationList {
   common: typeof import("public/locales/default/common.json");
   test: typeof import("public/locales/default/test.json");
+  home: typeof import("public/locales/default/home.json");
 }
 
 export const getTranslations = async <T extends keyof TranslationList>(

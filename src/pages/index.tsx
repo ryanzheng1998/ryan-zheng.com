@@ -1,24 +1,42 @@
 import { type GetStaticProps, type NextPage } from "next";
+import Head from "next/head";
+import { NavBar } from "~/components/home/NavBar";
 import { getTranslations, type TranslationList } from "~/server/translation";
 
 interface Props {
-  i18n: Pick<TranslationList, "common" | "test">;
+  t: Pick<TranslationList, "common" | "test" | "home">;
 }
 
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
   return {
     props: {
-      i18n: await getTranslations(locale, ["common", "test"]),
+      t: await getTranslations(locale, ["common", "test", "home"]),
     },
   };
 };
 
 const Home: NextPage<Props> = (p) => {
-  console.log(p);
+  const t = p.t;
+
   return (
-    <div>
-      {p.i18n.common.hello} {p.i18n.test.b}
-    </div>
+    <>
+      <Head>
+        <title>{t.home.title}</title>
+        <meta name="description" content={t.home.description} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <div className="grid h-screen grid-rows-[auto_1fr]">
+        <NavBar />
+        <div className="grid place-items-center">
+          <div className="text-center">
+            <p>{t.home.hi} 👋</p>
+
+            <p>{t.home["My name is"]}</p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
