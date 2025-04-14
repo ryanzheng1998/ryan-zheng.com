@@ -1,0 +1,50 @@
+<svg
+  width="256"
+  height="256"
+  viewBox="0 0 256 256"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+>
+  <!-- Big RZ Text Centered -->
+  <text
+    x="50%"
+    y="150px"
+    font-family="Segoe UI, Roboto, sans-serif"
+    font-size="200"
+    fill="#1E2A38"
+    font-weight="700"
+    letter-spacing="5"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >
+    RZ
+  </text>
+
+  <!-- Angular Tech Corners -->
+  <path d="M10 10 H40 V30" stroke="#1E2A38" stroke-width="2" />
+  <path d="M246 10 H216 V30" stroke="#1E2A38" stroke-width="2" />
+  <path d="M10 246 H40 V226" stroke="#1E2A38" stroke-width="2" />
+  <path d="M246 246 H216 V226" stroke="#1E2A38" stroke-width="2" />
+
+  <!-- Circular Tech Ring -->
+  <circle
+    cx="128"
+    cy="128"
+    r="110"
+    stroke="#1E2A38"
+    stroke-width="1.5"
+    stroke-dasharray="6 4"
+  />
+
+  <!-- Radial Lines -->
+  <line x1="128" y1="10" x2="128" y2="25" stroke="#1E2A38" stroke-width="2" />
+  <line x1="128" y1="231" x2="128" y2="246" stroke="#1E2A38" stroke-width="2" />
+  <line x1="10" y1="128" x2="25" y2="128" stroke="#1E2A38" stroke-width="2" />
+  <line x1="231" y1="128" x2="246" y2="128" stroke="#1E2A38" stroke-width="2" />
+
+  <!-- Diagonal Radial Lines -->
+  <line x1="45" y1="45" x2="60" y2="60" stroke="#1E2A38" stroke-width="2" />
+  <line x1="211" y1="45" x2="196" y2="60" stroke="#1E2A38" stroke-width="2" />
+  <line x1="45" y1="211" x2="60" y2="196" stroke="#1E2A38" stroke-width="2" />
+  <line x1="211" y1="211" x2="196" y2="196" stroke="#1E2A38" stroke-width="2" />
+</svg>
