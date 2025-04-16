@@ -1,4 +1,4 @@
-import { MvpMatrix } from '@/classes/MvpMatrix'
+import { MvpMatrix } from '@/app/fun/webgl-box/MvpMatrix'
 import { createBuffer } from '@/side-effects/gl/createBuffer'
 import { createElementBuffer } from '@/side-effects/gl/createElementBuffer'
 import { createProgram } from '@/side-effects/gl/createProgram'

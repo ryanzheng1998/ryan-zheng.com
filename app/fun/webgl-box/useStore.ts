@@ -2,8 +2,8 @@ import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
 
 const initState = {
-  rotationX: 0,
-  rotationY: 0,
+  rotationX: -40,
+  rotationY: -40,
   zoom: 1,
 }
 
