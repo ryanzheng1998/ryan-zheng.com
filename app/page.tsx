@@ -26,6 +26,9 @@ export default function Home() {
         <li>
           <a href="/fun/webgl-box">WebGL Box</a>
         </li>
+        <li>
+          <a href="/fun/pose-detection">Pose Detection</a>
+        </li>
       </ul>
     </div>
   )

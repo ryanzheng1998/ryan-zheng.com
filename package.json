@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.22-rc.20250304",
     "@tensorflow/tfjs": "^4.22.0",
     "gl-matrix": "^3.4.3",
     "next": "15.3.0",
@@ -24,6 +25,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.1",
     "postcss": "^8",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
