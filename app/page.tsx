@@ -3,7 +3,7 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <div className="grid place-items-center">
-      <Image src="/me.jpeg" width={768 / 3} height={1024 / 3} alt="me" />
+      <Image src="/me.jpeg" width={768 / 4} height={1024 / 4} alt="me" />
       <div className="mx-auto mt-16 max-w-xl px-4 text-center text-neutral-800">
         <p className="mb-4 text-xl font-semibold">
           I’m Ryan. I like books and building things.
@@ -28,6 +28,9 @@ export default function Home() {
         </li>
         <li>
           <a href="/fun/pose-detection">Pose Detection</a>
+        </li>
+        <li>
+          <a href="https://snake-0000.web.app/">Snake Game</a>
         </li>
         <li>
           <a href="https://csp-gd.github.io/nutn-csie-exhib-109/build/index.html">

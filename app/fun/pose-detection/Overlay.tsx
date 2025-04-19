@@ -1,3 +1,5 @@
+import { HandOverlay } from './HandOverlay'
+import { PoseOverlay } from './PoseOverlay'
 import { useStore } from './useStore'
 
 export const Overlay = () => {
@@ -10,7 +12,7 @@ export const Overlay = () => {
   const yOffset = (state.height - state.videoHeight * scale) / 2
 
   return (
-    <>
+    <div className='relative h-full w-full overflow-hidden'>
       <PoseOverlay
         landmarks={state.poseLandmarkerResult?.landmarks ?? []}
         width={state.videoWidth}
@@ -27,6 +29,6 @@ export const Overlay = () => {
         xOffset={xOffset}
         yOffset={yOffset}
       />
-    </>
+    </div>
   )
 }
