@@ -16,8 +16,6 @@ export const onTimeUpdate = (t1: number) => (t2: number) => {
   )
     return
 
-  const filters = s.kalmanFilters
-
   s.poseLandmarker.detectForVideo(s.webcam, t2, (result) => {
     set({
       poseLandmarkerResult: result,

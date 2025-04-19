@@ -1,16 +1,18 @@
 'use client'
 import { useEffect } from 'react'
 import { HandOverlay } from './HandOverlay'
-import { onMount } from './onMount'
+import { loadModels } from './loadModels'
 import { onTimeUpdate } from './onTimeUpdate'
 import { PoseOverlay } from './PoseOverlay'
+import { setupWebcam } from './setupWebcam'
 import { get, set, useStore } from './useStore'
 
 export default function Page() {
   const state = useStore()
 
   useEffect(() => {
-    onMount()
+    setupWebcam()
+    loadModels()
   }, [])
 
   useEffect(() => {
@@ -34,25 +36,37 @@ export default function Page() {
   const yOffset = (state.height - state.videoHeight * scale) / 2
 
   return (
-    <div className="relative h-screen w-screen -scale-x-100">
-      <video id="webcam" autoPlay className="absolute h-full w-full bg-black" />
-      <div className="relative h-full w-full overflow-hidden">
-        <PoseOverlay
-          landmarks={state.poseLandmarkerResult?.landmarks ?? []}
-          width={state.videoWidth}
-          height={state.videoHeight}
-          scale={scale}
-          xOffset={xOffset}
-          yOffset={yOffset}
+    <div className="relative h-screen w-screen">
+      <div
+        style={{ display: state.loading ? undefined : 'none' }}
+        className="grid h-full w-full place-items-center bg-black text-6xl text-white"
+      >
+        Loading...
+      </div>
+      <div className="h-full w-full -scale-x-100">
+        <video
+          id="webcam"
+          autoPlay
+          className="absolute h-full w-full bg-black"
         />
-        <HandOverlay
-          landmarks={state.handLandmarkerResult?.landmarks ?? []}
-          width={state.videoWidth}
-          height={state.videoHeight}
-          scale={scale}
-          xOffset={xOffset}
-          yOffset={yOffset}
-        />
+        <div className="relative h-full w-full overflow-hidden">
+          <PoseOverlay
+            landmarks={state.poseLandmarkerResult?.landmarks ?? []}
+            width={state.videoWidth}
+            height={state.videoHeight}
+            scale={scale}
+            xOffset={xOffset}
+            yOffset={yOffset}
+          />
+          <HandOverlay
+            landmarks={state.handLandmarkerResult?.landmarks ?? []}
+            width={state.videoWidth}
+            height={state.videoHeight}
+            scale={scale}
+            xOffset={xOffset}
+            yOffset={yOffset}
+          />
+        </div>
       </div>
     </div>
   )

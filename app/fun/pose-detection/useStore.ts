@@ -8,6 +8,7 @@ import KalmanFilter from 'kalmanjs'
 import { create } from 'zustand'
 
 const initState = {
+  loading: false,
   poseLandmarker: null as null | PoseLandmarker,
   animationId: 0,
   webcam: null as null | HTMLVideoElement,

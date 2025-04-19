@@ -5,32 +5,8 @@ import {
 } from '@mediapipe/tasks-vision'
 import { set } from './useStore'
 
-export const onMount = async () => {
-  // setup webcam
-  const webcam = document.getElementById('webcam') as HTMLVideoElement
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: true,
-  })
-  webcam.srcObject = stream
-  webcam.onloadedmetadata = () => {
-    set({
-      webcam,
-      videoWidth: webcam.videoWidth,
-      videoHeight: webcam.videoHeight,
-    })
-  }
-
-  const observer = new ResizeObserver((entries) => {
-    for (const entry of entries) {
-      const { width, height } = entry.contentRect
-      set({
-        width,
-        height,
-      })
-    }
-  })
-
-  observer.observe(webcam)
+export const loadModels = async () => {
+  set({ loading: true })
 
   // setup pose detection
   const vision = await FilesetResolver.forVisionTasks('/pose-detection/wasm')
@@ -53,5 +29,5 @@ export const onMount = async () => {
     numHands: 6,
   })
 
-  set({ poseLandmarker, handLandmarker })
+  set({ poseLandmarker, handLandmarker, loading: false })
 }
