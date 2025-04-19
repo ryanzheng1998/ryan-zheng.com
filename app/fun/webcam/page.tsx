@@ -13,9 +13,15 @@ export default function Page() {
 
     main()
   }, [])
+
   return (
     <div>
-      <video id="webcam" autoPlay className="absolute h-full w-full bg-black" />
+      <video
+        id="webcam"
+        autoPlay
+        muted
+        className="absolute h-full w-full bg-black"
+      />
     </div>
   )
 }
