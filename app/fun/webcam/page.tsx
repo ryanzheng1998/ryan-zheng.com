@@ -1,5 +1,6 @@
 'use client'
 import { useEffect } from 'react'
+import { set } from '../pose-detection/useStore'
 
 export default function Page() {
   useEffect(() => {
@@ -9,6 +10,26 @@ export default function Page() {
         video: true,
       })
       webcam.srcObject = stream
+
+      const observer = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { width, height } = entry.contentRect
+          set({
+            width,
+            height,
+          })
+        }
+      })
+
+      observer.observe(webcam)
+
+      webcam.onloadedmetadata = () => {
+        set({
+          webcam,
+          videoWidth: webcam.videoWidth,
+          videoHeight: webcam.videoHeight,
+        })
+      }
     }
 
     main()
