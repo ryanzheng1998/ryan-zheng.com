@@ -3,6 +3,7 @@
 import { clamp } from '@/functions/clamp'
 import { useEffect } from 'react'
 import { drawBox } from './drawBox'
+import './index.css'
 import { useStore } from './useStore'
 
 export default function Page() {

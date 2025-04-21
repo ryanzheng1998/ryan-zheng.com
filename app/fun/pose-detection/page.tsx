@@ -1,48 +1,41 @@
 'use client'
 import { useEffect } from 'react'
+import { Content } from './Content'
 import { loadModels } from './loadModels'
-import { onTimeUpdate } from './onTimeUpdate'
-import { Overlay } from './Overlay'
-import { setupWebcam } from './setupWebcam'
-import { get, set, useStore } from './useStore'
+import { set, useStore } from './useStore'
 
 export default function Page() {
-  const state = useStore()
+  const store = useStore()
 
   useEffect(() => {
-    setupWebcam()
     loadModels()
   }, [])
 
-  useEffect(() => {
-    const id = requestAnimationFrame(onTimeUpdate(performance.now()))
-
-    set({
-      animationId: id,
-    })
-
-    return () => {
-      const id = get().animationId
-      cancelAnimationFrame(id)
-    }
-  }, [])
-
-  return (
-    <div className="relative h-screen w-screen">
-      <div
-        style={{ display: state.loading ? undefined : 'none' }}
-        className="grid h-full w-full place-items-center bg-black text-6xl text-white"
-      >
-        Loading...
+  if (store.warning) {
+    return (
+      <div className="grid h-screen w-screen place-items-center bg-black px-4">
+        <div className="grid w-full max-w-xl place-items-center gap-6 text-center">
+          <p className="text-5xl font-bold text-white md:text-6xl">
+            ⚠️ Performance Warning
+          </p>
+          <p className="text-lg text-white md:text-xl">
+            Your device may not have enough performance to run this app
+            smoothly.
+          </p>
+          <p className="text-sm text-white text-opacity-70">
+            This could be due to limited GPU support, low CPU power, or mobile
+            device limitations.
+          </p>
+          <button
+            onClick={() => set({ warning: false })}
+            className="rounded-xl bg-green-600 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-green-500"
+          >
+            Continue Anyway
+          </button>
+        </div>
       </div>
-      <div className="h-full w-full -scale-x-100">
-        <video
-          id="webcam"
-          autoPlay
-          className="absolute h-full w-full bg-black"
-        />
-        <Overlay />
-      </div>
-    </div>
-  )
+    )
+  }
+
+  return <Content />
 }
