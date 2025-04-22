@@ -21,6 +21,9 @@ export default function Home() {
       <h3>Projects</h3>
       <ul>
         <li>
+          <a href="/fun/presentation">Presentation</a>
+        </li>
+        <li>
           <a href="/fun/flip-card">Flip Card</a>
         </li>
         <li>

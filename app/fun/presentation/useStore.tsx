@@ -1,10 +1,11 @@
 import { JSX } from 'react'
 import { create } from 'zustand'
-import { Introduction } from './pages/Introduction'
-import { Title } from './pages/Title'
+import { AboutMe } from './pages/AboutMe'
+import { Cover } from './pages/Cover'
+import { Skills } from './pages/Skills'
 
 const initState = {
-  slides: [<Title />, <Introduction />] as JSX.Element[],
+  slides: [<Cover />, <AboutMe />, <Skills />] as JSX.Element[],
 
   currentPage: 0,
 }
