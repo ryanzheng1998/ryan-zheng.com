@@ -31,6 +31,14 @@ export default function Home() {
           <ul className="grid gap-3 sm:grid-cols-2">
             <li>
               <a
+                href="/fun/custom-spring/spring-parameter-picker"
+                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
+              >
+                🌀 Spring Animation Parameter Picker
+              </a>
+            </li>
+            <li>
+              <a
                 href="/fun/presentation"
                 className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
               >

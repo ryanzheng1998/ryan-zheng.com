@@ -29,7 +29,12 @@ export default function Page() {
   }, [])
 
   return (
-    <div className="relative h-screen w-screen bg-gradient-to-br from-white to-gray-100">
+    <div
+      onClick={() => {
+        nextPage()
+      }}
+      className="relative h-screen w-screen bg-gradient-to-br from-white to-gray-100"
+    >
       {store.slides[store.currentPage]}
       <label className="absolute bottom-0 right-0 m-5 text-3xl">
         {store.currentPage + 1}
