@@ -56,7 +56,7 @@ export default function Home() {
 
       // stop animation to save battery
       const allElementsAreAtRest = animationState.current.elements.every(
-        (el, i) => el.velocity === 0 && getSpringPosition(i) === el.position
+        (el, i) => el.velocity === 0 && getSpringPosition(i) === el.position,
       )
       if (allElementsAreAtRest) {
         return
@@ -123,9 +123,9 @@ export default function Home() {
       >
         <Image
           alt="DALL·E 2024-02-21 14.41.27 - Create an image of a vibrant city street scene at night. The focus should be on a large, illuminated billboard attached to a building. The billboard d"
-          ref={(el) =>
-            (animationState.current.elements[0]!.element = el) as any
-          }
+          ref={(el) => {
+            animationState.current.elements[0]!.element = el
+          }}
           width={800}
           height={450}
           className="absolute h-full w-full rounded bg-slate-400 p-2"
@@ -136,9 +136,9 @@ export default function Home() {
         />
         <Image
           alt="DALL·E 2024-02-21 14.42.11 - Illustrate a bustling night scene on an urban street. In the center, a bright neon sign hangs from the side of a building, prominently featuring a fic"
-          ref={(el) =>
-            (animationState.current.elements[1]!.element = el) as any
-          }
+          ref={(el) => {
+            animationState.current.elements[1]!.element = el
+          }}
           width={800}
           height={450}
           className="absolute h-full w-full rounded bg-slate-400 p-2"

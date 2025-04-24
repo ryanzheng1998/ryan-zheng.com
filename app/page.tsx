@@ -47,7 +47,7 @@ export default function Home() {
             </li>
             <li>
               <a
-                href="/fun/flip-card"
+                href="/fun/custom-spring/flip-card"
                 className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
               >
                 🃏 Flip Card
