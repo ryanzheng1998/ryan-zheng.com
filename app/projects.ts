@@ -36,7 +36,7 @@ export const projects = [
   },
   {
     name: '頻譜的動態視覺化',
-    href: 'https://github.com/ryanzheng1998/frequency-response',
+    href: 'https://ryanzheng1998.github.io/frequency-response/',
     external: true,
   },
   {
@@ -102,5 +102,17 @@ export const projects = [
   {
     name: '📉 WebGL Wireframe',
     href: '/fun/webgl/wireframe',
+  },
+  {
+    name: 'SVG Chart',
+    href: 'https://ryanzheng1998.github.io/svg-chart/',
+  },
+  {
+    name: 'React Motion Parameters Chooser',
+    href: 'https://ryanzheng1998.github.io/react-motion-parameters-chooser/',
+  },
+  {
+    name: '編譯器期末專案',
+    href: 'https://ryanzheng1998.github.io/presentation/',
   },
 ]
