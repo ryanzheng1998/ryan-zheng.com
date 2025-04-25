@@ -1,28 +1,27 @@
-import { MvpMatrix } from '@/app/fun/webgl-box/drawBox/MvpMatrix'
-import { createBuffer } from '@/side-effects/gl/createBuffer'
-import { createElementBuffer } from '@/side-effects/gl/createElementBuffer'
-import { createProgram } from '@/side-effects/gl/createProgram'
-import { getGlContext } from '@/side-effects/gl/getGlContext'
-import { setAttribute } from '@/side-effects/gl/setAttribute'
-import { setUniform } from '@/side-effects/gl/setUniform'
+import { MvpMatrix } from '@/app/fun/webgl/MvpMatrix'
+import { createBuffer } from '@/app/fun/webgl/side-effects/createBuffer'
+import { createElementBuffer } from '@/app/fun/webgl/side-effects/createElementBuffer'
+import { createProgram } from '@/app/fun/webgl/side-effects/createProgram'
+import { getGlContext } from '@/app/fun/webgl/side-effects/getGlContext'
+import { setAttribute } from '@/app/fun/webgl/side-effects/setAttribute'
+import { setUniform } from '@/app/fun/webgl/side-effects/setUniform'
 import { useStore } from '../useStore'
-import { boxIndices } from './boxIndices'
 import { boxVertex } from './boxVertex'
 import fragmentShaderText from './fragmentShader.glsl'
+import { generateDots } from './generateDots'
 import vertexShaderText from './vertexShader.glsl'
 
-const vertexData = boxVertex
-const indices = boxIndices
+const data = generateDots(boxVertex, 0.03)
 
-export const drawBox = (canvas: HTMLCanvasElement) => {
+export const drawSphere = (canvas: HTMLCanvasElement) => {
   const gl = getGlContext(canvas)
 
   if (gl instanceof Error) return gl
 
   const program = createProgram(gl, vertexShaderText, fragmentShaderText)
 
-  createBuffer(gl, vertexData)
-  createElementBuffer(gl, indices)
+  createBuffer(gl, data.vertices)
+  createElementBuffer(gl, data.indices)
 
   setAttribute(gl, program, 'position', 3, 6, 0)
   setAttribute(gl, program, 'color', 3, 6, 3)
@@ -40,7 +39,7 @@ export const drawBox = (canvas: HTMLCanvasElement) => {
     Math.PI / 4,
     canvas.width / canvas.height,
     0.1,
-    1000
+    1000,
   )
 
   const unsubscribe = useStore.subscribe(
@@ -52,11 +51,11 @@ export const drawBox = (canvas: HTMLCanvasElement) => {
 
       gl.clearColor(0.0, 0.0, 0.0, 1.0)
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0)
+      gl.drawElements(gl.TRIANGLES, data.indices.length, gl.UNSIGNED_SHORT, 0)
     },
     {
       fireImmediately: true,
-    }
+    },
   )
 
   const unsubscribe2 = useStore.subscribe(
@@ -66,13 +65,13 @@ export const drawBox = (canvas: HTMLCanvasElement) => {
 
       setUniform(gl, program, 'matrix', mvpMatrix.getMatrix())
 
-      gl.clearColor(0.0, 0.0, 0.0, 1.0)
+      gl.clearColor(1.0, 1.0, 1.0, 1.0)
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0)
+      gl.drawElements(gl.TRIANGLES, data.indices.length, gl.UNSIGNED_SHORT, 0)
     },
     {
       fireImmediately: true,
-    }
+    },
   )
 
   return () => {

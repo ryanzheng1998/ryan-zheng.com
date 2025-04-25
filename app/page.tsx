@@ -1,140 +1,94 @@
 import Image from 'next/image'
+import { projects } from './projects'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white px-4 py-10 text-neutral-800">
-      <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+    <main className="min-h-screen bg-white px-6 py-12 text-neutral-800">
+      <div className="mx-auto max-w-3xl text-center">
         <Image
           src="/me.jpeg"
           width={192}
           height={256}
           alt="me"
-          className="rounded-2xl shadow-lg"
+          className="mx-auto rounded-2xl shadow-xl"
         />
 
         <div className="mt-10 space-y-4">
-          <p className="text-2xl font-bold">
-            I’m Ryan. I like books and building things.
+          <h1 className="text-3xl font-extrabold">Hi, I’m Ryan 👋</h1>
+          <p className="text-lg">
+            I like books and building things. Lately, I’ve been thinking a lot
+            about where I’m going — whether I should change jobs, explore new
+            paths, or keep growing where I am.
           </p>
-          <p>
-            Lately, I’ve been thinking a lot about where I’m going — whether I
-            should change jobs, explore new paths, or keep growing where I am.
-          </p>
-          <p>
+          <p className="text-lg">
             This site is part of that journey. A space to share what I’ve made,
             and maybe discover what I’ll become.
           </p>
         </div>
 
-        <div className="mt-16 w-full">
-          <h3 className="mb-6 text-xl font-semibold">Projects</h3>
-          <ul className="grid gap-3 sm:grid-cols-2">
-            <li>
-              <a
-                href="/fun/custom-spring/spring-parameter-picker"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                🌀 Spring Animation Parameter Picker
-              </a>
-            </li>
-            <li>
-              <a
-                href="/fun/presentation"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                🖼 Presentation
-              </a>
-            </li>
-            <li>
-              <a
-                href="/fun/custom-spring/flip-card"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                🃏 Flip Card
-              </a>
-            </li>
-            <li>
-              <a
-                href="/fun/webgl-box"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                📦 WebGL Box
-              </a>
-            </li>
-            <li>
-              <a
-                href="/fun/pose-detection"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                🕺 Pose Detection
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://snake-0000.web.app/"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                🐍 Snake Game
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://csp-gd.github.io/nutn-csie-exhib-109/build/index.html"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                🧑‍💻 109 NUTN CSIE Exhibition
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://ryanzheng1998.github.io/gasket-3d/"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                WebGL Sierpiński Gasket
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://github.com/ryanzheng1998/frequency-response"
-                className="block rounded-lg border p-4 shadow-sm transition hover:bg-gray-50"
-              >
-                頻譜的動態視覺化
-              </a>
-            </li>
+        <section className="mt-12">
+          <h2 className="mb-4 text-2xl font-semibold text-gray-700">
+            Projects
+          </h2>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {projects.map((project, index) => (
+              <li key={index}>
+                <a
+                  href={project.href}
+                  className="block rounded-xl border p-4 text-left shadow-md transition hover:shadow-lg hover:ring-1 hover:ring-gray-200"
+                  target="_blank"
+                >
+                  <p className="font-medium text-blue-600">{project.name}</p>
+                </a>
+              </li>
+            ))}
           </ul>
-        </div>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/ryanzheng1998"
-        >
-          <img src="/logo-github.svg" alt="github logo" />
-          <p>Github</p>
-        </a>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://codepen.io/ryanzheng"
-        >
-          <img src="/logo-codepen.svg" alt="codepen logo" />
-          <p>Codepen</p>
-        </a>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.linkedin.com/in/sheng-xuan-zheng/"
-        >
-          <img src="/logo-linkedin.svg" alt="linkedin logo" />
-          <p>Linkedin</p>
-        </a>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="mailto:ryan.zheng.1998@gmail.com"
-        >
-          <img src="/mail-outline.svg" alt="mail logo" />
-          <p>Email</p>
-        </a>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="mb-4 text-2xl font-semibold text-gray-700">Links</h2>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {[
+              {
+                href: 'https://github.com/ryanzheng1998',
+                icon: '/logo-github.svg',
+                label: 'GitHub',
+              },
+              {
+                href: 'https://codepen.io/ryanzheng',
+                icon: '/logo-codepen.svg',
+                label: 'Codepen',
+              },
+              {
+                href: 'https://www.linkedin.com/in/sheng-xuan-zheng/',
+                icon: '/logo-linkedin.svg',
+                label: 'LinkedIn',
+              },
+              {
+                href: 'mailto:ryan.zheng.1998@gmail.com',
+                icon: '/mail-outline.svg',
+                label: 'Email',
+              },
+            ].map(({ href, icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center rounded-lg border p-4 transition hover:bg-gray-50"
+              >
+                <img
+                  src={icon}
+                  alt={`${label} logo`}
+                  className="mb-2 h-6 w-6"
+                />
+                <span className="text-sm font-medium text-gray-700">
+                  {label}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
       </div>
     </main>
   )
