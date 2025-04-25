@@ -13,7 +13,7 @@ export const projects = [
   },
   {
     name: '📦 WebGL Box',
-    href: '/fun/webgl-box',
+    href: '/fun/webgl/box',
   },
   {
     name: '🕺 Pose Detection',
