@@ -104,6 +104,10 @@ export const projects = [
     href: '/fun/webgl/wireframe',
   },
   {
+    name: 'OAuth2.0',
+    href: '/fun/oauth',
+  },
+  {
     name: 'SVG Chart',
     href: 'https://ryanzheng1998.github.io/svg-chart/',
   },
