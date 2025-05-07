@@ -14,7 +14,12 @@ export default function Home() {
         />
 
         <div className="mt-10 space-y-4">
-          <h1 className="text-3xl font-extrabold">Hi, I’m Ryan 👋</h1>
+          <h1 className="text-3xl font-extrabold">
+            Hi, I’m Ryan 👋
+            <br />
+            <span className="text-xl text-gray-600">鄭聖玄</span>
+          </h1>
+
           <p className="text-lg">
             I like books and building things. Lately, I’ve been thinking a lot
             about where I’m going — whether I should change jobs, explore new
