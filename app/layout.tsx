@@ -39,6 +39,10 @@ export default function RootLayout({
 
         gtag('config', 'G-9EKGL74FSH');`}
       </Script>
+      <meta
+        name="google-adsense-account"
+        content="ca-pub-1553335306246491"
+      ></meta>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
