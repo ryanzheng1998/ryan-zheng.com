@@ -1,5 +1,13 @@
 export const projects = [
   {
+    name: 'Flocking',
+    href: '/fun/steering/flocking',
+  },
+  {
+    name: 'Steering',
+    href: '/fun/steering/single-vehicle',
+  },
+  {
     name: '🌀 Spring Animation Parameter Picker',
     href: '/fun/spring-animation/spring-parameter-picker',
   },
