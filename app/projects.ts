@@ -4,6 +4,10 @@ export const projects = [
     href: '/fun/steering/flocking',
   },
   {
+    name: 'Google Ad',
+    href: '/fun/ad/google',
+  },
+  {
     name: 'Steering',
     href: '/fun/steering/single-vehicle',
   },
