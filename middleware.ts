@@ -9,9 +9,9 @@ export function middleware(request: NextRequest) {
   }
 
   const locale = getLocale(request)
-  const trueLocale = locale === 'zh' ? 'zh' : 'en'
   const url = request.nextUrl.clone()
-  url.pathname = `/${locale}${pathname}`
+  url.pathname = `/${locale}`
+
   return NextResponse.redirect(url)
 }
 

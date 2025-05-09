@@ -50,7 +50,7 @@ export default async function Home({
                 key={blog.name}
                 className="group rounded-2xl bg-gray-50 p-5 shadow-md transition duration-300 hover:bg-white hover:shadow-xl"
               >
-                <a href={blog.href} className="block space-y-1">
+                <a href={`/${lang}/${blog.href}`} className="block space-y-1">
                   <p className="text-lg font-semibold text-blue-700 group-hover:underline">
                     {blog.name}
                   </p>
@@ -73,7 +73,7 @@ export default async function Home({
               {section.items.map((item, index) => (
                 <li key={index}>
                   <a
-                    href={item.href}
+                    href={item.external ? item.href : `/${lang}/${item.href}`}
                     className="group block rounded-2xl bg-gray-50 p-5 shadow-md transition duration-300 hover:bg-white hover:shadow-xl"
                     target="_blank"
                   >
