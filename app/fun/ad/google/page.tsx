@@ -7,8 +7,8 @@ export default function Page() {
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1553335306246491"
         crossOrigin="anonymous"
+        strategy="afterInteractive"
       />
-      <Script>(adsbygoogle = window.adsbygoogle || []).push({});</Script>
       <main className="min-h-screen bg-white px-6 py-20 text-center">
         <h1 className="mb-4 text-3xl font-bold">Support My Work 💛</h1>
         <p className="mb-8 text-gray-600">
@@ -18,10 +18,13 @@ export default function Page() {
           className="adsbygoogle"
           style={{ display: 'block' }}
           data-ad-client="ca-pub-1553335306246491"
-          data-ad-slot="7565987022"
+          data-ad-slot="3741457936"
           data-ad-format="auto"
           data-full-width-responsive="true"
         ></ins>
+        <Script id="adsbygoogle-init" strategy="afterInteractive">
+          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
+        </Script>
       </main>
     </>
   )
