@@ -1,6 +1,12 @@
+import createMDX from '@next/mdx'
 import type { NextConfig } from 'next'
 
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+})
+
 const nextConfig: NextConfig = {
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   webpack: (config) => {
     config.module.rules.push({
       test: /\.glsl$/,
@@ -19,10 +25,8 @@ const nextConfig: NextConfig = {
     return config
   },
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
 }
 
-export default nextConfig
+export default withMDX(nextConfig)
