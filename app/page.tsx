@@ -1,7 +1,8 @@
 import Image from 'next/image'
+import { blogs } from './blogs'
 import { projects } from './projects'
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="min-h-screen bg-white px-6 py-12 text-neutral-800">
       <div className="mx-auto max-w-3xl text-center">
@@ -30,6 +31,24 @@ export default function Home() {
             and maybe discover what I’ll become.
           </p>
         </div>
+
+        <section className="mt-12">
+          <h2 className="mb-4 text-2xl font-semibold text-gray-700">Blog</h2>
+          <ul className="space-y-4 text-left">
+            {blogs.map((blog) => (
+              <li
+                key={blog.name}
+                className="rounded-lg border p-4 hover:shadow-md hover:ring-1 hover:ring-gray-200"
+              >
+                <a href={blog.href} className="block space-y-1">
+                  <p className="text-lg font-semibold text-blue-700">
+                    {blog.name}
+                  </p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <section className="mt-12">
           <h2 className="mb-4 text-2xl font-semibold text-gray-700">
