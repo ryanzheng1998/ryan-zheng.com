@@ -1,4 +1,4 @@
-import { createProgram } from '@/app/[locale]/fun/webgl/side-effects/createProgram'
+import { createProgram } from '@/app/[lang]/fun/webgl/side-effects/createProgram'
 import fragmentShaderText from './fragmentShader.glsl'
 import { generateGaussianKernel } from './generateGaussianKernel'
 import vertexShaderText from './vertexShader.glsl'
@@ -26,7 +26,7 @@ const quadVertexData = [
   1.0, // Top right
 ]
 
-export const textureToBlurTexture2 = (
+export const textureToBlurTexture = (
   gl: WebGLRenderingContext,
   canvas: HTMLCanvasElement,
   texture: WebGLTexture,

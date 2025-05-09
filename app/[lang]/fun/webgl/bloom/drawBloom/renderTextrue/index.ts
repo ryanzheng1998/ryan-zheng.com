@@ -1,7 +1,7 @@
-import { createBuffer } from '@/app/[locale]/fun/webgl/side-effects/createBuffer'
-import { createProgram } from '@/app/[locale]/fun/webgl/side-effects/createProgram'
-import { setAttribute } from '@/app/[locale]/fun/webgl/side-effects/setAttribute'
-import { setTexture } from '@/app/[locale]/fun/webgl/side-effects/setTexture'
+import { createBuffer } from '@/app/[lang]/fun/webgl/side-effects/createBuffer'
+import { createProgram } from '@/app/[lang]/fun/webgl/side-effects/createProgram'
+import { setAttribute } from '@/app/[lang]/fun/webgl/side-effects/setAttribute'
+import { setTexture } from '@/app/[lang]/fun/webgl/side-effects/setTexture'
 import fragmentShaderText from './fragmentShader.glsl'
 import vertexShaderText from './vertexShader.glsl'
 

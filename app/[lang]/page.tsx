@@ -2,9 +2,18 @@ import Image from 'next/image'
 import { blogs } from './blogs'
 import { projects } from './projects'
 
-export default async function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: string }>
+}) {
+  const { lang } = await params
+
   return (
     <main className="min-h-screen bg-white px-6 py-16 font-sans leading-relaxed text-neutral-800">
+      {lang === 'zh' && <a href="/en">English</a>}
+      {lang !== 'zh' && <a href="/zh">中文</a>}
+
       <div className="mx-auto max-w-3xl text-center">
         {/* Profile Image */}
         <Image

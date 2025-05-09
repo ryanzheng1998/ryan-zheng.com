@@ -1,28 +1,31 @@
-import { createBuffer } from '@/app/[locale]/fun/webgl/side-effects/createBuffer'
-import { createElementBuffer } from '@/app/[locale]/fun/webgl/side-effects/createElementBuffer'
-import { createProgram } from '@/app/[locale]/fun/webgl/side-effects/createProgram'
-import { getGlContext } from '@/app/[locale]/fun/webgl/side-effects/getGlContext'
-import { setAttribute } from '@/app/[locale]/fun/webgl/side-effects/setAttribute'
-import { setUniform } from '@/app/[locale]/fun/webgl/side-effects/setUniform'
+import { MvpMatrix } from '@/app/[lang]/fun/webgl/MvpMatrix'
+import { createBuffer } from '@/app/[lang]/fun/webgl/side-effects/createBuffer'
+import { createElementBuffer } from '@/app/[lang]/fun/webgl/side-effects/createElementBuffer'
+import { createProgram } from '@/app/[lang]/fun/webgl/side-effects/createProgram'
+import { getGlContext } from '@/app/[lang]/fun/webgl/side-effects/getGlContext'
+import { setAttribute } from '@/app/[lang]/fun/webgl/side-effects/setAttribute'
+import { setUniform } from '@/app/[lang]/fun/webgl/side-effects/setUniform'
 import { useStore } from '../useStore'
 import { boxIndices } from './boxIndices'
 import { boxVertex } from './boxVertex'
 import fragmentShaderText from './fragmentShader.glsl'
-import { MvpMatrix } from './MvpMatrix'
+import { generateWireframe } from './generateWireframe'
 import vertexShaderText from './vertexShader.glsl'
 
-const vertexData = boxVertex
-const indices = boxIndices
+const newVertex = boxVertex.filter(
+  (_, i) => i % 5 === 0 || i % 5 === 1 || i % 5 === 2,
+)
 
-export const drawBox = (canvas: HTMLCanvasElement) => {
+const data = generateWireframe(newVertex, boxIndices, 0.01)
+
+export const drawWireframe = (canvas: HTMLCanvasElement) => {
   const gl = getGlContext(canvas)
 
   if (gl instanceof Error) return gl
 
   const program = createProgram(gl, vertexShaderText, fragmentShaderText)
-
-  createBuffer(gl, vertexData)
-  createElementBuffer(gl, indices)
+  createElementBuffer(gl, data.indices)
+  createBuffer(gl, data.vertices)
 
   setAttribute(gl, program, 'position', 3, 6, 0)
   setAttribute(gl, program, 'color', 3, 6, 3)
@@ -50,9 +53,9 @@ export const drawBox = (canvas: HTMLCanvasElement) => {
 
       setUniform(gl, program, 'matrix', mvpMatrix.getMatrix())
 
-      gl.clearColor(0.0, 0.0, 0.0, 1.0)
+      gl.clearColor(1.0, 1.0, 1.0, 1.0)
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0)
+      gl.drawElements(gl.TRIANGLES, data.indices.length, gl.UNSIGNED_SHORT, 0)
     },
     {
       fireImmediately: true,
@@ -66,9 +69,9 @@ export const drawBox = (canvas: HTMLCanvasElement) => {
 
       setUniform(gl, program, 'matrix', mvpMatrix.getMatrix())
 
-      gl.clearColor(0.0, 0.0, 0.0, 1.0)
+      gl.clearColor(1.0, 1.0, 1.0, 1.0)
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0)
+      gl.drawElements(gl.TRIANGLES, data.indices.length, gl.UNSIGNED_SHORT, 0)
     },
     {
       fireImmediately: true,
