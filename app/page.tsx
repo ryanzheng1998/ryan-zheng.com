@@ -39,10 +39,10 @@ export default async function Home() {
             {blogs.map((blog) => (
               <li
                 key={blog.name}
-                className="rounded-xl border border-gray-200 p-4 shadow-sm transition hover:shadow-lg hover:ring-1 hover:ring-gray-200"
+                className="group rounded-2xl bg-gray-50 p-5 shadow-md transition duration-300 hover:bg-white hover:shadow-xl"
               >
                 <a href={blog.href} className="block space-y-1">
-                  <p className="text-lg font-semibold text-blue-700">
+                  <p className="text-lg font-semibold text-blue-700 group-hover:underline">
                     {blog.name}
                   </p>
                   {blog.description && (
@@ -55,24 +55,33 @@ export default async function Home() {
         </section>
 
         {/* Projects Section */}
-        <section className="mt-16 text-left">
-          <h2 className="mb-4 text-2xl font-semibold text-gray-700">
-            Projects
-          </h2>
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {projects.map((project, index) => (
-              <li key={index}>
-                <a
-                  href={project.href}
-                  className="block rounded-xl border border-gray-200 p-4 shadow-sm transition hover:shadow-lg hover:ring-1 hover:ring-gray-200"
-                  target="_blank"
-                >
-                  <p className="font-medium text-blue-600">{project.name}</p>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+        {projects.map((section) => (
+          <div key={section.category} className="mb-10 text-left">
+            <h3 className="mb-2 mt-12 text-xl font-semibold text-gray-800">
+              {section.category}
+            </h3>
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {section.items.map((item, index) => (
+                <li key={index}>
+                  <a
+                    href={item.href}
+                    className="group block rounded-2xl bg-gray-50 p-5 shadow-md transition duration-300 hover:bg-white hover:shadow-xl"
+                    target="_blank"
+                  >
+                    <p className="flex items-center justify-between font-medium text-blue-600">
+                      {item.name}
+                      {item.external && (
+                        <span className="ml-2 text-xs text-gray-400 group-hover:text-blue-500">
+                          ↗
+                        </span>
+                      )}
+                    </p>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
 
         {/* Links Section */}
         <section className="mt-16 text-left">
@@ -105,7 +114,7 @@ export default async function Home() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50"
+                className="flex flex-col items-center rounded-2xl bg-gray-50 p-5 shadow-md transition duration-300 hover:bg-white hover:shadow-xl"
               >
                 <Image
                   src={icon}
