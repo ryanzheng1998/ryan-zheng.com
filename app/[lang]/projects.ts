@@ -52,7 +52,7 @@ export const projects = [
         external: true,
       },
       { name: 'Analog Clock', href: '/fun/analog-clock' },
-      { name: 'Pose Detection', href: '/fun/pose-detection' },
+      { name: 'Pose Detection', href: '/fun/ai/pose-detection' },
     ],
   },
   {

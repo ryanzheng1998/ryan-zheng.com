@@ -1,8 +1,10 @@
+import { PreTrainedModel, Processor } from '@huggingface/transformers'
 import { create } from 'zustand'
 
 const initState = {
-  webcamLoading: false,
-  webcamError: null as null | Error,
+  processor: null as null | Processor,
+  model: null as null | PreTrainedModel,
+  file: null as null | File,
 }
 
 export const useStore = create<typeof initState>()(() => initState)
