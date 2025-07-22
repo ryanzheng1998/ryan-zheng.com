@@ -1,24 +1,14 @@
 import Image from 'next/image'
-import { blogs } from './blogs'
-import { projects } from './projects'
+import { projects } from '../projects'
 
 export default async function Home({
   params,
 }: {
   params: Promise<{ lang: string }>
 }) {
-  const { lang } = await params
-
   return (
     <main className="min-h-screen bg-white px-6 py-16 font-sans leading-relaxed text-neutral-800">
-      <nav className="absolute right-6 top-6">
-        <a
-          href="/zh"
-          className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-600 shadow-sm transition hover:border-blue-500 hover:text-blue-600"
-        >
-          中文
-        </a>
-      </nav>
+      <a href="/">English</a>
 
       <div className="mx-auto max-w-3xl text-center">
         {/* Profile Image */}
@@ -48,7 +38,7 @@ export default async function Home({
         </div>
 
         {/* Blog Section */}
-        <section className="mt-16 text-left">
+        {/* <section className="mt-16 text-left">
           <h2 className="mb-4 text-2xl font-semibold text-gray-700">Blog</h2>
           <ul className="space-y-4">
             {blogs.map((blog) => (
@@ -67,7 +57,7 @@ export default async function Home({
               </li>
             ))}
           </ul>
-        </section>
+        </section> */}
 
         {/* Projects Section */}
         {projects.map((section) => (

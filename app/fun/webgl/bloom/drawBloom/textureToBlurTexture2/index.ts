@@ -1,4 +1,4 @@
-import { createProgram } from '@/app/[lang]/fun/webgl/side-effects/createProgram'
+import { createProgram } from '@/app/fun/webgl/side-effects/createProgram'
 import fragmentShaderText from './fragmentShader.glsl'
 import { generateGaussianKernel } from './generateGaussianKernel'
 import vertexShaderText from './vertexShader.glsl'
