@@ -73,7 +73,7 @@ export default async function Home({
               {section.items.map((item, index) => (
                 <li key={index}>
                   <a
-                    href={item.external ? item.href : `/${lang}/${item.href}`}
+                    href={item.external ? item.href : `${item.href}`}
                     className="group block rounded-2xl bg-gray-50 p-5 shadow-md transition duration-300 hover:bg-white hover:shadow-xl"
                     target="_blank"
                   >

@@ -9,10 +9,15 @@ export function middleware(request: NextRequest) {
   }
 
   const locale = getLocale(request)
-  const url = request.nextUrl.clone()
-  url.pathname = `/${locale}`
 
-  return NextResponse.redirect(url)
+  if (locale === 'cn') {
+    const url = request.nextUrl.clone()
+    url.pathname = `/${locale}`
+
+    return NextResponse.redirect(url)
+  }
+
+  return NextResponse.next()
 }
 
 export const config = {
