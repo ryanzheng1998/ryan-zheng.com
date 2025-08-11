@@ -65,7 +65,7 @@ export default function Page() {
               'contain',
             )
 
-            const minLen = 2,
+            const minLen = 3,
               gain = 2.0,
               maxDraw = 12,
               strokeW = 0.9

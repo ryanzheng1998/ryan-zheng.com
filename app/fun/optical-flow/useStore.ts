@@ -6,6 +6,7 @@ const initState = {
   webcamError: null as null | Error,
   webcam: null as null | HTMLVideoElement,
   previousImage: null as null | Uint8ClampedArray,
+  imageHistory: [] as Uint8ClampedArray[],
   flow: null as null | ReturnType<typeof computeOpticalFlow>,
   animationId: 0,
 }

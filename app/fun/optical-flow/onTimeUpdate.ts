@@ -1,5 +1,5 @@
-import { computeOpticalFlow } from './computeOpticalFlow'
 import { getRGBAFromVideo } from './getRGBAFromVideo'
+import { smoothFlowFromHistory } from './smoothFlowFromHistory'
 import { get, set } from './useStore'
 
 export const onTimeUpdate = (t1: number) => (t2: number) => {
@@ -15,16 +15,17 @@ export const onTimeUpdate = (t1: number) => (t2: number) => {
 
   const image = getRGBAFromVideo(s.webcam)
   const previousImage = s.previousImage
+  const newHistory = [image, ...s.imageHistory].slice(0, 10)
 
   set({
     previousImage: image,
+    imageHistory: newHistory,
   })
 
   if (previousImage === null) return
 
-  const flow = computeOpticalFlow(
-    previousImage,
-    image,
+  const flow = smoothFlowFromHistory(
+    newHistory,
     s.webcam.videoWidth,
     s.webcam.videoHeight,
   )

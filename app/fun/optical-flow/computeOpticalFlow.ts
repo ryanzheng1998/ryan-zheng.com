@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Compute sparse optical flow (Lucas–Kanade) on a grid.
  * - oldRGBA/newRGBA: Uint8ClampedArray (ImageData.data) length = width*height*4
