@@ -48,20 +48,11 @@ export default function Page() {
       {store.flow && store.webcam && (
         <div className="pointer-events-none absolute inset-0 -scale-x-100">
           {(() => {
-            const zones = store.flow!.zones
-            const vw = store.webcam!.videoWidth || 640
-            const vh = store.webcam!.videoHeight || 480
-
-            // Screen size (your container is full screen)
-            const screenW = window.innerWidth
-            const screenH = window.innerHeight
-
-            // If your video uses object-contain, pass 'contain'. If object-cover, pass 'cover'.
             const { scaleX, scaleY, offsetX, offsetY } = getVideoFit(
-              vw,
-              vh,
-              screenW,
-              screenH,
+              store.webcam.videoWidth,
+              store.webcam.videoHeight,
+              window.innerWidth,
+              window.innerHeight,
               'contain',
             )
 
@@ -77,7 +68,7 @@ export default function Page() {
             return (
               <svg
                 className="absolute inset-0 h-full w-full"
-                viewBox={`0 0 ${screenW} ${screenH}`} // screen space
+                viewBox={`0 0 ${window.innerWidth} ${window.innerHeight}`} // screen space
                 preserveAspectRatio="none"
               >
                 <defs>
@@ -99,7 +90,7 @@ export default function Page() {
                   transform={`translate(${offsetX},${offsetY}) scale(${scaleX},${scaleY})`}
                 >
                   {/* Now x,y,u,v are in the video’s intrinsic space */}
-                  {zones.map(({ x, y, u, v }) => {
+                  {store.flow.zones.map(({ x, y, u, v }) => {
                     const len = Math.hypot(u, v)
                     if (len < minLen) return null
                     const scale = Math.min(gain, maxDraw / (len || 1))
