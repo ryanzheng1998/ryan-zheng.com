@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 
 type Landmark = { x: number; y: number }

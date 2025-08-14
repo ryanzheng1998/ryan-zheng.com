@@ -4,7 +4,7 @@ export function getLocale(request: Request) {
 
   const preferredLanguages = acceptLang
     .split(',')
-    .map((lang) => lang.split(';')[0].trim().toLowerCase())
+    .map((lang) => lang.split(';')[0]!.trim().toLowerCase())
 
   for (const lang of preferredLanguages) {
     const baseLang = lang.split('-')[0] // e.g., "zh-TW" → "zh"

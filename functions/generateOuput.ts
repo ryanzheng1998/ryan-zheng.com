@@ -33,5 +33,5 @@ export const generateOutput = async (
     },
   )
 
-  return output[0]
+  return output[0]!
 }

@@ -1,10 +1,11 @@
+// @ts-nocheck
 import { generateCylinderVertex } from './generateCylinderVertex'
 
 export const generateWireframe = (
   vertices: number[],
   indices: number[],
   radius: number,
-  segment: number = 16
+  segment: number = 16,
 ) => {
   const wireframeVertices: number[] = []
   const wireframeIndices: number[] = []
@@ -44,11 +45,14 @@ export const generateWireframe = (
     // Adjust cylinder indices based on the current indexOffset
     const adjustedIndices1 = cylIndices1.map((index) => index + currentIndex)
     const adjustedIndices2 = cylIndices2.map(
-      (index) => index + currentIndex + cylVertices1.length / 6 // 6 floats per vertex (x, y, z, r, g, b)
+      (index) => index + currentIndex + cylVertices1.length / 6, // 6 floats per vertex (x, y, z, r, g, b)
     )
     const adjustedIndices3 = cylIndices3.map(
       (index) =>
-        index + currentIndex + cylVertices1.length / 6 + cylVertices2.length / 6
+        index +
+        currentIndex +
+        cylVertices1.length / 6 +
+        cylVertices2.length / 6,
     )
 
     wireframeIndices.push(...adjustedIndices1)

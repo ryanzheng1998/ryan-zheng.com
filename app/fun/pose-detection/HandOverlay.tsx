@@ -47,8 +47,8 @@ export const HandOverlay: React.FC<HandOverlayProps> = ({
         <React.Fragment key={handIndex}>
           {/* Render Connections */}
           {HAND_CONNECTIONS.map(([startIdx, endIdx], i) => {
-            const start = hand[startIdx]
-            const end = hand[endIdx]
+            const start = hand[startIdx!]!
+            const end = hand[endIdx!]!
 
             const x1 = start.x * width * scale + xOffset
             const y1 = start.y * height * scale + yOffset

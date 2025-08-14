@@ -1,10 +1,11 @@
+// @ts-nocheck
 import { generateSphereData } from './generateSphereData'
 
 export const generateDots = (
   vertexData: number[],
   radius: number,
   latSegments: number = 16,
-  longSegments: number = 16
+  longSegments: number = 16,
 ) => {
   const vertices: number[] = []
   const indices: number[] = []

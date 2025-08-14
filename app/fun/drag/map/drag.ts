@@ -1,7 +1,7 @@
 import { get, set } from './useStore'
 
-export const drag = (e: React.PointerEvent<HTMLDivElement>) => {
-  const element = e.currentTarget
+export const drag = (e: React.PointerEvent) => {
+  const element = e.currentTarget.firstChild as HTMLElement
   element.setPointerCapture(e.pointerId)
   element.style.cursor = 'grabbing'
 
