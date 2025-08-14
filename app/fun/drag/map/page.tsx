@@ -25,14 +25,12 @@ export default function Page() {
       ref={ref}
       onWheel={zoom}
       onPointerDown={drag}
-      className="h-screen w-screen overflow-hidden overscroll-contain bg-black"
+      className="h-screen w-screen select-none overflow-hidden bg-black"
     >
-      <div className="origin-top-left">
-        <img
-          draggable="false"
-          src="/flip-card/DALL·E 2024-02-21 14.41.27 - Create an image of a vibrant city street scene at night. The focus should be on a large, illuminated billboard attached to a building. The billboard d.webp"
-        />
-      </div>
+      <img
+        draggable="false"
+        src="/flip-card/DALL·E 2024-02-21 14.41.27 - Create an image of a vibrant city street scene at night. The focus should be on a large, illuminated billboard attached to a building. The billboard d.webp"
+      />
     </div>
   )
 }

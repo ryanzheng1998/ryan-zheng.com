@@ -12,6 +12,7 @@ export const drag = (e: React.PointerEvent) => {
     const dx = e.pageX - mouseDownX
     const dy = e.pageY - mouseDownY
 
+    element.style.transformOrigin = '0 0'
     element.style.transform = `scale(${get().zoom}) translate(${dx / get().zoom}px, ${dy / get().zoom}px)`
 
     set({ panX: dx, panY: dy })

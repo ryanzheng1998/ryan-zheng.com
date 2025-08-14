@@ -14,6 +14,7 @@ export const zoom = (e: WheelEvent) => {
   const panX = x - currentMousePositionX * (zoom - store.zoom)
   const panY = y - currentMousePositionY * (zoom - store.zoom)
 
+  element.style.transformOrigin = '0 0'
   element.style.transform = `scale(${zoom}) translate(${panX / zoom}px, ${panY / zoom}px)`
 
   set({
