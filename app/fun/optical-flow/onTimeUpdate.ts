@@ -15,7 +15,7 @@ export const onTimeUpdate = (t1: number) => (t2: number) => {
 
   const image = getRGBAFromVideo(s.webcam)
   const previousImage = s.previousImage
-  const newHistory = [image, ...s.imageHistory].slice(0, 15)
+  const newHistory = [image, ...s.imageHistory].slice(0, 40)
 
   set({
     previousImage: image,
