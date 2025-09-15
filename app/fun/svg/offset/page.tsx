@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 
-// Factory (UMD) + types
 import type {
   Clipper2ZFactoryFunction,
   MainModule,
@@ -36,27 +35,23 @@ export default function Page() {
   const square = clipper.MakePath64([
     10, 10, 110, 10, 110, 110, 10, 110, 10, 10,
   ])
-  const circle = clipper.MakePath64([
-    150, 100, 149, 84, 144, 69, 135, 56, 123, 47, 108, 42, 92, 42, 77, 47, 65,
-    56, 56, 69, 51, 84, 50, 100, 51, 116, 56, 131, 65, 144, 77, 153, 92, 158,
-    108, 158, 123, 153, 135, 144, 144, 131, 149, 116, 150, 100,
-  ])
 
   const a = new clipper.Paths64()
   a.push_back(square)
-  const b = new clipper.Paths64()
-  b.push_back(circle)
 
-  const merged = clipper.Union64(a, b, clipper.FillRule.NonZero)
+  const merged = clipper.InflatePaths64(
+    a,
+    20,
+    clipper.JoinType.Round,
+    clipper.EndType.Polygon,
+    0,
+    0,
+  )
 
   return (
     <div className="grid h-screen w-screen place-items-center gap-6">
-      {/* show inputs */}
-      <svg width="300" height="300" viewBox="0 0 180 180">
+      <svg width="300" height="300" viewBox="-100 -100 280 280">
         <path d={pathsToSvg(a)} fill="none" stroke="black" />
-        <path d={pathsToSvg(b)} fill="none" stroke="black" />
-      </svg>
-      <svg width="300" height="300" viewBox="0 0 180 180">
         <path d={pathsToSvg(merged)} fill="none" stroke="black" />
       </svg>
     </div>
