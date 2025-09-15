@@ -18,16 +18,14 @@ export default function Page() {
 
   // Load WASM once in the browser
   useEffect(() => {
-    let cancelled = false
-    ;(async () => {
+    const main = async () => {
       const mod = await Clipper2ZFactory({
-        locateFile: (f) => (f.endsWith('.wasm') ? '/clipper2z.wasm' : f),
+        locateFile: () => '/clipper2z.wasm',
       })
-      if (!cancelled) setClipper(mod)
-    })()
-    return () => {
-      cancelled = true
+      setClipper(mod)
     }
+
+    main()
   }, [])
 
   if (!clipper)
@@ -49,8 +47,7 @@ export default function Page() {
   const b = new clipper.Paths64()
   b.push_back(circle)
 
-  // @ts-ignore
-  const merged = clipper.Union64(a, b, true)
+  const merged = clipper.Union64(a, b, clipper.FillRule.NonZero)
 
   return (
     <div className="grid h-screen w-screen place-items-center gap-6">
