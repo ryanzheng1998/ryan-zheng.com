@@ -1,6 +1,6 @@
 import { PathsD } from 'clipper2-wasm/dist/clipper2z'
 
-export const pathsToSvg = (paths: PathsD) => {
+export const pathDToArray = (paths: PathsD) => {
   let points: [number, number][] = []
 
   for (let i = 0; i < paths.size(); i++) {
@@ -12,7 +12,5 @@ export const pathsToSvg = (paths: PathsD) => {
     }
   }
 
-  const d = 'M' + points.map((p) => p.join(' ')).join(' L') + ' Z'
-
-  return d
+  return points.flat()
 }
