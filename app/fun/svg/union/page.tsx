@@ -4,7 +4,7 @@ import { PathsD } from 'clipper2-wasm/dist/clipper2z'
 import { useEffect, useState } from 'react'
 import { getClipper } from '../getClipper'
 import { makePathsD } from '../makePathsD'
-import { pathsToSvg } from '../pathToSvg'
+import { pathDToArray } from '../pathDToArray'
 
 export default function Page() {
   const [square, setSquare] = useState<PathsD | null>(null)
@@ -32,9 +32,11 @@ export default function Page() {
         8,
       )
 
+      const simplified = clipper.main.SimplifyPathsD(merged, 0.1, false)
+
       setSquare(square)
       setCircle(circle)
-      setMerged(merged)
+      setMerged(simplified)
     }
 
     main()
@@ -48,11 +50,23 @@ export default function Page() {
     <div className="grid h-screen w-screen place-items-center gap-6">
       {/* show inputs */}
       <svg width="300" height="300" viewBox="0 0 180 180">
-        <path d={pathsToSvg(square)} fill="none" stroke="black" />
-        <path d={pathsToSvg(circle)} fill="none" stroke="black" />
+        <polygon
+          points={pathDToArray(square).join(' ')}
+          fill="none"
+          stroke="red"
+        />
+        <polygon
+          points={pathDToArray(circle).join(' ')}
+          fill="none"
+          stroke="blue"
+        />
       </svg>
       <svg width="300" height="300" viewBox="0 0 180 180">
-        <path d={pathsToSvg(merged)} fill="none" stroke="black" />
+        <polygon
+          points={pathDToArray(merged).join(' ')}
+          fill="none"
+          stroke="black"
+        />
       </svg>
     </div>
   )
