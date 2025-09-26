@@ -2,13 +2,7 @@ import Image from 'next/image'
 import { blogs } from './blogs'
 import { projects } from './projects'
 
-export default async function Home({
-  params,
-}: {
-  params: Promise<{ lang: string }>
-}) {
-  const { lang } = await params
-
+export default async function Home() {
   return (
     <main className="min-h-screen bg-white px-6 py-16 font-sans leading-relaxed text-neutral-800">
       <nav className="absolute right-6 top-6">
@@ -56,7 +50,7 @@ export default async function Home({
                 key={blog.name}
                 className="group rounded-2xl bg-gray-50 p-5 shadow-md transition duration-300 hover:bg-white hover:shadow-xl"
               >
-                <a href={`/${lang}/${blog.href}`} className="block space-y-1">
+                <a href={`/${blog.href}`} className="block space-y-1">
                   <p className="text-lg font-semibold text-blue-700 group-hover:underline">
                     {blog.name}
                   </p>
