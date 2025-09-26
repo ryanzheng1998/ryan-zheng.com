@@ -50,6 +50,9 @@ importers:
       gl-matrix:
         specifier: ^3.4.3
         version: 3.4.3
+      jsts:
+        specifier: ^2.12.1
+        version: 2.12.1
       kalmanjs:
         specifier: ^1.1.0
         version: 1.1.0
@@ -72,6 +75,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.2.0
+      '@types/jsts':
+        specifier: ^0.17.24
+        version: 0.17.24
       '@types/kalmanjs':
         specifier: ^1.1.0
         version: 1.1.0
@@ -751,6 +757,9 @@ packages:
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
+  '@types/jsts@0.17.24':
+    resolution: {integrity: sha512-zZAAiAh7SjXCo5lYCMquz/klQVS9LVdSkAVXPk2BP/2l7FHqmfAFTj9PEld9zUFzXC/bgr04yiEDbDKDSaX7Hg==}
+
   '@types/kalmanjs@1.1.0':
     resolution: {integrity: sha512-x93QR3TXzzy6ZN2oi85a/DTHrwgcxWwykhF+meyxHCHKrErbOHqTl3J7mDh4uZXjRDt8lGJrp9UjLRfbyPx6ug==}
 
@@ -777,6 +786,9 @@ packages:
 
   '@types/offscreencanvas@2019.7.3':
     resolution: {integrity: sha512-ieXiYmgSRXUDeOntE1InxjWyvEelZGP63M+cGuquuRLuIKKT1osnkXjxev9B7d1nXSug5vpunx+gNlbVxMlC9A==}
+
+  '@types/openlayers@4.6.23':
+    resolution: {integrity: sha512-7jCPIa4D4LV03Rttae1AEqvkIN0+nc6Snz4IgA/IjsJD5O3ONxpscqIOdp1qAGuAsikR/ZC9vrPF9np8JRc6ig==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -1466,6 +1478,9 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
+  fastpriorityqueue@0.7.5:
+    resolution: {integrity: sha512-3Pa0n9gwy8yIbEsT3m2j/E9DXgWvvjfiZjjqcJ+AdNKTAlVMIuFYrYG5Y3RHEM8O6cwv9hOpOWY/NaMfywoQVA==}
+
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -1823,6 +1838,10 @@ packages:
   json5@1.0.2:
     resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
     hasBin: true
+
+  jsts@2.12.1:
+    resolution: {integrity: sha512-aaiCZeGfeU5o9TbrYF1KF0VvhGGLtG3w7vNynmaTjC8XRmS2v15lq+2Bxa8lMtprsFFJiIpAayJZguLruiHd0w==}
+    engines: {node: '>= 18'}
 
   jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
@@ -3593,6 +3612,10 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
+  '@types/jsts@0.17.24':
+    dependencies:
+      '@types/openlayers': 4.6.23
+
   '@types/kalmanjs@1.1.0': {}
 
   '@types/long@4.0.2': {}
@@ -3617,6 +3640,8 @@ snapshots:
   '@types/offscreencanvas@2019.3.0': {}
 
   '@types/offscreencanvas@2019.7.3': {}
+
+  '@types/openlayers@4.6.23': {}
 
   '@types/parse-json@4.0.2': {}
 
@@ -4493,6 +4518,8 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
+  fastpriorityqueue@0.7.5: {}
+
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -4882,6 +4909,10 @@ snapshots:
   json5@1.0.2:
     dependencies:
       minimist: 1.2.8
+
+  jsts@2.12.1:
+    dependencies:
+      fastpriorityqueue: 0.7.5
 
   jsx-ast-utils@3.3.5:
     dependencies:
