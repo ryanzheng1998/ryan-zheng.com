@@ -44,15 +44,9 @@ importers:
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
-      clipper2-wasm:
-        specifier: ^0.2.1
-        version: 0.2.1
       gl-matrix:
         specifier: ^3.4.3
         version: 3.4.3
-      jsts:
-        specifier: ^2.12.1
-        version: 2.12.1
       kalmanjs:
         specifier: ^1.1.0
         version: 1.1.0
@@ -739,9 +733,6 @@ packages:
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
 
-  '@types/emscripten@1.41.2':
-    resolution: {integrity: sha512-0EVXosRnffZuF+rsMM1ZVbfpwpvL2/hWycYQ/0GaH/VaoSJvcSmMl6fiPel9TZXHL3EhANxzqKOVFC6NFXyn8A==}
-
   '@types/estree-jsx@1.0.5':
     resolution: {integrity: sha512-52CcUVNFyfb1A2ALocQw/Dd1BQFNmSdkuC3BkZ6iqhdMfQz7JWOFRuJFloOzjk+6WijU56m9oKXFAXc7o3Towg==}
 
@@ -1061,9 +1052,6 @@ packages:
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
-
-  clipper2-wasm@0.2.1:
-    resolution: {integrity: sha512-WXkKLsfLtB0952jVky77xgqCcNRa641aDZDtB0vmU6wiaUd45nb1aQpqz21JJMUg4uXkjAYPCOF3iH5lMfS9tw==}
 
   cliui@7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
@@ -1478,9 +1466,6 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
-  fastpriorityqueue@0.7.5:
-    resolution: {integrity: sha512-3Pa0n9gwy8yIbEsT3m2j/E9DXgWvvjfiZjjqcJ+AdNKTAlVMIuFYrYG5Y3RHEM8O6cwv9hOpOWY/NaMfywoQVA==}
-
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -1838,10 +1823,6 @@ packages:
   json5@1.0.2:
     resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
     hasBin: true
-
-  jsts@2.12.1:
-    resolution: {integrity: sha512-aaiCZeGfeU5o9TbrYF1KF0VvhGGLtG3w7vNynmaTjC8XRmS2v15lq+2Bxa8lMtprsFFJiIpAayJZguLruiHd0w==}
-    engines: {node: '>= 18'}
 
   jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
@@ -3596,8 +3577,6 @@ snapshots:
     dependencies:
       '@types/ms': 2.1.0
 
-  '@types/emscripten@1.41.2': {}
-
   '@types/estree-jsx@1.0.5':
     dependencies:
       '@types/estree': 1.0.6
@@ -3950,10 +3929,6 @@ snapshots:
   chownr@3.0.0: {}
 
   client-only@0.0.1: {}
-
-  clipper2-wasm@0.2.1:
-    dependencies:
-      '@types/emscripten': 1.41.2
 
   cliui@7.0.4:
     dependencies:
@@ -4518,8 +4493,6 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
-  fastpriorityqueue@0.7.5: {}
-
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -4909,10 +4882,6 @@ snapshots:
   json5@1.0.2:
     dependencies:
       minimist: 1.2.8
-
-  jsts@2.12.1:
-    dependencies:
-      fastpriorityqueue: 0.7.5
 
   jsx-ast-utils@3.3.5:
     dependencies:
