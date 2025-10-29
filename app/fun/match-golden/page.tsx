@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { initDeviceList } from './initDeviceList'
+import { initDeviceList } from './actions/initDeviceList'
 import { Panel } from './Panel'
 import { WebCam } from './Webcam'
 
