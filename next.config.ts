@@ -22,6 +22,13 @@ const nextConfig: NextConfig = {
       type: 'asset/inline',
     })
 
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      path: false,
+      os: false,
+    }
+
     return config
   },
   eslint: {

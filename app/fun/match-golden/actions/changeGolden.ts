@@ -1,5 +1,5 @@
-import { imageBlobToBase64 } from '@/side-effects/imageBlobToBase64'
-import { snap } from '@/side-effects/snap'
+import { imageBlobToBase64 } from '@/functions/imageBlobToBase64'
+import { snap } from '@/functions/snap'
 import { get, set } from '../useStore'
 
 export const changeGolden = async () => {
