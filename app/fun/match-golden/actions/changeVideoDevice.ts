@@ -1,9 +1,10 @@
-import { set } from './useStore'
+import { set } from '../useStore'
 
 export const changeVideoDevice = async (deviceId: string) => {
   set({
     webcamLoading: true,
     webcamError: null,
+    selectedDeviceId: deviceId,
   })
 
   try {

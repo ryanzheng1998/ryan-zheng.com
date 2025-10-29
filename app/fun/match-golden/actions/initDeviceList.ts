@@ -1,4 +1,4 @@
-import { set } from './useStore'
+import { set } from '../useStore'
 
 export const initDeviceList = async () => {
   set({
@@ -41,6 +41,7 @@ export const initDeviceList = async () => {
   set({
     videoDevices: videoDevices,
     stream: stream,
+    selectedDeviceId: videoDevices[0]!.deviceId,
     webcamLoading: false,
   })
 }
