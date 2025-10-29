@@ -3,6 +3,8 @@ import { create } from 'zustand'
 const initState = {
   webcamLoading: false,
   webcamError: null as null | Error,
+  videoDevices: [] as MediaDeviceInfo[],
+  stream: null as MediaStream | null,
 }
 
 export const useStore = create<typeof initState>()(() => initState)
