@@ -1,34 +1,36 @@
-import { useEffect } from 'react'
-import { enableCam } from './enableCam'
 import { useStore } from './useStore'
+import { VideoWithStream } from './VideoWithSteam'
 
-export const Webcam = () => {
+export const WebCam = () => {
   const store = useStore()
 
-  useEffect(() => {
-    enableCam()
-  }, [])
+  if (store.webcamLoading) {
+    return (
+      <div className="fixed inset-0 grid place-items-center bg-black text-4xl text-white">
+        Loading webcam...
+      </div>
+    )
+  }
+
+  if (store.webcamError) {
+    return (
+      <div className="fixed inset-0 grid place-items-center bg-black text-2xl text-red-400">
+        {store.webcamError.message}
+      </div>
+    )
+  }
+
+  if (!store.stream) {
+    return <p>Impossible</p>
+  }
 
   return (
-    <div className="relative h-screen w-screen">
-      {store.webcamLoading && (
-        <div className="grid h-screen w-screen place-items-center bg-black text-6xl text-white">
-          Loading...
-        </div>
-      )}
-      {store.webcamError && (
-        <div className="grid h-screen w-screen place-items-center bg-black text-white">
-          <p className="text-6xl">{store.webcamError.message}</p>
-        </div>
-      )}
-      <div className="h-full w-full -scale-x-100">
-        <video
-          id="webcam"
-          autoPlay
-          muted
-          className="absolute h-full w-full bg-black"
-        />
-      </div>
+    <div className="fixed inset-0 -scale-x-100 bg-black">
+      <VideoWithStream
+        id="webcam"
+        className="h-full w-full"
+        srcObject={store.stream}
+      />
     </div>
   )
 }

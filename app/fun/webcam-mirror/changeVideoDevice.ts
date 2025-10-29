@@ -1,22 +1,30 @@
-import { get, set } from './useStore'
+import { set } from './useStore'
 
 export const changeVideoDevice = async (deviceId: string) => {
-  const currentStream = get().stream
-  currentStream?.getTracks().forEach((track) => track.stop())
-
   set({
-    stream: null,
+    webcamLoading: true,
+    webcamError: null,
   })
 
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: {
-      deviceId: {
-        exact: deviceId,
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        deviceId: {
+          exact: deviceId,
+        },
       },
-    },
-  })
+    })
 
-  set({
-    stream: stream,
-  })
+    set({
+      stream: stream,
+      webcamLoading: false,
+    })
+  } catch (error) {
+    const e = error instanceof Error ? error : new Error('Unknown error')
+
+    set({
+      webcamLoading: false,
+      webcamError: e,
+    })
+  }
 }

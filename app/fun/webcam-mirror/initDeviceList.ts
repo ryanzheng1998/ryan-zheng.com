@@ -1,6 +1,11 @@
 import { set } from './useStore'
 
 export const initDeviceList = async () => {
+  set({
+    webcamLoading: true,
+    webcamError: null,
+  })
+
   //
   // Request camera permission first
   //
@@ -11,6 +16,7 @@ export const initDeviceList = async () => {
   } catch (error) {
     const e = error instanceof Error ? error : new Error('Unknown error')
     set({
+      webcamLoading: false,
       webcamError: e,
     })
     return
@@ -35,5 +41,6 @@ export const initDeviceList = async () => {
   set({
     videoDevices: videoDevices,
     stream: stream,
+    webcamLoading: false,
   })
 }
