@@ -13,7 +13,7 @@ export const Panel = () => {
     <div className="fixed left-5 top-5 grid gap-3 rounded-2xl bg-white/90 p-5 shadow-lg backdrop-blur-md">
       <h1 className="text-xl font-semibold text-gray-800">🎥 Match Golden</h1>
 
-      <p>Similarity {store.similarity}%</p>
+      <p>Similarity {store.similarity * 100}%</p>
 
       <select
         onChange={(e) => {
