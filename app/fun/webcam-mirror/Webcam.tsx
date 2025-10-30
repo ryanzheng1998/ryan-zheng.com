@@ -25,7 +25,7 @@ export const WebCam = () => {
   }
 
   return (
-    <div className="fixed inset-0 -scale-x-100 bg-black">
+    <div className="fixed inset-0 bg-black">
       <VideoWithStream
         id="webcam"
         className="h-full w-full"

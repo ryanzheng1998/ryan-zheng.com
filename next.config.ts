@@ -7,21 +7,21 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+
   webpack: (config) => {
+    // --- GLSL loader ---
     config.module.rules.push({
       test: /\.glsl$/,
       type: 'asset/source',
     })
 
-    config.module.generator['asset/resource'] = config.module.generator['asset']
-    config.module.generator['asset/source'] = config.module.generator['asset']
-    delete config.module.generator['asset']
-
+    // --- SVG inline ---
     config.module.rules.push({
       test: /\.svg$/,
       type: 'asset/inline',
     })
 
+    // --- Polyfill Node modules ---
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
@@ -31,6 +31,7 @@ const nextConfig: NextConfig = {
 
     return config
   },
+
   eslint: {
     ignoreDuringBuilds: true,
   },
