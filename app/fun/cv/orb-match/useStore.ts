@@ -8,6 +8,8 @@ const initState = {
     imageHeight: number
     imageUrl: string
     orbResult: Awaited<ReturnType<typeof orb>>
+    cssMatrix: string | undefined
+    goodMatches: { queryIdx: number; trainIdx: number }[]
   }[],
 }
 
