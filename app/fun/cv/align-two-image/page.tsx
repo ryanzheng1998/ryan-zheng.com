@@ -13,20 +13,16 @@ export default function Page() {
       <div className="relative w-[6000px]">
         {store.images.map((img, idx) => {
           return (
-            <div
+            <img
               key={idx}
-              className="relative"
+              src={img.imageUrl}
+              alt={`uploaded-${idx}`}
+              className="absolute opacity-40"
+              width={img.imageWidth}
+              height={img.imageHeight}
               style={{ transform: img.transform }}
-            >
-              <img
-                src={img.imageUrl}
-                alt={`uploaded-${idx}`}
-                className="absolute opacity-40"
-                width={img.imageWidth}
-                height={img.imageHeight}
-                draggable={false}
-              />
-            </div>
+              draggable={false}
+            />
           )
         })}
       </div>
