@@ -1,6 +1,6 @@
 import { getCv } from '@/functions/getCv'
 import { orb } from './orb'
-import { get, set, useStore } from './useStore'
+import { get, useStore } from './useStore'
 
 export const fileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
   //
@@ -37,64 +37,50 @@ export const fileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
   const s = get()
   const cv = await getCv()
 
-  const matcher = new cv.BFMatcher()
+  console.log(cv)
+
+  // @ts-ignore
+  const matcher = new cv.DescriptorMatcher_create(
+    // @ts-ignore
+    cv.DescriptorMatcher_FLANNBASED.toString(),
+  )
   const first = s.images[0]!
 
   const others = s.images.slice(1)
 
-  others.map((img) => {
-    const matches = new cv.DMatchVector()
+  //   others.map((img) => {
+  //     const matches = new cv.DMatchVector()
 
-    matcher.match(
-      first.orbResult.descriptors,
-      img.orbResult.descriptors,
-      matches,
-    )
+  //     matcher.knnMatch(
+  //       first.orbResult.descriptors,
+  //       img.orbResult.descriptors,
+  //       matches,
+  //       2,
+  //     )
 
-    const matchArray = []
-    for (let i = 0; i < matches.size(); i++) {
-      matchArray.push(matches.get(i))
-    }
+  //     const matchArray = []
+  //     for (let i = 0; i < matches.size(); i++) {
+  //       matchArray.push(matches.get(i))
+  //     }
 
-    const goodMatches = matchArray
-      .sort((a, b) => a.distance - b.distance)
-      .slice(0, 50)
+  //     const goodMatches = matchArray
+  //       .sort((a, b) => a.distance - b.distance)
+  //       .slice(0, 50)
 
-    const srcPoints = goodMatches.map(
-      (m) => first.orbResult.keypoints[m.queryIdx]!,
-    )
-    const dstPoints = goodMatches.map(
-      (m) => img.orbResult.keypoints[m.trainIdx]!,
-    )
+  //     set({
+  //       images: s.images.map((im) => {
+  //         if (im === img) {
+  //           return {
+  //             ...im,
+  //             goodMatches,
+  //           }
+  //         }
+  //         return im
+  //       }),
+  //     })
 
-    const srcMat = cv.matFromArray(
-      srcPoints.length,
-      1,
-      cv.CV_32FC2,
-      srcPoints.flatMap((p) => [p.x, p.y]),
-    )
-    const dstMat = cv.matFromArray(
-      dstPoints.length,
-      1,
-      cv.CV_32FC2,
-      dstPoints.flatMap((p) => [p.x, p.y]),
-    )
+  //     matches.delete()
+  //   })
 
-    set({
-      images: s.images.map((im) => {
-        if (im === img) {
-          return {
-            ...im,
-            goodMatches,
-          }
-        }
-        return im
-      }),
-    })
-
-    srcMat.delete()
-    dstMat.delete()
-    matches.delete()
-    matcher.delete()
-  })
+  matcher.delete()
 }
