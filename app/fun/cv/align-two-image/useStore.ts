@@ -6,7 +6,7 @@ const initState = {
     imageWidth: number
     imageHeight: number
     imageUrl: string
-    cssMatrix: string | undefined
+    transform: string | undefined
   }[],
 }
 
