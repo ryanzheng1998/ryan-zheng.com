@@ -1,4 +1,4 @@
-import { getCv } from '@/functions/getCv'
+import { templateMatch } from './templateMatch'
 import { get, set } from './useStore'
 
 export const fileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +19,7 @@ export const fileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
           imageUrl,
           imageHeight: bitmap.height,
           imageWidth: bitmap.width,
-          cssMatrix: undefined,
+          transform: undefined,
         },
       ],
     }))
@@ -31,5 +31,24 @@ export const fileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
   // match features after all images are processed
   //
   const s = get()
-  const cv = await getCv()
+
+  const first = s.images[0]!
+
+  const others = s.images.slice(1)
+
+  others.map(async (img) => {
+    const result = await templateMatch(first.blob, img.blob)
+
+    set({
+      images: s.images.map((i) => {
+        if (i.imageUrl === img.imageUrl) {
+          return {
+            ...i,
+            transform: `translate(${-result.dx}px, ${-result.dy}px) rotate(${0}deg)`,
+          }
+        }
+        return i
+      }),
+    })
+  })
 }

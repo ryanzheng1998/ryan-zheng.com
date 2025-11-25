@@ -15,8 +15,8 @@ export default function Page() {
           return (
             <div
               key={idx}
-              // className="relative origin-top-left"
-              // style={{ transform: img.cssMatrix }}
+              className="relative"
+              style={{ transform: img.transform }}
             >
               <img
                 src={img.imageUrl}
