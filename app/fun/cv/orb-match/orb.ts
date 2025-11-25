@@ -12,7 +12,7 @@ export async function orb(blob: Blob) {
   cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY)
 
   // 3. ORB detection
-  const orb = new cv.ORB()
+  const orb = new cv.ORB(100, 1.05, 16, 31, 0, 6, cv.ORB_HARRIS_SCORE, 55, 20)
   const kpVec = new cv.KeyPointVector()
   const descriptors = new cv.Mat()
 
