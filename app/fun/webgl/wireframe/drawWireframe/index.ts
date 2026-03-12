@@ -5,11 +5,11 @@ import { createProgram } from '@/app/fun/webgl/side-effects/createProgram'
 import { getGlContext } from '@/app/fun/webgl/side-effects/getGlContext'
 import { setAttribute } from '@/app/fun/webgl/side-effects/setAttribute'
 import { setUniform } from '@/app/fun/webgl/side-effects/setUniform'
+import { generateWireframe } from '../../functions/generateWireframe'
 import { useStore } from '../useStore'
 import { boxIndices } from './boxIndices'
 import { boxVertex } from './boxVertex'
 import fragmentShaderText from './fragmentShader.glsl'
-import { generateWireframe } from './generateWireframe'
 import vertexShaderText from './vertexShader.glsl'
 
 const newVertex = boxVertex.filter(

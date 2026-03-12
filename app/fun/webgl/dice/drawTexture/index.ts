@@ -32,9 +32,6 @@ export const drawTexture = async (canvas: HTMLCanvasElement) => {
 
   gl.useProgram(program)
   gl.enable(gl.DEPTH_TEST)
-  gl.enable(gl.CULL_FACE)
-  gl.frontFace(gl.CCW)
-  gl.cullFace(gl.BACK)
 
   const texture = await createTexture(gl, diceTexture)
   setTexture(gl, program, 'texture', texture, 0)
