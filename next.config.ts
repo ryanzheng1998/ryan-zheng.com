@@ -7,6 +7,7 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  transpilePackages: ['three'],
   webpack: (config) => {
     config.module.rules.push({
       test: /\.glsl$/,
