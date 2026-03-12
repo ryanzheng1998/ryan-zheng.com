@@ -9,7 +9,7 @@ export default function Page() {
     <div className="h-screen w-screen">
       <Canvas>
         <color attach="background" args={['#000']} />
-        <ambientLight intensity={0.05} />
+        <ambientLight intensity={0.7} />
         <Dice />
         <OrbitControls />
 

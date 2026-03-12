@@ -144,7 +144,6 @@ export const Dice = () => {
           transparent
           opacity={0.5}
           side={THREE.BackSide}
-          blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
       </mesh>
