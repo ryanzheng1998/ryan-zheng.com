@@ -30,18 +30,18 @@ export default async function ProductivityProcrastinationPage({
         >
           {locale === 'en' ? 'Blog' : '部落格'}
         </a>
-        <LanguageSwitcher locale={locale} path="/blog" />
+        <LanguageSwitcher locale={locale} path={`/blog/${slug}`} />
       </nav>
 
       <article className="prose prose-neutral mx-auto max-w-3xl">
         <p className="text-sm text-gray-500">{post.date}</p>
-        <Post />
+        {locale === 'en' ? <EnglishPost /> : <ChinesePost />}
       </article>
     </main>
   )
 }
 
-function Post() {
+function EnglishPost() {
   return (
     <>
       <h1>Productivity Was My Favorite Form of Procrastination</h1>
@@ -217,6 +217,170 @@ function Post() {
       </p>
 
       <p>Maybe the goal was simply to build a life.</p>
+    </>
+  )
+}
+
+function ChinesePost() {
+  return (
+    <>
+      <h1>生產力曾是我最喜歡的拖延方式</h1>
+
+      <h2>我想，我一直用錯方式看待生產力</h2>
+
+      <p>從 2024 年開始，我一直在追逐生產力。</p>
+
+      <p>我讀了很多書：</p>
+
+      <ul>
+        <li>Getting Things Done</li>
+        <li>Building a Second Brain</li>
+        <li>Make Time</li>
+        <li>The Bullet Journal Method</li>
+        <li>Atomic Habits</li>
+      </ul>
+
+      <p>我也試過很多系統和工具：</p>
+
+      <ul>
+        <li>番茄鐘</li>
+        <li>各種筆記方法</li>
+        <li>彩虹行事曆</li>
+        <li>Obsidian</li>
+        <li>Notion</li>
+        <li>OpenClaw</li>
+        <li>Hermes agents</li>
+      </ul>
+
+      <p>大多數都失敗了。</p>
+
+      <p>或者更準確地說，我用了一陣子之後就不再用了。</p>
+
+      <p>很長一段時間，我以為問題是我還沒有找到對的系統。</p>
+
+      <p>但今天，我意識到一件事：</p>
+
+      <p>我想，我一直用錯方式看待生產力。</p>
+
+      <h2>缺少的那一塊</h2>
+
+      <p>如果沒有什麼有意義的東西需要我產出，那就不需要生產力系統。</p>
+
+      <p>在工作之外，這幾年我其實沒有創作太多東西。</p>
+
+      <p>我一直想做一個個人網站。</p>
+
+      <p>我一直想寫作。</p>
+
+      <p>我一直想提升英文。</p>
+
+      <p>但我只前進了一點點。</p>
+
+      <p>相反地，我把很多時間花在消費上。</p>
+
+      <p>看小說。</p>
+
+      <p>看 YouTube。</p>
+
+      <p>滑 YouTube Shorts。</p>
+
+      <p>玩遊戲。</p>
+
+      <p>看色情內容。</p>
+
+      <p>甚至讀生產力書籍。</p>
+
+      <p>回頭看，生產力內容也變成了另一種消費。</p>
+
+      <p>一種社會上比較能被接受的拖延。</p>
+
+      <p>它讓我覺得自己正在改善生活，但其實不需要我真的去做什麼。</p>
+
+      <h2>真正的問題</h2>
+
+      <p>我缺少的不是另一套建立習慣的框架。</p>
+
+      <p>不是另一個生產力 App。</p>
+
+      <p>也不是更好的 Life OS。</p>
+
+      <p>我缺少的是去做事情的勇氣。</p>
+
+      <p>創作的勇氣。</p>
+
+      <p>面對不舒服的勇氣。</p>
+
+      <p>逃離廉價多巴胺循環的勇氣。</p>
+
+      <p>因為創作很難。</p>
+
+      <p>發布一個網站很難。</p>
+
+      <p>寫一篇部落格很難。</p>
+
+      <p>去上英文課很難。</p>
+
+      <p>把自己的作品展示給別人看很難。</p>
+
+      <p>消費很容易。</p>
+
+      <p>網路提供了無止境的娛樂、資訊，以及延後行動的藉口。</p>
+
+      <h2>你會成為你花時間做的事</h2>
+
+      <p>我注意到一件很簡單的事。</p>
+
+      <p>我花時間打羽球。</p>
+
+      <p>結果，我的羽球變好了。</p>
+
+      <p>不是因為我找到了完美的羽球生產力系統。</p>
+
+      <p>不是因為我追蹤了每一次練習。</p>
+
+      <p>也不是因為我建立了羽球第二大腦。</p>
+
+      <p>我進步，是因為我有出現，然後去打。</p>
+
+      <p>同樣的原則也適用在其他地方。</p>
+
+      <p>如果我花時間做網站，我就會成為更好的 builder。</p>
+
+      <p>如果我花時間寫作，我就會成為更好的 writer。</p>
+
+      <p>如果我花時間練英文，我的英文就會變好。</p>
+
+      <p>我們會成為我們反覆做的事。</p>
+
+      <h2>接下來我想改做的事</h2>
+
+      <p>現在，我不想再尋找完美的生產力系統了。</p>
+
+      <p>我不想再尋找完美的 Life OS。</p>
+
+      <p>我不想再一直重整我的工具。</p>
+
+      <p>相反地，我想把時間花在產出上。</p>
+
+      <p>做我的個人網站。</p>
+
+      <p>寫部落格文章。</p>
+
+      <p>去上英文課。</p>
+
+      <p>創造一些昨天還不存在的東西。</p>
+
+      <p>不需要多革命性。</p>
+
+      <p>不需要多有野心。</p>
+
+      <p>只是去做。</p>
+
+      <p>一次做一件小事。</p>
+
+      <p>因為也許目標從來不是建立一套更好的生產力系統。</p>
+
+      <p>也許目標只是建立一種生活。</p>
     </>
   )
 }

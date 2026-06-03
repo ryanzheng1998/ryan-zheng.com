@@ -5,13 +5,16 @@ const routes = [
   '/zh',
   '/en/blog',
   '/zh/blog',
+  '/en/blog/finite-state-machines-code-reading',
+  '/zh/blog/finite-state-machines-code-reading',
   '/en/blog/life-changing-books',
   '/zh/blog/life-changing-books',
   '/en/blog/productivity-procrastination',
+  '/zh/blog/productivity-procrastination',
   '/en/projects',
   '/zh/projects',
-  '/en/fun/pose-detection',
-  '/zh/fun/pose-detection',
+  '/en/projects/pose-detection',
+  '/zh/projects/pose-detection',
 ]
 
 const failures = []
