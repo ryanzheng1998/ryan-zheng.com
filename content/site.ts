@@ -24,7 +24,6 @@ export const home = {
     languageLabel: '中文',
     navBlog: 'Blog',
     navProjects: 'Projects',
-    navFun: 'Fun',
     eyebrow: 'Ryan Zheng',
     introTitle: 'I write, build, and learn in public.',
     name: '鄭聖玄',
@@ -50,7 +49,6 @@ export const home = {
     languageLabel: 'English',
     navBlog: '部落格',
     navProjects: '作品',
-    navFun: '實驗',
     eyebrow: 'Ryan Zheng',
     introTitle: '我寫作、做東西，也把學習過程留下來。',
     name: '鄭聖玄',
@@ -75,7 +73,6 @@ export const home = {
   languageLabel: string
   navBlog: string
   navProjects: string
-  navFun: string
   eyebrow: string
   introTitle: string
   name: string
@@ -107,6 +104,10 @@ export const categoryNames = {
     en: 'Games & Interactive',
     zh: '遊戲與互動',
   },
+  computerVision: {
+    en: 'Computer Vision',
+    zh: '電腦視覺',
+  },
   ui: {
     en: 'UI / UX Experiments',
     zh: 'UI / UX 實驗',
@@ -129,7 +130,7 @@ export const projects: Project[] = [
   {
     id: 'spring-parameter-picker',
     categoryId: 'animation',
-    href: '/fun/spring-animation/spring-parameter-picker',
+    href: '/projects/spring-animation/spring-parameter-picker',
     title: {
       en: 'Spring Animation Picker',
       zh: '彈簧動畫參數選擇器',
@@ -138,7 +139,7 @@ export const projects: Project[] = [
   {
     id: 'flip-card',
     categoryId: 'animation',
-    href: '/fun/spring-animation/flip-card',
+    href: '/projects/spring-animation/flip-card',
     title: {
       en: 'Flip Card',
       zh: '翻牌動畫',
@@ -147,7 +148,7 @@ export const projects: Project[] = [
   {
     id: 'spring-flip-animation',
     categoryId: 'animation',
-    href: '/fun/spring-animation/flip-animation',
+    href: '/projects/spring-animation/flip-animation',
     title: {
       en: 'Spring Flip Animation',
       zh: '彈簧翻轉動畫',
@@ -156,7 +157,7 @@ export const projects: Project[] = [
   {
     id: 'floating-button',
     categoryId: 'animation',
-    href: '/fun/spring-animation/floating-button',
+    href: '/projects/spring-animation/floating-button',
     title: {
       en: 'Floating Button',
       zh: '浮動按鈕',
@@ -165,7 +166,7 @@ export const projects: Project[] = [
   {
     id: 'mount-unmount-spring',
     categoryId: 'animation',
-    href: '/fun/spring-animation/mount-unmount',
+    href: '/projects/spring-animation/mount-unmount',
     title: {
       en: 'Mount Unmount Spring',
       zh: '掛載與卸載動畫',
@@ -174,7 +175,7 @@ export const projects: Project[] = [
   {
     id: 'number-spring',
     categoryId: 'animation',
-    href: '/fun/spring-animation/number',
+    href: '/projects/spring-animation/number',
     title: {
       en: 'Number Spring',
       zh: '數字彈簧動畫',
@@ -183,7 +184,7 @@ export const projects: Project[] = [
   {
     id: 'star-spring',
     categoryId: 'animation',
-    href: '/fun/spring-animation/star',
+    href: '/projects/spring-animation/star',
     title: {
       en: 'Star Spring',
       zh: '星星彈簧動畫',
@@ -192,7 +193,7 @@ export const projects: Project[] = [
   {
     id: 'webgl-box',
     categoryId: 'graphics',
-    href: '/fun/webgl/box',
+    href: '/projects/webgl/box',
     title: {
       en: 'WebGL Box',
       zh: 'WebGL 盒子',
@@ -201,7 +202,7 @@ export const projects: Project[] = [
   {
     id: 'webgl-bloom',
     categoryId: 'graphics',
-    href: '/fun/webgl/bloom',
+    href: '/projects/webgl/bloom',
     title: {
       en: 'WebGL Bloom',
       zh: 'WebGL Bloom',
@@ -210,7 +211,7 @@ export const projects: Project[] = [
   {
     id: 'webgl-dice',
     categoryId: 'graphics',
-    href: '/fun/webgl/dice',
+    href: '/projects/webgl/dice',
     title: {
       en: 'WebGL Dice',
       zh: 'WebGL 骰子',
@@ -219,7 +220,7 @@ export const projects: Project[] = [
   {
     id: 'webgl-sphere',
     categoryId: 'graphics',
-    href: '/fun/webgl/sphere',
+    href: '/projects/webgl/sphere',
     title: {
       en: 'WebGL Sphere',
       zh: 'WebGL 球體',
@@ -228,10 +229,19 @@ export const projects: Project[] = [
   {
     id: 'webgl-wireframe',
     categoryId: 'graphics',
-    href: '/fun/webgl/wireframe',
+    href: '/projects/webgl/wireframe',
     title: {
       en: 'WebGL Wireframe',
       zh: 'WebGL 線框',
+    },
+  },
+  {
+    id: 'three-dice',
+    categoryId: 'graphics',
+    href: '/projects/three/dice',
+    title: {
+      en: 'Three.js Dice',
+      zh: 'Three.js 骰子',
     },
   },
   {
@@ -267,7 +277,7 @@ export const projects: Project[] = [
   {
     id: 'analog-clock',
     categoryId: 'interactive',
-    href: '/fun/analog-clock',
+    href: '/projects/analog-clock',
     title: {
       en: 'Analog Clock',
       zh: '類比時鐘',
@@ -276,16 +286,97 @@ export const projects: Project[] = [
   {
     id: 'pose-detection',
     categoryId: 'interactive',
-    href: '/fun/pose-detection',
+    href: '/projects/pose-detection',
     title: {
       en: 'Pose Detection',
       zh: '姿態偵測',
     },
   },
   {
+    id: 'forward-kinematics',
+    categoryId: 'interactive',
+    href: '/projects/forward-kinematics',
+    title: {
+      en: 'Forward Kinematics',
+      zh: '正向運動學',
+    },
+  },
+  {
+    id: 'inverse-kinematics',
+    categoryId: 'interactive',
+    href: '/projects/inverse-kinematics',
+    title: {
+      en: 'Inverse Kinematics',
+      zh: '反向運動學',
+    },
+  },
+  {
+    id: 'presentation',
+    categoryId: 'interactive',
+    href: '/projects/presentation',
+    title: {
+      en: 'Interactive Presentation',
+      zh: '互動簡報',
+    },
+  },
+  {
+    id: 'template-match',
+    categoryId: 'computerVision',
+    href: '/projects/cv/template-match',
+    title: {
+      en: 'Template Match',
+      zh: '模板比對',
+    },
+  },
+  {
+    id: 'align-two-image',
+    categoryId: 'computerVision',
+    href: '/projects/cv/align-two-image',
+    title: {
+      en: 'Align Two Images',
+      zh: '兩張圖片對齊',
+    },
+  },
+  {
+    id: 'match-golden',
+    categoryId: 'computerVision',
+    href: '/projects/cv/match-golden',
+    title: {
+      en: 'Match Golden',
+      zh: 'Golden Sample 比對',
+    },
+  },
+  {
+    id: 'optical-flow',
+    categoryId: 'computerVision',
+    href: '/projects/cv/optical-flow',
+    title: {
+      en: 'Optical Flow',
+      zh: '光流',
+    },
+  },
+  {
+    id: 'optical-flow-test',
+    categoryId: 'computerVision',
+    href: '/projects/cv/optical-flow-test',
+    title: {
+      en: 'Optical Flow Test',
+      zh: '光流測試',
+    },
+  },
+  {
+    id: 'orb-detect',
+    categoryId: 'computerVision',
+    href: '/projects/cv/orb-detect',
+    title: {
+      en: 'ORB Detect',
+      zh: 'ORB 特徵偵測',
+    },
+  },
+  {
     id: 'draggable',
     categoryId: 'ui',
-    href: '/fun/drag/draggable',
+    href: '/projects/drag/draggable',
     title: {
       en: 'Draggable',
       zh: '拖曳元件',
@@ -294,7 +385,7 @@ export const projects: Project[] = [
   {
     id: 'draggable-homing',
     categoryId: 'ui',
-    href: '/fun/drag/draggable-homing',
+    href: '/projects/drag/draggable-homing',
     title: {
       en: 'Draggable Homing',
       zh: '自動歸位拖曳',
@@ -303,16 +394,25 @@ export const projects: Project[] = [
   {
     id: 'draggable-slot',
     categoryId: 'ui',
-    href: '/fun/drag/draggable-homing-with-slot',
+    href: '/projects/drag/draggable-homing-with-slot',
     title: {
       en: 'Draggable w/ Slot',
       zh: '插槽拖曳',
     },
   },
   {
+    id: 'draggable-map',
+    categoryId: 'ui',
+    href: '/projects/drag/map',
+    title: {
+      en: 'Draggable Map',
+      zh: '拖曳地圖',
+    },
+  },
+  {
     id: 'webcam-mirror',
     categoryId: 'ui',
-    href: '/fun/webcam-mirror',
+    href: '/projects/webcam-mirror',
     title: {
       en: 'Webcam Mirror',
       zh: 'Webcam 鏡子',
@@ -321,7 +421,7 @@ export const projects: Project[] = [
   {
     id: 'todo-list',
     categoryId: 'ui',
-    href: '/fun/todo-list',
+    href: '/projects/todo-list',
     title: {
       en: 'Todo List',
       zh: '待辦清單',
@@ -330,7 +430,7 @@ export const projects: Project[] = [
   {
     id: 'flocking',
     categoryId: 'steering',
-    href: '/fun/steering/flocking',
+    href: '/projects/steering/flocking',
     title: {
       en: 'Flocking',
       zh: '群聚模擬',
@@ -339,7 +439,7 @@ export const projects: Project[] = [
   {
     id: 'single-vehicle-steering',
     categoryId: 'steering',
-    href: '/fun/steering/single-vehicle',
+    href: '/projects/steering/single-vehicle',
     title: {
       en: 'Single Vehicle Steering',
       zh: '單一載具 Steering',
@@ -378,7 +478,7 @@ export const projects: Project[] = [
   {
     id: 'google-ad-page',
     categoryId: 'other',
-    href: '/fun/ad/google',
+    href: '/projects/ad/google',
     title: {
       en: 'Google Ad Page',
       zh: 'Google 廣告頁',
@@ -387,7 +487,7 @@ export const projects: Project[] = [
   {
     id: 'oauth-demo',
     categoryId: 'other',
-    href: '/fun/oauth',
+    href: '/projects/oauth',
     title: {
       en: 'OAuth 2.0 Demo',
       zh: 'OAuth 2.0 Demo',
@@ -407,16 +507,29 @@ export const projects: Project[] = [
 
 export const blogPosts = [
   {
+    slug: 'finite-state-machines-code-reading',
+    date: '2026-06-03',
+    locales: ['en', 'zh'],
+    title: {
+      en: 'Finite State Machines Changed How I Read Code',
+      zh: '有限狀態機改變了我閱讀程式碼的方式',
+    },
+    description: {
+      en: 'A practical way to understand software architecture by finding where state lives and how it changes.',
+      zh: '透過找出狀態在哪裡，以及狀態如何改變，來理解軟體架構。',
+    },
+  },
+  {
     slug: 'productivity-procrastination',
     date: '2026-06-03',
-    locales: ['en'],
+    locales: ['en', 'zh'],
     title: {
       en: 'Productivity Was My Favorite Form of Procrastination',
-      zh: 'Productivity Was My Favorite Form of Procrastination',
+      zh: '生產力曾是我最喜歡的拖延方式',
     },
     description: {
       en: 'A reflection on productivity systems, consumption, and the courage to create.',
-      zh: 'A reflection on productivity systems, consumption, and the courage to create.',
+      zh: '關於生產力系統、消費，以及創作勇氣的一些反思。',
     },
   },
   {

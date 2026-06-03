@@ -48,9 +48,6 @@ export default async function Home({ params }: Props) {
           >
             {content.navProjects}
           </a>
-          <a href={`/${locale}/fun`} className="hidden hover:text-neutral-950 sm:inline">
-            {content.navFun}
-          </a>
           <LanguageSwitcher locale={locale} />
         </nav>
       </header>
@@ -83,7 +80,7 @@ export default async function Home({ params }: Props) {
           </div>
         </div>
 
-        <div className="justify-self-start lg:justify-self-end">
+        <div className="justify-self-center text-center lg:justify-self-end lg:text-left">
           <Image
             src="/me.jpeg"
             width={360}
