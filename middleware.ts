@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { defaultLocale } from './content/locales'
 import { getLocale } from './functions/getLocale'
 
 export function middleware(request: NextRequest) {
@@ -9,15 +10,12 @@ export function middleware(request: NextRequest) {
   }
 
   const locale = getLocale(request)
+  const targetLocale = locale === 'zh' ? 'zh' : defaultLocale
 
-  if (locale === 'cn') {
-    const url = request.nextUrl.clone()
-    url.pathname = `/${locale}`
+  const url = request.nextUrl.clone()
+  url.pathname = `/${targetLocale}`
 
-    return NextResponse.redirect(url)
-  }
-
-  return NextResponse.next()
+  return NextResponse.redirect(url)
 }
 
 export const config = {
