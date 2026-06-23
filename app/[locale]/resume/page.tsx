@@ -1,6 +1,6 @@
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
-import { home } from '@/content/site'
 import { isLocale, type Locale } from '@/content/locales'
+import { home } from '@/content/site'
 import { notFound } from 'next/navigation'
 
 type Props = {
@@ -12,7 +12,7 @@ type ResumeSection = {
   items: string[]
 }
 
-const profile = {
+export const resumeProfiles = {
   zh: {
     title: '軟體工程師',
     location: 'AI 應用 / 智慧製造 / 自動化系統',
@@ -182,27 +182,62 @@ export default async function ResumePage({ params }: Props) {
   }
 
   const locale: Locale = localeParam
-  const content = profile[locale]
+  const content = resumeProfiles[locale]
 
+  return <ResumeContent content={content} locale={locale} />
+}
+
+export function ResumeContent({
+  content,
+  fixed = false,
+  locale = 'zh',
+  showNav = true,
+}: {
+  content: (typeof resumeProfiles)[Locale]
+  fixed?: boolean
+  locale?: Locale
+  showNav?: boolean
+}) {
   return (
-    <main className="resume-shell min-h-screen bg-stone-100 px-4 py-6 font-sans text-neutral-900 sm:px-6 sm:py-10">
-      <PrintResume content={content} />
-
-      <nav className="resume-nav mx-auto mb-6 flex w-full max-w-[210mm] items-center justify-between">
-        <a href={`/${locale}`} className="text-sm font-semibold text-blue-700">
-          Ryan Zheng
-        </a>
-        <div className="flex items-center gap-4 text-sm font-medium text-neutral-600">
-          <a href={`/${locale}/projects`} className="hover:text-neutral-950">
-            {home[locale].navProjects}
+    <main className="resume-shell min-h-screen overflow-auto bg-stone-100 px-4 py-6 font-sans text-neutral-900 sm:px-6 sm:py-10">
+      {showNav && (
+        <nav className="mx-auto mb-6 flex w-full max-w-[210mm] items-center justify-between">
+          <a
+            href={`/${locale}`}
+            className="text-sm font-semibold text-blue-700"
+          >
+            Ryan Zheng
           </a>
-          <LanguageSwitcher locale={locale} path="/resume" />
-        </div>
-      </nav>
+          <div className="flex items-center gap-4 text-sm font-medium text-neutral-600">
+            <a href={`/${locale}/projects`} className="hover:text-neutral-950">
+              {home[locale].navProjects}
+            </a>
+            <a
+              href={`/${locale}/resume/print`}
+              className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-600 shadow-sm transition hover:border-blue-500 hover:text-blue-600"
+            >
+              Print
+            </a>
+            <LanguageSwitcher locale={locale} path="/resume" />
+          </div>
+        </nav>
+      )}
 
-      <article className="resume-paper mx-auto w-full max-w-[210mm] rounded-lg border border-neutral-200 bg-white p-6 shadow-xl shadow-neutral-200 sm:p-10">
+      <article
+        className={`resume-paper mx-auto h-[297mm] w-[210mm] overflow-hidden bg-white p-[11mm] ${
+          fixed
+            ? 'shrink-0'
+            : 'max-w-full rounded-lg shadow-xl shadow-neutral-200 sm:p-10'
+        }`}
+      >
         <header className="border-b border-neutral-200 pb-5">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+          <div
+            className={
+              fixed
+                ? 'flex flex-row items-start justify-between gap-4'
+                : 'flex flex-col justify-between gap-4 sm:flex-row sm:items-start'
+            }
+          >
             <div>
               <p className="text-sm font-semibold uppercase text-teal-700">
                 {content.title}
@@ -214,7 +249,13 @@ export default async function ResumePage({ params }: Props) {
                 {content.location}
               </p>
             </div>
-            <div className="text-left text-sm leading-6 text-neutral-700 sm:text-right">
+            <div
+              className={
+                fixed
+                  ? 'text-right text-sm leading-6 text-neutral-700'
+                  : 'text-left text-sm leading-6 text-neutral-700 sm:text-right'
+              }
+            >
               <a
                 href="mailto:ryanzheng1998@gmail.com"
                 className="font-semibold text-blue-700"
@@ -226,7 +267,13 @@ export default async function ResumePage({ params }: Props) {
           <p className="mt-5 text-[15px] leading-7 text-neutral-700">
             {content.summary}
           </p>
-          <ul className="mt-4 grid gap-2 text-sm leading-6 text-neutral-700 sm:grid-cols-3">
+          <ul
+            className={
+              fixed
+                ? 'mt-4 grid grid-cols-3 gap-2 text-sm leading-6 text-neutral-700'
+                : 'mt-4 grid gap-2 text-sm leading-6 text-neutral-700 sm:grid-cols-3'
+            }
+          >
             {content.strengths.map((strength) => (
               <li key={strength} className="border-l-2 border-teal-600 pl-3">
                 {strength}
@@ -235,10 +282,22 @@ export default async function ResumePage({ params }: Props) {
           </ul>
         </header>
 
-        <div className="grid gap-8 pt-6 lg:grid-cols-[1.65fr_0.9fr]">
+        <div
+          className={
+            fixed
+              ? 'grid grid-cols-[1.65fr_0.9fr] gap-8 pt-6'
+              : 'grid gap-8 pt-6 lg:grid-cols-[1.65fr_0.9fr]'
+          }
+        >
           <section>
             <SectionTitle>{content.experienceTitle}</SectionTitle>
-            <div className="mt-3 flex flex-col justify-between gap-1 border-b border-neutral-200 pb-3 sm:flex-row sm:items-end">
+            <div
+              className={
+                fixed
+                  ? 'mt-3 flex flex-row items-end justify-between gap-1 border-b border-neutral-200 pb-3'
+                  : 'mt-3 flex flex-col justify-between gap-1 border-b border-neutral-200 pb-3 sm:flex-row sm:items-end'
+              }
+            >
               <div>
                 <h2 className="text-xl font-bold text-neutral-950">
                   {content.company}
@@ -305,79 +364,6 @@ export default async function ResumePage({ params }: Props) {
         </div>
       </article>
     </main>
-  )
-}
-
-function PrintResume({ content }: { content: (typeof profile)[Locale] }) {
-  return (
-    <article className="resume-print">
-      <header className="resume-print-header">
-        <div>
-          <p className="resume-print-role">{content.title}</p>
-          <h1>鄭聖玄 Ryan Zheng</h1>
-          <p className="resume-print-subtitle">{content.location}</p>
-        </div>
-        <p className="resume-print-contact">ryanzheng1998@gmail.com</p>
-      </header>
-
-      <section className="resume-print-summary">
-        <p>{content.summary}</p>
-        <ul className="resume-print-strengths">
-          {content.strengths.map((strength) => (
-            <li key={strength}>{strength}</li>
-          ))}
-        </ul>
-      </section>
-
-      <div className="resume-print-body">
-        <section>
-          <h2>{content.experienceTitle}</h2>
-          <div className="resume-print-job">
-            <div>
-              <h3>{content.company}</h3>
-              <p>{content.role}</p>
-            </div>
-            <p>{content.period}</p>
-          </div>
-
-          {content.sections.map((section) => (
-            <section className="resume-print-project" key={section.title}>
-              <h3>{section.title}</h3>
-              <ul>
-                {section.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </section>
-
-        <aside className="resume-print-sidebar">
-          <section>
-            <h2>{content.skillsTitle}</h2>
-            {content.skills.map(([label, value]) => (
-              <div className="resume-print-skill" key={label}>
-                <h3>{label}</h3>
-                <p>{value}</p>
-              </div>
-            ))}
-          </section>
-
-          <section>
-            <h2>{content.educationTitle}</h2>
-            <p>
-              <strong>{content.education}</strong>
-            </p>
-            <p>{content.educationPeriod}</p>
-          </section>
-
-          <section>
-            <h2>{content.languageTitle}</h2>
-            <p>{content.language}</p>
-          </section>
-        </aside>
-      </div>
-    </article>
   )
 }
 
