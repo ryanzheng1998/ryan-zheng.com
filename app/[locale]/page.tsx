@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { isLocale, type Locale } from '@/content/locales'
 import { blogPosts, home, projects, socialLinks } from '@/content/site'
@@ -39,7 +38,10 @@ export default async function Home({ params }: Props) {
           Ryan Zheng
         </a>
         <nav className="flex items-center gap-5 text-sm font-medium text-neutral-600">
-          <a href={`/${locale}/blog`} className="hidden hover:text-neutral-950 sm:inline">
+          <a
+            href={`/${locale}/blog`}
+            className="hidden hover:text-neutral-950 sm:inline"
+          >
             {content.navBlog}
           </a>
           <a
@@ -48,11 +50,17 @@ export default async function Home({ params }: Props) {
           >
             {content.navProjects}
           </a>
+          <a
+            href={`/${locale}/resume`}
+            className="hidden hover:text-neutral-950 sm:inline"
+          >
+            {content.navResume}
+          </a>
           <LanguageSwitcher locale={locale} />
         </nav>
       </header>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-8 sm:px-8 lg:grid-cols-[1fr_360px] lg:pb-24 lg:pt-16">
+      <section className="mx-auto max-w-6xl px-5 pb-16 pt-8 sm:px-8 lg:pb-24 lg:pt-16">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">
             {content.eyebrow}
@@ -78,20 +86,6 @@ export default async function Home({ params }: Props) {
               {content.secondaryAction}
             </a>
           </div>
-        </div>
-
-        <div className="justify-self-center text-center lg:justify-self-end lg:text-left">
-          <Image
-            src="/me.jpeg"
-            width={360}
-            height={480}
-            priority
-            alt={locale === 'en' ? 'Ryan Zheng' : 'Ryan Zheng 的照片'}
-            className="aspect-[3/4] w-64 rounded-lg object-cover shadow-2xl shadow-neutral-300 sm:w-80 lg:w-[360px]"
-          />
-          <p className="mt-4 text-sm leading-6 text-neutral-600">
-            {content.name}
-          </p>
         </div>
       </section>
 
@@ -152,9 +146,7 @@ export default async function Home({ params }: Props) {
             <li key={project.id}>
               <a
                 href={
-                  project.external
-                    ? project.href
-                    : `/${locale}${project.href}`
+                  project.external ? project.href : `/${locale}${project.href}`
                 }
                 target={project.external ? '_blank' : undefined}
                 rel={project.external ? 'noopener noreferrer' : undefined}
