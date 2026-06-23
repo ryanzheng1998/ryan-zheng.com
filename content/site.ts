@@ -24,6 +24,7 @@ export const home = {
     languageLabel: '中文',
     navBlog: 'Blog',
     navProjects: 'Projects',
+    navResume: 'Resume',
     eyebrow: 'Ryan Zheng',
     introTitle: 'I write, build, and learn in public.',
     name: '鄭聖玄',
@@ -36,9 +37,11 @@ export const home = {
     primaryAction: 'Read the blog',
     secondaryAction: 'See projects',
     blogHeading: 'Blog',
-    blogSubheading: 'Notes on books, work, and the parts of life I am trying to understand.',
+    blogSubheading:
+      'Notes on books, work, and the parts of life I am trying to understand.',
     projectsHeading: 'Projects',
-    projectsSubheading: 'Selected experiments across graphics, motion, computer vision, and interaction.',
+    projectsSubheading:
+      'Selected experiments across graphics, motion, computer vision, and interaction.',
     linksHeading: 'Links',
     viewAllProjects: 'View all projects',
     latestLabel: 'Latest writing',
@@ -49,10 +52,12 @@ export const home = {
     languageLabel: 'English',
     navBlog: '部落格',
     navProjects: '作品',
+    navResume: '履歷',
     eyebrow: 'Ryan Zheng',
     introTitle: '我寫作、做東西，也把學習過程留下來。',
     name: '鄭聖玄',
-    summary: '這是我的個人網站，用來整理文章、作品，以及那些我反覆想做好的軟體小實驗。',
+    summary:
+      '這是我的個人網站，用來整理文章、作品，以及那些我反覆想做好的軟體小實驗。',
     paragraphs: [
       '我喜歡閱讀與動手做東西。最近，我常在思考我的未來：我應該換工作、探索新的道路，還是繼續在現有的地方成長？',
       '這個網站是我旅程的一部分。用來分享我做過的事，也許也能幫助我發現自己未來會成為什麼樣子。',
@@ -73,6 +78,7 @@ export const home = {
   languageLabel: string
   navBlog: string
   navProjects: string
+  navResume: string
   eyebrow: string
   introTitle: string
   name: string
