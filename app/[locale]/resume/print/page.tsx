@@ -1,4 +1,7 @@
-import { ResumeContent, resumeProfiles } from '@/app/[locale]/resume/page'
+import {
+  ResumeContent,
+  resumeProfiles,
+} from '@/app/[locale]/resume/ResumeContent'
 import { isLocale, type Locale } from '@/content/locales'
 import { notFound } from 'next/navigation'
 
