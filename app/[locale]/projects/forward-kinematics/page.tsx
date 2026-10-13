@@ -54,31 +54,43 @@ export default function InverseKinematicsPage() {
         <circle cx={arm1X1} cy={arm1Y1} r="2" fill="blue" />
         <circle cx={arm2X2} cy={arm2Y2} r="2" fill="green" />
       </svg>
-      <div className="fixed left-0 top-0 m-6 grid gap-6 rounded bg-white p-4 text-white">
-        <input
-          type="range"
-          min="-180"
-          max="180"
-          step="1"
-          value={store.angle1}
-          onChange={(e) => set({ angle1: Number(e.target.value) })}
-        />
-        <input
-          type="range"
-          min="-180"
-          max="180"
-          step="1"
-          value={store.angle2}
-          onChange={(e) => set({ angle2: Number(e.target.value) })}
-        />
-        <input
-          type="range"
-          min="-180"
-          max="180"
-          step="1"
-          value={store.angle3}
-          onChange={(e) => set({ angle3: Number(e.target.value) })}
-        />
+      <div className="fixed left-0 top-0 m-5 grid gap-4 rounded-lg bg-[#f7f4ec] p-5 text-[#183e35]">
+        <label className="grid gap-2 text-xs">
+          Joint 1: {store.angle1}°
+          <input
+            aria-label="Joint 1 angle"
+            type="range"
+            min="-180"
+            max="180"
+            step="1"
+            value={store.angle1}
+            onChange={(e) => set({ angle1: Number(e.target.value) })}
+          />
+        </label>
+        <label className="grid gap-2 text-xs">
+          Joint 2: {store.angle2}°
+          <input
+            aria-label="Joint 2 angle"
+            type="range"
+            min="-180"
+            max="180"
+            step="1"
+            value={store.angle2}
+            onChange={(e) => set({ angle2: Number(e.target.value) })}
+          />
+        </label>
+        <label className="grid gap-2 text-xs">
+          Joint 3: {store.angle3}°
+          <input
+            aria-label="Joint 3 angle"
+            type="range"
+            min="-180"
+            max="180"
+            step="1"
+            value={store.angle3}
+            onChange={(e) => set({ angle3: Number(e.target.value) })}
+          />
+        </label>
       </div>
     </div>
   )

@@ -13,6 +13,16 @@ export default function Home() {
     <div className="grid h-screen w-screen justify-center pb-[100px]">
       <div className="flex flex-col-reverse gap-7">
         <div
+          role="button"
+          tabIndex={0}
+          aria-label="Toggle floating buttons"
+          aria-expanded={!float}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              e.currentTarget.click()
+            }
+          }}
           className="z-30 aspect-square w-[100px] cursor-pointer rounded-full bg-black"
           onClick={() => {
             setFloat((x) => !x)
@@ -51,10 +61,11 @@ export default function Home() {
                 if (timeDelta > 0.1) {
                   time = t
                   requestAnimationFrame(step)
+                  return
                 }
 
                 if (
-                  velocity < precision &&
+                  Math.abs(velocity) < precision &&
                   Math.abs(position - springPosition) < precision
                 ) {
                   element.style.transform = ''

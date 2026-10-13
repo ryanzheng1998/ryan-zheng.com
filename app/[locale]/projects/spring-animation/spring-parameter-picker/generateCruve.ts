@@ -1,22 +1,22 @@
 export const generateCruve = (config: {
-  from: number;
-  springPosition: number;
-  stiffness: number;
-  damping: number;
-  precision: number;
-  mass: number;
-  timeSlowdown: number;
-  initialVelocity: number;
+  from: number
+  springPosition: number
+  stiffness: number
+  damping: number
+  precision: number
+  mass: number
+  timeSlowdown: number
+  initialVelocity: number
 }) => {
-  let answer: number[] = [config.from];
+  let answer: number[] = [config.from]
 
   const animationState = {
     position: config.from,
     velocity: config.initialVelocity,
-  };
+  }
 
   while (true) {
-    const { position, velocity } = animationState;
+    const { position, velocity } = animationState
     const {
       springPosition,
       stiffness,
@@ -24,36 +24,37 @@ export const generateCruve = (config: {
       precision,
       mass,
       timeSlowdown,
-    } = config;
-    const timeDelta = 16 / 1000 / timeSlowdown;
+    } = config
+    const timeDelta = 16 / 1000 / Math.max(0.1, timeSlowdown)
 
     // Cancel animation frame when animation stop
     if (
-      velocity < precision &&
+      Math.abs(velocity) < precision &&
       Math.abs(position - springPosition) < precision
     ) {
-      answer.push(springPosition);
-      break;
+      answer.push(springPosition)
+      break
     }
 
     // Prevent non-stop animation
     if (answer.length > 1000) {
-      break;
+      break
     }
 
     // Apply spring force
-    const springForce = (springPosition - position) * stiffness;
-    const dampingForce = -velocity * damping;
-    const totalForce = springForce + dampingForce;
-    const acceleration = totalForce / mass;
-    const nextVelocity = velocity + acceleration * timeDelta;
-    const nextPosition = position + nextVelocity * timeDelta;
+    const springForce = (springPosition - position) * stiffness
+    const dampingForce = -velocity * damping
+    const totalForce = springForce + dampingForce
+    const acceleration = totalForce / Math.max(0.1, mass)
+    const nextVelocity = velocity + acceleration * timeDelta
+    const nextPosition = position + nextVelocity * timeDelta
 
-    answer.push(nextPosition);
+    if (!Number.isFinite(nextPosition)) break
+    answer.push(nextPosition)
 
-    animationState.position = nextPosition;
-    animationState.velocity = nextVelocity;
+    animationState.position = nextPosition
+    animationState.velocity = nextVelocity
   }
 
-  return answer;
-};
+  return answer
+}

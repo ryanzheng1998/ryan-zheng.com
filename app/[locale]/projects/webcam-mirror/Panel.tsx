@@ -6,7 +6,7 @@ export const Panel = () => {
 
   return (
     <div className="fixed left-5 top-5 rounded-2xl bg-white/90 p-5 shadow-lg backdrop-blur-md">
-      <h1 className="text-xl font-semibold text-gray-800">🎥 Webcam Mirror</h1>
+      <h1 className="text-xl font-semibold text-gray-800">Webcam Mirror</h1>
 
       {store.videoDevices.length === 0 ? (
         <div className="mt-4 rounded-lg bg-gray-100 px-4 py-3 text-gray-500">
@@ -14,6 +14,7 @@ export const Panel = () => {
         </div>
       ) : (
         <select
+          aria-label="Select camera"
           onChange={(e) => {
             const deviceId = e.target.value
             void changeVideoDevice(deviceId)

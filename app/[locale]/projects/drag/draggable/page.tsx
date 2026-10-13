@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="grid h-screen w-screen place-items-center overflow-hidden">
       <div
-        className="cursor-grab select-none rounded bg-green-500 px-9 py-6 text-7xl text-white shadow"
+        className="cursor-grab touch-none select-none rounded bg-green-500 px-3 py-4 text-sm text-white shadow sm:px-9 sm:py-6 sm:text-3xl sm:text-7xl"
         onPointerDown={(e) => {
           const element = e.currentTarget
           element.setPointerCapture(e.pointerId)

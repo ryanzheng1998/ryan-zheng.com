@@ -59,19 +59,19 @@ export default function Home() {
         ref={parentRef}
         className="grid h-screen w-screen grid-cols-3 place-items-center overflow-hidden"
       >
-        <div className="select-none rounded px-9 py-6 text-3xl text-transparent outline outline-8 outline-gray-500">
+        <div className="select-none rounded px-3 py-4 text-sm text-transparent outline outline-8 outline-gray-500 sm:px-9 sm:py-6 sm:text-3xl">
           Draggable
         </div>
-        <div className="select-none rounded px-9 py-6 text-3xl text-transparent outline outline-8 outline-gray-500">
+        <div className="select-none rounded px-3 py-4 text-sm text-transparent outline outline-8 outline-gray-500 sm:px-9 sm:py-6 sm:text-3xl">
           Draggable
         </div>
-        <div className="select-none rounded px-9 py-6 text-3xl text-transparent outline outline-8 outline-gray-500">
+        <div className="select-none rounded px-3 py-4 text-sm text-transparent outline outline-8 outline-gray-500 sm:px-9 sm:py-6 sm:text-3xl">
           Draggable
         </div>
       </div>
       <div
         ref={draggableRef}
-        className="fixed left-0 top-0 cursor-grab select-none rounded bg-green-400 px-9 py-6 text-3xl"
+        className="fixed left-0 top-0 cursor-grab touch-none select-none rounded bg-green-400 px-3 py-4 text-sm sm:px-9 sm:py-6 sm:text-3xl"
         onPointerDown={(e) => {
           const element = e.currentTarget
           element.setPointerCapture(e.pointerId)

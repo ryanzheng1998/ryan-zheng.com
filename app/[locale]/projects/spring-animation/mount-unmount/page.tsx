@@ -7,7 +7,7 @@ export default function Home() {
   const [show, setShow] = useState(true)
 
   const ref = useSpring<HTMLDivElement>({
-    springPosition: show ? 0 : 1,
+    springPosition: show ? 1 : 0,
     transform: (position, element) => {
       element.style.opacity = `${position}`
     },
@@ -20,7 +20,7 @@ export default function Home() {
           ✌️
         </div>
         <button
-          className="rounded bg-blue-500 px-2 py-3 text-white"
+          className="rounded-lg bg-[#183e35] px-2 py-3 text-white"
           onClick={() => setShow((x) => !x)}
         >
           Toggle Show

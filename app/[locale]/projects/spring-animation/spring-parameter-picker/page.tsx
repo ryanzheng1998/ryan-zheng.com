@@ -1,31 +1,47 @@
-"use client";
+'use client'
 
-import { LineChart } from "@mui/x-charts";
-import { Inputs } from "./Inputs";
-import { generateCruve } from "./generateCruve";
-import { useStore } from "./useStore";
+import { useParams } from 'next/navigation'
+import { SiteHeader } from '@/components/SiteHeader'
+import { LineChart } from '@mui/x-charts'
+import { DemoIntro } from '@/components/DemoIntro'
+import { Inputs } from './Inputs'
+import { generateCruve } from './generateCruve'
+import { useStore } from './useStore'
 
 export default function Home() {
-  const state = useStore();
-  const cruve = generateCruve(state);
+  const { locale } = useParams<{ locale: string }>()
+  const state = useStore()
+  const cruve = generateCruve(state)
 
   return (
-    <div className="grid place-items-center gap-5 p-10">
-      <h1 className="text-4xl font-bold">Spring Parameter Picker</h1>
-      <Inputs />
-      <LineChart
-        xAxis={[{ data: cruve.map((_, i) => i * 16), label: "Time (ms)" }]}
-        yAxis={[{ label: "Value" }]}
-        series={[
-          {
-            data: cruve,
-            connectNulls: true,
-            showMark: false,
-          },
-        ]}
-        width={800}
-        height={400}
+    <main className="editorial-site">
+      <SiteHeader
+        locale={locale === 'zh' ? 'zh' : 'en'}
+        path="/projects/spring-animation/spring-parameter-picker"
       />
-    </div>
-  );
+      <div
+        id="main-content"
+        className="mx-auto grid w-full min-w-0 max-w-4xl gap-8 px-5 py-12"
+      >
+        <div className="demo-content w-full">
+          <DemoIntro id="spring-parameter-picker" />
+        </div>
+        <Inputs />
+        <div className="min-w-0 rounded-xl bg-white p-2 sm:p-5">
+          <LineChart
+            xAxis={[{ data: cruve.map((_, i) => i * 16), label: 'Time (ms)' }]}
+            yAxis={[{ label: 'Value' }]}
+            series={[
+              {
+                data: cruve,
+                connectNulls: true,
+                showMark: false,
+              },
+            ]}
+            height={400}
+          />
+        </div>
+      </div>
+    </main>
+  )
 }

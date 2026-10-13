@@ -1,24 +1,24 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
 interface State {
-  from: number;
-  springPosition: number;
-  stiffness: number;
-  damping: number;
-  precision: number;
-  mass: number;
-  timeSlowdown: number;
-  initialVelocity: number;
+  from: number
+  springPosition: number
+  stiffness: number
+  damping: number
+  precision: number
+  mass: number
+  timeSlowdown: number
+  initialVelocity: number
   setState: (config: {
-    from?: number;
-    springPosition?: number;
-    stiffness?: number;
-    damping?: number;
-    precision?: number;
-    mass?: number;
-    timeSlowdown?: number;
-    initialVelocity?: number;
-  }) => void;
+    from?: number
+    springPosition?: number
+    stiffness?: number
+    damping?: number
+    precision?: number
+    mass?: number
+    timeSlowdown?: number
+    initialVelocity?: number
+  }) => void
 }
 
 export const useStore = create<State>((set) => ({
@@ -31,18 +31,18 @@ export const useStore = create<State>((set) => ({
   timeSlowdown: 1,
   initialVelocity: 0,
   setState: (config: {
-    from?: number;
-    springPosition?: number;
-    stiffness?: number;
-    damping?: number;
-    precision?: number;
-    mass?: number;
-    timeSlowdown?: number;
-    initialVelocity?: number;
+    from?: number
+    springPosition?: number
+    stiffness?: number
+    damping?: number
+    precision?: number
+    mass?: number
+    timeSlowdown?: number
+    initialVelocity?: number
   }) => {
     set((state) => ({
       ...state,
       ...config,
-    }));
+    }))
   },
-}));
+}))

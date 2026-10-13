@@ -10,5 +10,5 @@ export default function Page() {
     drawBloom(canvas)
   }, [])
 
-  return <canvas id="canvas" />
+  return <canvas aria-label="Bloom WebGL scene" id="canvas" />
 }

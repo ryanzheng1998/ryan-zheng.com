@@ -1,78 +1,89 @@
 'use client'
+import { useParams } from 'next/navigation'
+import { DemoIntro } from '@/components/DemoIntro'
 import { useStore } from './useStore'
 
 export default function Todo() {
   const [state, dispatch] = useStore()
-
+  const { locale } = useParams<{ locale: string }>()
+  const zh = locale === 'zh'
+  const entries = Object.entries(state.todos)
+  const remaining = entries.filter(([, todo]) => !todo.completed).length
   return (
-    <div className="mx-auto max-w-xl rounded-xl bg-white p-6 shadow-lg dark:bg-gray-800">
-      <h1 className="mb-6 text-center text-2xl font-bold text-gray-800 dark:text-white">
-        📝 Todo List
-      </h1>
-
-      <div className="mb-6 flex gap-3">
-        <input
-          type="text"
-          value={state.todoInput}
-          className={styledInput}
-          placeholder="What do you need to do?"
-          onChange={(e) =>
-            dispatch({ type: 'EditInput', text: e.target.value })
-          }
-        />
-        <button
-          className={styledButton}
-          onClick={() => {
-            if (state.todoInput === '') return console.log('empty')
+    <main className="demo-surface">
+      <div className="demo-content max-w-xl">
+        <DemoIntro id="todo-list" />
+        <form
+          className="mb-6 flex gap-3"
+          onSubmit={(e) => {
+            e.preventDefault()
+            const text = state.todoInput.trim()
+            if (!text) return
             dispatch({
               type: 'AddTodo',
               id: crypto.randomUUID(),
-              description: state.todoInput,
+              description: text,
             })
+            dispatch({ type: 'EditInput', text: '' })
           }}
         >
-          ➕ Add
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        {Object.entries(state.todos).map(([id, todo]) => (
-          <div
-            key={id}
-            className="flex items-center justify-between rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 dark:border-gray-600 dark:bg-gray-700"
-          >
-            <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                className="h-5 w-5"
-                onChange={() => dispatch({ type: 'ToggleTodoCompletion', id })}
-              />
-              <p
-                className={`text-sm ${
-                  todo.completed
-                    ? 'text-gray-400 line-through'
-                    : 'text-gray-800 dark:text-white'
-                }`}
-              >
-                {todo.description}
-              </p>
-            </div>
-            <button
-              className="text-red-500 hover:text-red-700"
-              onClick={() => dispatch({ type: 'DeleteTodo', id })}
+          <input
+            aria-label={zh ? '新增待辦事項' : 'New task'}
+            value={state.todoInput}
+            className="min-w-0 flex-1 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm"
+            placeholder={zh ? '接下來要做什麼？' : 'What do you need to do?'}
+            onChange={(e) =>
+              dispatch({ type: 'EditInput', text: e.target.value })
+            }
+          />
+          <button className="button-primary" disabled={!state.todoInput.trim()}>
+            {zh ? '新增' : 'Add'}
+          </button>
+        </form>
+        <p className="mb-5 text-xs text-neutral-500" role="status">
+          {zh
+            ? `${remaining} 項未完成`
+            : `${remaining} ${remaining === 1 ? 'task' : 'tasks'} remaining`}
+        </p>
+        {!entries.length && (
+          <p className="rounded-lg border border-dashed border-neutral-300 p-8 text-center text-sm text-neutral-500">
+            {zh
+              ? '清單還是空的，新增第一個待辦事項吧。'
+              : 'A clear slate. Add your first task above.'}
+          </p>
+        )}
+        <ul className="space-y-3">
+          {entries.map(([id, todo]) => (
+            <li
+              key={id}
+              className="flex items-center justify-between gap-3 rounded-lg border border-neutral-200 bg-white p-4"
             >
-              🗑
-            </button>
-          </div>
-        ))}
+              <label className="flex min-w-0 items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  className="h-5 w-5 shrink-0 accent-[#183e35]"
+                  onChange={() =>
+                    dispatch({ type: 'ToggleTodoCompletion', id })
+                  }
+                />
+                <span
+                  className={`break-words text-sm ${todo.completed ? 'text-neutral-400 line-through' : ''}`}
+                >
+                  {todo.description}
+                </span>
+              </label>
+              <button
+                className="shrink-0 text-xs text-[#924327]"
+                aria-label={`${zh ? '刪除' : 'Delete'}: ${todo.description}`}
+                onClick={() => dispatch({ type: 'DeleteTodo', id })}
+              >
+                {zh ? '刪除' : 'Delete'}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </main>
   )
 }
-
-const styledInput =
-  'flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400'
-
-const styledButton =
-  'rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition-colors'

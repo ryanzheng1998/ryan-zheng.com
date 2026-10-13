@@ -1,46 +1,32 @@
 import { set } from './useStore'
 
-export const initDeviceList = async () => {
-  set({
-    webcamLoading: true,
-    webcamError: null,
-  })
-
-  //
-  // Request camera permission first
-  //
+export const initDeviceList = async (signal?: AbortSignal) => {
+  set({ webcamLoading: true, webcamError: null })
+  let stream: MediaStream | undefined
   try {
-    await navigator.mediaDevices.getUserMedia({
-      video: true,
-    })
+    stream = await navigator.mediaDevices.getUserMedia({ video: true })
+    if (signal?.aborted) {
+      stream.getTracks().forEach((track) => track.stop())
+      return
+    }
+    const devices = await navigator.mediaDevices.enumerateDevices()
+    if (signal?.aborted) {
+      stream.getTracks().forEach((track) => track.stop())
+      return
+    }
+    const videoDevices = devices.filter(
+      (device) => device.kind === 'videoinput',
+    )
+    if (!videoDevices.length)
+      throw new Error('No camera found. Connect a camera and try again.')
+    set({ videoDevices, stream, webcamLoading: false })
   } catch (error) {
-    const e = error instanceof Error ? error : new Error('Unknown error')
-    set({
-      webcamLoading: false,
-      webcamError: e,
-    })
-    return
+    stream?.getTracks().forEach((track) => track.stop())
+    if (!signal?.aborted)
+      set({
+        webcamLoading: false,
+        webcamError:
+          error instanceof Error ? error : new Error('Unable to start camera.'),
+      })
   }
-
-  //
-  // This should be called after permission is granted
-  //
-  const devices = await navigator.mediaDevices.enumerateDevices()
-  const videoDevices = devices.filter((device) => device.kind === 'videoinput')
-
-  if (videoDevices.length === 0) return
-
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: {
-      deviceId: {
-        exact: videoDevices[0]!.deviceId,
-      },
-    },
-  })
-
-  set({
-    videoDevices: videoDevices,
-    stream: stream,
-    webcamLoading: false,
-  })
 }

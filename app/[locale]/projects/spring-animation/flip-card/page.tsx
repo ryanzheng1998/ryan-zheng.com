@@ -116,13 +116,23 @@ export default function Home() {
   return (
     <div className="fixed inset-0 grid place-items-center">
       <div
+        role="button"
+        tabIndex={0}
+        aria-label="Flip photo card"
+        aria-pressed={flip}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            setFlip((x) => !x)
+          }
+        }}
         onClick={() => {
           setFlip((x) => !x)
         }}
-        className="relative h-[450px] w-[800px] cursor-pointer select-none"
+        className="relative aspect-[16/9] w-[min(800px,calc(100vw-40px))] cursor-pointer select-none"
       >
         <Image
-          alt="DALL·E 2024-02-21 14.41.27 - Create an image of a vibrant city street scene at night. The focus should be on a large, illuminated billboard attached to a building. The billboard d"
+          alt="Neon billboard on a city street at night"
           ref={(el) => {
             animationState.current.elements[0]!.element = el
           }}
@@ -132,10 +142,10 @@ export default function Home() {
           style={{
             backfaceVisibility: 'hidden',
           }}
-          src="/flip-card/DALL·E 2024-02-21 14.41.27 - Create an image of a vibrant city street scene at night. The focus should be on a large, illuminated billboard attached to a building. The billboard d.webp"
+          src="/images/night-billboard.webp"
         />
         <Image
-          alt="DALL·E 2024-02-21 14.42.11 - Illustrate a bustling night scene on an urban street. In the center, a bright neon sign hangs from the side of a building, prominently featuring a fic"
+          alt="Illuminated sign on a night-time street"
           ref={(el) => {
             animationState.current.elements[1]!.element = el
           }}
@@ -146,7 +156,7 @@ export default function Home() {
             backfaceVisibility: 'hidden',
             transform: 'rotateX(180deg)',
           }}
-          src="/flip-card/DALL·E 2024-02-21 14.42.11 - Illustrate a bustling night scene on an urban street. In the center, a bright neon sign hangs from the side of a building, prominently featuring a fic.webp"
+          src="/images/night-sign.webp"
         />
       </div>
     </div>

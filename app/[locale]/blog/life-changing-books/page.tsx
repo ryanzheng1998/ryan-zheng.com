@@ -1,4 +1,5 @@
-import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { SiteFooter } from '@/components/SiteFooter'
+import { SiteHeader } from '@/components/SiteHeader'
 import { isLocale, type Locale } from '@/content/locales'
 import { blogPosts } from '@/content/site'
 import { notFound } from 'next/navigation'
@@ -7,7 +8,9 @@ type Props = {
   params: Promise<{ locale: string }>
 }
 
-const post = blogPosts.find((blogPost) => blogPost.slug === 'life-changing-books')
+const post = blogPosts.find(
+  (blogPost) => blogPost.slug === 'life-changing-books',
+)
 
 export default async function LifeChangingBooksPage({ params }: Props) {
   const { locale: localeParam } = await params
@@ -19,21 +22,17 @@ export default async function LifeChangingBooksPage({ params }: Props) {
   const locale: Locale = localeParam
 
   return (
-    <main className="min-h-screen bg-white px-6 py-16 font-sans text-neutral-800">
-      <nav className="mx-auto mb-12 flex max-w-3xl items-center justify-between">
-        <a
-          href={`/${locale}/blog`}
-          className="text-sm font-medium text-blue-600"
-        >
-          {locale === 'en' ? 'Blog' : '部落格'}
-        </a>
-        <LanguageSwitcher locale={locale} path="/blog/life-changing-books" />
-      </nav>
+    <main className="editorial-site">
+      <SiteHeader locale={locale} path="/blog/life-changing-books" />
 
-      <article className="prose prose-neutral mx-auto max-w-3xl">
+      <article
+        id="main-content"
+        className="prose prose-neutral mx-auto max-w-3xl px-5 py-12 sm:py-16"
+      >
         <p className="text-sm text-gray-500">{post.date}</p>
         {locale === 'en' ? <EnglishPost /> : <ChinesePost />}
       </article>
+      <SiteFooter locale={locale} />
     </main>
   )
 }
@@ -57,7 +56,8 @@ function EnglishPost() {
       <p>
         This book challenged how I see myself and others. It is a conversation
         between a philosopher and a youth, exploring Alfred Adler's ideas. The
-        biggest lesson? <strong>My past does not define me. Only my actions now do.</strong>
+        biggest lesson?{' '}
+        <strong>My past does not define me. Only my actions now do.</strong>
       </p>
       <p>
         I used to worry a lot about what others thought. This book helped me

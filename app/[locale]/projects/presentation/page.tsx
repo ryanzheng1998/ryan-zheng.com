@@ -36,8 +36,8 @@ export default function Page() {
       className="relative h-screen w-screen bg-gradient-to-br from-white to-gray-100"
     >
       {store.slides[store.currentPage]}
-      <label className="absolute bottom-0 right-0 m-5 text-3xl">
-        {store.currentPage + 1}
+      <label className="absolute bottom-24 right-5 text-sm text-neutral-500">
+        {store.currentPage + 1} / {store.slides.length}
       </label>
     </div>
   )

@@ -16,6 +16,7 @@ export const Panel = () => {
       <p>Similarity {store.similarity * 100}%</p>
 
       <select
+        aria-label="Select camera"
         onChange={(e) => {
           const deviceId = e.target.value
           void changeVideoDevice(deviceId)

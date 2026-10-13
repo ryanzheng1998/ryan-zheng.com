@@ -6,10 +6,10 @@ import { useStore } from './useStore'
 
 export default function Page() {
   useEffect(() => {
-    window.addEventListener('mousemove', onPointerMove)
+    window.addEventListener('pointermove', onPointerMove)
 
     return () => {
-      window.removeEventListener('mousemove', onPointerMove)
+      window.removeEventListener('pointermove', onPointerMove)
     }
   }, [])
 
@@ -28,7 +28,13 @@ export default function Page() {
 
   return (
     <div>
-      <svg width={1920} height={1080} viewBox="0 0 1920 1080">
+      <svg
+        id="flock-scene"
+        className="h-screen w-full touch-none"
+        viewBox="0 0 1920 1080"
+        preserveAspectRatio="none"
+        aria-label="Flocking simulation"
+      >
         <rect
           x="0"
           y="0"

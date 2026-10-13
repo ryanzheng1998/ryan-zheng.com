@@ -1,54 +1,40 @@
-import { MouseEvent } from 'react'
+import { PointerEvent } from 'react'
 import { set } from './useStore'
 
 const toDeg = (rad: number) => rad * (180 / Math.PI)
-const toRad = (deg: number) => deg * (Math.PI / 180)
-
+// The renderer stores absolute segment angles, so return world-space angles.
 export function solveIK(targetX: number, targetY: number) {
-  const l1 = 10
-  const l2 = 10
-  const l3 = 10
-
-  const dx = targetX
-  const dy = targetY
-  const d = Math.hypot(dx, dy)
-
-  // Clamp to max reach
-  const maxReach = l1 + l2 + l3
-  const clampedD = Math.min(d, maxReach - 0.001)
-
-  // Adjust for wrist (end of link2)
-  const ratio = (clampedD - l3) / d
-  const wristX = dx * ratio
-  const wristY = dy * ratio
-  const wristDist = Math.hypot(wristX, wristY)
-
-  // Solve angle2 using Law of Cosines
-  const cosA2 = (l1 ** 2 + l2 ** 2 - wristDist ** 2) / (2 * l1 * l2)
-  const angle2 = Math.acos(Math.max(-1, Math.min(1, cosA2)))
-
-  // Solve angle1
-  const k1 = l1 + l2 * Math.cos(angle2)
-  const k2 = l2 * Math.sin(angle2)
-  const angle1 = Math.atan2(wristY, wristX) - Math.atan2(k2, k1)
-
-  // Solve angle3 to match orientation
-  const totalAngle = Math.atan2(dy - wristY, dx - wristX)
-  const angle3 = totalAngle - angle1 - angle2
-
+  const l1 = 10,
+    l2 = 10,
+    l3 = 10
+  const distance = Math.hypot(targetX, targetY)
+  const direction = distance === 0 ? 0 : Math.atan2(targetY, targetX)
+  const reach = Math.min(distance, l1 + l2 + l3)
+  const wristX = (reach - l3) * Math.cos(direction)
+  const wristY = (reach - l3) * Math.sin(direction)
+  const cosine = (wristX ** 2 + wristY ** 2 - l1 ** 2 - l2 ** 2) / (2 * l1 * l2)
+  const elbow = Math.acos(Math.max(-1, Math.min(1, cosine)))
+  const shoulder =
+    Math.atan2(wristY, wristX) -
+    Math.atan2(l2 * Math.sin(elbow), l1 + l2 * Math.cos(elbow))
   return {
-    angle1: toDeg(angle1),
-    angle2: toDeg(angle2),
-    angle3: toDeg(angle3),
+    angle1: toDeg(shoulder),
+    angle2: toDeg(shoulder + elbow),
+    angle3: toDeg(direction),
   }
 }
 
-export const updateMousePosition = (event: MouseEvent) => {
+export const updateMousePosition = (event: PointerEvent<SVGSVGElement>) => {
   const { clientX, clientY } = event
-  const { innerWidth, innerHeight } = window
+  const {
+    left,
+    top,
+    width: innerWidth,
+    height: innerHeight,
+  } = event.currentTarget.getBoundingClientRect()
 
-  const x = (clientX / innerWidth) * 100 - 50
-  const y = (clientY / innerHeight) * 100 - 50
+  const x = ((clientX - left) / innerWidth) * 100 - 50
+  const y = ((clientY - top) / innerHeight) * 100 - 50
 
   const { angle1, angle2, angle3 } = solveIK(x, y)
 

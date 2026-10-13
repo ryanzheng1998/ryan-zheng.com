@@ -1,56 +1,119 @@
+'use client'
+
+import { useState } from 'react'
 import type { Locale } from '@/content/locales'
 import { categoryNames, projects } from '@/content/site'
+import { ProjectPreview } from './ProjectPreview'
 
-type Props = {
-  locale: Locale
-}
-
-export function ProjectGrid({ locale }: Props) {
-  const categories = Object.entries(categoryNames)
-
+export function ProjectGrid({ locale }: { locale: Locale }) {
+  const [query, setQuery] = useState('')
+  const [category, setCategory] = useState('all')
+  const filtered = projects.filter(
+    (p) =>
+      (category === 'all' || p.categoryId === category) &&
+      `${p.title.en} ${p.title.zh} ${p.description?.[locale] ?? ''} ${categoryNames[p.categoryId as keyof typeof categoryNames][locale]}`
+        .toLowerCase()
+        .includes(query.toLowerCase().trim()),
+  )
   return (
     <>
-      {categories.map(([categoryId, categoryName]) => {
-        const categoryProjects = projects.filter(
-          (project) => project.categoryId === categoryId,
-        )
-
+      <div className="project-filters">
+        <label htmlFor="project-search" className="eyebrow">
+          {locale === 'en' ? 'Find an experiment' : '找一個實驗'}
+        </label>
+        <input
+          id="project-search"
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={locale === 'en' ? 'Search projects…' : '搜尋作品…'}
+        />
+        <div
+          className="category-filters"
+          aria-label={locale === 'en' ? 'Filter by category' : '依分類篩選'}
+        >
+          <button
+            aria-pressed={category === 'all'}
+            onClick={() => setCategory('all')}
+          >
+            {locale === 'en' ? 'All' : '全部'} <span>{projects.length}</span>
+          </button>
+          {Object.entries(categoryNames).map(([id, name]) => (
+            <button
+              key={id}
+              aria-pressed={category === id}
+              onClick={() => setCategory(id)}
+            >
+              {name[locale]}
+            </button>
+          ))}
+        </div>
+        <p className="result-count" role="status">
+          {locale === 'en'
+            ? `${filtered.length} ${filtered.length === 1 ? 'experiment' : 'experiments'}`
+            : `${filtered.length} 個實驗`}
+        </p>
+      </div>
+      {filtered.length === 0 && (
+        <div className="empty-projects">
+          <h2>
+            {locale === 'en' ? 'No projects found.' : '沒有找到符合的作品。'}
+          </h2>
+          <p>
+            {locale === 'en'
+              ? 'Try another keyword or category.'
+              : '試試其他關鍵字或分類。'}
+          </p>
+          <button
+            className="text-link"
+            onClick={() => {
+              setQuery('')
+              setCategory('all')
+            }}
+          >
+            {locale === 'en' ? 'Reset filters →' : '重設篩選 →'}
+          </button>
+        </div>
+      )}
+      {Object.entries(categoryNames).map(([id, name]) => {
+        const items = filtered.filter((p) => p.categoryId === id)
+        if (!items.length) return null
         return (
-          <div key={categoryId} className="mb-10 text-left">
-            <h3 className="mb-2 mt-12 text-xl font-semibold text-gray-800">
-              {categoryName[locale]}
-            </h3>
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {categoryProjects.map((project) => (
-                <li key={project.id}>
+          <section key={id} className="project-category">
+            <h2>
+              {name[locale]}{' '}
+              <span>{items.length.toString().padStart(2, '0')}</span>
+            </h2>
+            <ul className="project-directory-grid">
+              {items.map((p) => (
+                <li key={p.id}>
                   <a
-                    href={
-                      project.external
-                        ? project.href
-                        : `/${locale}${project.href}`
-                    }
-                    className="group block rounded-lg border border-neutral-200 bg-white p-5 transition duration-300 hover:border-neutral-300 hover:shadow-lg hover:shadow-neutral-200"
-                    target={project.external ? '_blank' : undefined}
-                    rel={project.external ? 'noopener noreferrer' : undefined}
+                    className="directory-card"
+                    href={p.external ? p.href : `/${locale}${p.href}`}
+                    target={p.external ? '_blank' : undefined}
+                    rel={p.external ? 'noopener noreferrer' : undefined}
                   >
-                    <p className="flex items-center justify-between font-medium text-blue-600">
-                      {project.title[locale]}
-                      {project.external && (
-                        <span className="ml-2 text-xs text-gray-400 group-hover:text-blue-500">
-                          ↗
-                        </span>
-                      )}
-                    </p>
-                    {project.description && (
-                      <p className="mt-2 text-sm text-gray-600">
-                        {project.description[locale]}
-                      </p>
-                    )}
+                    <ProjectPreview id={p.id} />
+                    <div>
+                      <h3>
+                        {p.title[locale]} <span aria-hidden="true">↗</span>
+                      </h3>
+                      {p.description && <p>{p.description[locale]}</p>}
+                      <span className="directory-label">
+                        {p.external
+                          ? locale === 'en'
+                            ? 'External project'
+                            : '外部作品'
+                          : locale === 'en'
+                            ? 'Interactive experiment'
+                            : '互動實驗'}
+                      </span>
+                    </div>
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         )
       })}
     </>

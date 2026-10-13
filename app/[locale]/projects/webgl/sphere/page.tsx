@@ -20,6 +20,8 @@ export default function Page() {
 
   return (
     <canvas
+      aria-label="Sphere WebGL scene"
+      style={{ touchAction: 'none' }}
       className="fixed inset-0"
       id="canvas"
       onPointerDown={(e) => {

@@ -9,11 +9,16 @@ export default function Page() {
   useEffect(() => {
     const canvas = document.getElementById('canvas') as HTMLCanvasElement
 
-    drawWireframe(canvas)
+    const dispose = drawWireframe(canvas)
+    return () => {
+      if (typeof dispose === 'function') dispose()
+    }
   }, [])
 
   return (
     <canvas
+      aria-label="Wireframe WebGL scene"
+      style={{ touchAction: 'none' }}
       className="fixed inset-0"
       id="canvas"
       onPointerDown={(e) => {

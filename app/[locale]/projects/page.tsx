@@ -1,4 +1,5 @@
-import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { SiteFooter } from '@/components/SiteFooter'
+import { SiteHeader } from '@/components/SiteHeader'
 import { ProjectGrid } from '@/components/ProjectGrid'
 import { isLocale, type Locale } from '@/content/locales'
 import { home } from '@/content/site'
@@ -18,20 +19,20 @@ export default async function ProjectsPage({ params }: Props) {
   const locale: Locale = localeParam
 
   return (
-    <main className="min-h-screen bg-white px-6 py-16 font-sans text-neutral-800">
-      <nav className="mx-auto mb-12 flex max-w-3xl items-center justify-between">
-        <a href={`/${locale}`} className="text-sm font-medium text-blue-600">
-          Ryan Zheng
-        </a>
-        <LanguageSwitcher locale={locale} path="/projects" />
-      </nav>
+    <main className="editorial-site index-page">
+      <SiteHeader locale={locale} path="/projects" />
 
-      <section className="mx-auto max-w-3xl">
-        <h1 className="text-4xl font-bold tracking-tight">
+      <section id="main-content" className="site-width index-content">
+        <p className="eyebrow">
+          {locale === 'en' ? 'The playground' : '實驗遊樂場'}
+        </p>
+        <h1 className="mt-4 text-4xl font-bold tracking-tight">
           {home[locale].projectsHeading}
         </h1>
+        <p className="index-intro">{home[locale].projectsSubheading}</p>
         <ProjectGrid locale={locale} />
       </section>
+      <SiteFooter locale={locale} />
     </main>
   )
 }

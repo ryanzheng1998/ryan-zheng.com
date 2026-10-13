@@ -22,24 +22,27 @@ export default function Page() {
   }, [])
 
   useEffect(() => {
-    enableCam()
+    const controller = new AbortController()
+    void enableCam(controller.signal)
+    return () => controller.abort()
   }, [])
 
   return (
     <div className="relative h-screen w-screen">
       {store.webcamLoading && (
-        <div className="grid h-screen w-screen place-items-center bg-black text-6xl text-white">
+        <div className="grid h-screen w-screen place-items-center bg-black p-8 text-2xl text-white">
           Loading...
         </div>
       )}
       {store.webcamError && (
-        <div className="grid h-screen w-screen place-items-center bg-black text-white">
-          <p className="text-6xl">{store.webcamError.message}</p>
+        <div className="absolute inset-0 z-10 grid place-items-center bg-black text-white">
+          <p className="max-w-md p-8 text-lg">{store.webcamError.message}</p>
         </div>
       )}
       <div className="h-full w-full">
         <video
           id="webcam"
+          playsInline
           autoPlay
           muted
           className="absolute h-full w-full -scale-x-100 bg-black"

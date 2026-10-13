@@ -25,11 +25,12 @@ export default function Page() {
       ref={ref}
       onWheel={zoom}
       onPointerDown={drag}
-      className="h-screen w-screen select-none overflow-hidden bg-black"
+      className="h-screen w-screen touch-none select-none overflow-hidden bg-black"
     >
       <img
+        alt="Night-time city scene for pan and zoom"
         draggable="false"
-        src="/flip-card/DALL·E 2024-02-21 14.41.27 - Create an image of a vibrant city street scene at night. The focus should be on a large, illuminated billboard attached to a building. The billboard d.webp"
+        src="/images/night-billboard.webp"
       />
     </div>
   )

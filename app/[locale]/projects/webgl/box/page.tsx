@@ -21,6 +21,8 @@ export default function Page() {
 
   return (
     <canvas
+      aria-label="Box WebGL scene"
+      style={{ touchAction: 'none' }}
       className="fixed inset-0"
       id="canvas"
       onPointerDown={(e) => {

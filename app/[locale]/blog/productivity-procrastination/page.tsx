@@ -1,4 +1,5 @@
-import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { SiteFooter } from '@/components/SiteFooter'
+import { SiteHeader } from '@/components/SiteHeader'
 import { isLocale, type Locale } from '@/content/locales'
 import { blogPosts } from '@/content/site'
 import { notFound } from 'next/navigation'
@@ -22,21 +23,17 @@ export default async function ProductivityProcrastinationPage({
   const locale: Locale = localeParam
 
   return (
-    <main className="min-h-screen bg-white px-6 py-16 font-sans text-neutral-800">
-      <nav className="mx-auto mb-12 flex max-w-3xl items-center justify-between">
-        <a
-          href={`/${locale}/blog`}
-          className="text-sm font-medium text-blue-600"
-        >
-          {locale === 'en' ? 'Blog' : '部落格'}
-        </a>
-        <LanguageSwitcher locale={locale} path={`/blog/${slug}`} />
-      </nav>
+    <main className="editorial-site">
+      <SiteHeader locale={locale} path={`/blog/${slug}`} />
 
-      <article className="prose prose-neutral mx-auto max-w-3xl">
+      <article
+        id="main-content"
+        className="prose prose-neutral mx-auto max-w-3xl px-5 py-12 sm:py-16"
+      >
         <p className="text-sm text-gray-500">{post.date}</p>
         {locale === 'en' ? <EnglishPost /> : <ChinesePost />}
       </article>
+      <SiteFooter locale={locale} />
     </main>
   )
 }
@@ -88,8 +85,8 @@ function EnglishPost() {
       <h2>The Missing Piece</h2>
 
       <p>
-        There is no need for productivity systems if there is nothing
-        meaningful for me to produce.
+        There is no need for productivity systems if there is nothing meaningful
+        for me to produce.
       </p>
 
       <p>Outside of work, I haven&apos;t been creating much in recent years.</p>
@@ -116,7 +113,9 @@ function EnglishPost() {
 
       <p>Even reading productivity books.</p>
 
-      <p>Looking back, productivity content became another form of consumption.</p>
+      <p>
+        Looking back, productivity content became another form of consumption.
+      </p>
 
       <p>A socially acceptable form of procrastination.</p>
 
@@ -188,7 +187,9 @@ function EnglishPost() {
 
       <h2>What I&apos;m Going to Do Instead</h2>
 
-      <p>For now, I&apos;m done searching for the perfect productivity system.</p>
+      <p>
+        For now, I&apos;m done searching for the perfect productivity system.
+      </p>
 
       <p>I&apos;m done searching for the perfect Life OS.</p>
 

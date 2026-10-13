@@ -1,3 +1,4 @@
+import { projectDetails } from './project-details'
 import type { Locale } from './locales'
 
 type Localized<T> = Record<Locale, T>
@@ -8,7 +9,9 @@ export type Project = {
   href: string
   external?: boolean
   title: Localized<string>
-  description?: Localized<string>
+  instructions: Localized<string>
+  thumbnail: string
+  description: Localized<string>
 }
 
 export type BlogPost = {
@@ -132,9 +135,13 @@ export const categoryNames = {
   },
 } satisfies Record<string, Localized<string>>
 
-export const projects: Project[] = [
+const projectEntries = [
   {
     id: 'spring-parameter-picker',
+    description: {
+      en: 'Tune a spring and see how motion changes, one parameter at a time.',
+      zh: '調整彈簧參數，看看每一次改動如何影響動畫。',
+    },
     categoryId: 'animation',
     href: '/projects/spring-animation/spring-parameter-picker',
     title: {
@@ -207,6 +214,10 @@ export const projects: Project[] = [
   },
   {
     id: 'webgl-bloom',
+    description: {
+      en: 'An experiment in light, glow, and graphics rendered in the browser.',
+      zh: '在瀏覽器裡探索光線、輝光與圖形渲染。',
+    },
     categoryId: 'graphics',
     href: '/projects/webgl/bloom',
     title: {
@@ -291,6 +302,10 @@ export const projects: Project[] = [
   },
   {
     id: 'pose-detection',
+    description: {
+      en: 'Explore body landmarks and real-time pose tracking with your camera.',
+      zh: '透過攝影機探索身體關鍵點與即時姿態追蹤。',
+    },
     categoryId: 'interactive',
     href: '/projects/pose-detection',
     title: {
@@ -417,6 +432,10 @@ export const projects: Project[] = [
   },
   {
     id: 'webcam-mirror',
+    description: {
+      en: 'A small camera experiment that turns your browser into a mirror.',
+      zh: '一個把瀏覽器變成鏡子的攝影機小實驗。',
+    },
     categoryId: 'ui',
     href: '/projects/webcam-mirror',
     title: {
@@ -510,6 +529,11 @@ export const projects: Project[] = [
     },
   },
 ]
+
+export const projects: Project[] = projectEntries.map((project) => ({
+  ...project,
+  ...projectDetails[project.id as keyof typeof projectDetails],
+}))
 
 export const blogPosts = [
   {

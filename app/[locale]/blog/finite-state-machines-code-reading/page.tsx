@@ -1,4 +1,5 @@
-import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { SiteFooter } from '@/components/SiteFooter'
+import { SiteHeader } from '@/components/SiteHeader'
 import { isLocale, type Locale } from '@/content/locales'
 import { blogPosts } from '@/content/site'
 import { notFound } from 'next/navigation'
@@ -22,21 +23,17 @@ export default async function FiniteStateMachinesCodeReadingPage({
   const locale: Locale = localeParam
 
   return (
-    <main className="min-h-screen bg-white px-6 py-16 font-sans text-neutral-800">
-      <nav className="mx-auto mb-12 flex max-w-3xl items-center justify-between">
-        <a
-          href={`/${locale}/blog`}
-          className="text-sm font-medium text-blue-600"
-        >
-          {locale === 'en' ? 'Blog' : '部落格'}
-        </a>
-        <LanguageSwitcher locale={locale} path={`/blog/${slug}`} />
-      </nav>
+    <main className="editorial-site">
+      <SiteHeader locale={locale} path={`/blog/${slug}`} />
 
-      <article className="prose prose-neutral mx-auto max-w-3xl">
+      <article
+        id="main-content"
+        className="prose prose-neutral mx-auto max-w-3xl px-5 py-12 sm:py-16"
+      >
         <p className="text-sm text-gray-500">{post.date}</p>
         {locale === 'en' ? <EnglishPost /> : <ChinesePost />}
       </article>
+      <SiteFooter locale={locale} />
     </main>
   )
 }
@@ -56,9 +53,7 @@ function EnglishPost() {
       <ul>
         <li>A system has a set of states.</li>
         <li>Events trigger transitions between states.</li>
-        <li>
-          The system behaves differently depending on its current state.
-        </li>
+        <li>The system behaves differently depending on its current state.</li>
       </ul>
 
       <p>Simple enough.</p>
@@ -110,8 +105,7 @@ function EnglishPost() {
       <p>State changes.</p>
 
       <p>
-        The details may differ, but the pattern remains surprisingly
-        consistent.
+        The details may differ, but the pattern remains surprisingly consistent.
       </p>
 
       <h2>Understanding Architecture Through State</h2>
@@ -197,7 +191,8 @@ function ChinesePost() {
       <h1>有限狀態機改變了我閱讀程式碼的方式</h1>
 
       <p>
-        有限狀態機（Finite State Machine，FSM）是我學過最有用的概念之一，它幫助我理解軟體架構。
+        有限狀態機（Finite State
+        Machine，FSM）是我學過最有用的概念之一，它幫助我理解軟體架構。
       </p>
 
       <p>乍看之下，FSM 像是一個學術概念：</p>

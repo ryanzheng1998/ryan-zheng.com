@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Ryan Zheng | 鄭聖玄',
-  description: "Ryan Zheng's personal website",
+  description: "Essays and interactive experiments by Ryan Zheng — exploring graphics, motion, computer vision, and the things worth learning.",
   icons: {
     icon: '/icon.svg',
   },

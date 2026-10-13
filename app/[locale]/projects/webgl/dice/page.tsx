@@ -18,6 +18,8 @@ export default function Page() {
 
   return (
     <canvas
+      aria-label="Dice WebGL scene"
+      style={{ touchAction: 'none' }}
       id="canvas"
       onPointerDown={(e) => {
         e.currentTarget.setPointerCapture(e.pointerId)

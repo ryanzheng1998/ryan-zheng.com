@@ -1,4 +1,4 @@
-import { set } from './useStore'
+import { set, useStore } from './useStore'
 
 export const changeVideoDevice = async (deviceId: string) => {
   set({
@@ -15,6 +15,10 @@ export const changeVideoDevice = async (deviceId: string) => {
       },
     })
 
+    useStore
+      .getState()
+      .stream?.getTracks()
+      .forEach((track) => track.stop())
     set({
       stream: stream,
       webcamLoading: false,

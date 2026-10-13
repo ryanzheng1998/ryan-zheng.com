@@ -25,7 +25,7 @@ export default function Home() {
           0.00
         </h1>
         <button
-          className="rounded bg-slate-400 px-10 py-3 text-6xl text-white shadow"
+          className="rounded-lg bg-[#183e35] px-8 py-3 text-xl text-white shadow"
           onClick={() => {
             setFlip((x) => !x)
 
@@ -49,7 +49,7 @@ export default function Home() {
               }
 
               if (
-                velocity < precision &&
+                Math.abs(velocity) < precision &&
                 Math.abs(position - springPosition) < precision
               ) {
                 element.innerHTML = springPosition.toFixed(2)
@@ -73,7 +73,7 @@ export default function Home() {
             requestAnimationFrame(step)
           }}
         >
-          Flip
+          Animate number
         </button>
       </div>
     </div>

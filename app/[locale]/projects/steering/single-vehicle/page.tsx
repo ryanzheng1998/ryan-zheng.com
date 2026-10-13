@@ -6,14 +6,10 @@ import { useStore } from './useStore'
 
 export default function Page() {
   useEffect(() => {
-    window.addEventListener('mousemove', onPointerMove)
-
-    setTimeout(() => {
-      console.log('state', useStore.getState().history)
-    }, 20000)
+    window.addEventListener('pointermove', onPointerMove)
 
     return () => {
-      window.removeEventListener('mousemove', onPointerMove)
+      window.removeEventListener('pointermove', onPointerMove)
     }
   }, [])
 

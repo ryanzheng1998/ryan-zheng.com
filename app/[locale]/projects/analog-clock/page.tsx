@@ -18,20 +18,22 @@ export default function AnalogClock() {
   const secondsDegrees = seconds * 6
 
   return (
-    <div className="grid h-screen place-items-center bg-gray-100">
+    <div className="grid h-screen place-items-center bg-[#f7f4ec]">
       <div className="grid place-items-center gap-5">
         <h3 className="font-mono text-sm text-neutral-500">
           {time.toLocaleTimeString()}
         </h3>
         <svg
-          className="aspect-square w-80 drop-shadow-md"
+          className="aspect-square w-[min(320px,calc(100vw-40px))] drop-shadow-md"
+          role="img"
+          aria-label={`Current time: ${time.toLocaleTimeString()}`}
           viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
             <radialGradient id="clock-gradient" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#93c5fd" />
-              <stop offset="100%" stopColor="#3b82f6" />
+              <stop offset="0%" stopColor="#6f927a" />
+              <stop offset="100%" stopColor="#183e35" />
             </radialGradient>
           </defs>
 

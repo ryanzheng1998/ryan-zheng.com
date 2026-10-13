@@ -1,4 +1,5 @@
-import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { SiteFooter } from '@/components/SiteFooter'
+import { SiteHeader } from '@/components/SiteHeader'
 import { isLocale, type Locale } from '@/content/locales'
 import { blogPosts, home } from '@/content/site'
 import { notFound } from 'next/navigation'
@@ -20,26 +21,25 @@ export default async function BlogIndex({ params }: Props) {
   )
 
   return (
-    <main className="min-h-screen bg-white px-6 py-16 font-sans text-neutral-800">
-      <nav className="mx-auto mb-12 flex max-w-3xl items-center justify-between">
-        <a href={`/${locale}`} className="text-sm font-medium text-blue-600">
-          Ryan Zheng
-        </a>
-        <LanguageSwitcher locale={locale} path="/blog" />
-      </nav>
+    <main className="editorial-site index-page">
+      <SiteHeader locale={locale} path="/blog" />
 
-      <section className="mx-auto max-w-3xl">
-        <h1 className="text-4xl font-bold tracking-tight">
+      <section id="main-content" className="site-width index-content">
+        <p className="eyebrow">
+          {locale === 'en' ? 'The notebook' : '我的筆記'}
+        </p>
+        <h1 className="mt-4 text-4xl font-bold tracking-tight">
           {home[locale].blogHeading}
         </h1>
+        <p className="index-intro">{home[locale].blogSubheading}</p>
         <ul className="mt-8 space-y-4">
           {localizedBlogPosts.map((post) => (
-            <li
-              key={post.slug}
-              className="rounded-2xl bg-gray-50 p-5 shadow-md transition hover:bg-white hover:shadow-xl"
-            >
-              <a href={`/${locale}/blog/${post.slug}`}>
-                <p className="text-lg font-semibold text-blue-700">
+            <li key={post.slug} className="article-card">
+              <a className="block" href={`/${locale}/blog/${post.slug}`}>
+                <time className="article-meta" dateTime={post.date}>
+                  {post.date}
+                </time>
+                <p className="text-lg font-semibold text-[#183e35]">
                   {post.title[locale]}
                 </p>
                 <p className="mt-1 text-sm text-gray-600">
@@ -50,6 +50,7 @@ export default async function BlogIndex({ params }: Props) {
           ))}
         </ul>
       </section>
+      <SiteFooter locale={locale} />
     </main>
   )
 }
