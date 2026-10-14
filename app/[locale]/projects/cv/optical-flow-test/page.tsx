@@ -7,8 +7,7 @@ export default function Page() {
   const grid = store.grid
 
   return (
-    <div>
-      <img className="opacity-55" src="/2025-08-14 11_13_57_162.png" />
+    <div className="min-h-screen bg-[#f7f4ec]" aria-label="Interactive flow-vector grid">
       {store.rotation.map((row, x) => {
         return (
           <div key={x}>
